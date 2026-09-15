@@ -1,0 +1,16 @@
+{
+  "name": "maximerit-platform",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "description": "Plateforme Maximerit — refonte (Spec-Driven). Le monorepo applicatif est mis en place en Phase 3.",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "seo:inventory": "node scripts/build-url-inventory.mjs",
+    "seo:map": "node scripts/build-migration-map.mjs",
+    "seo:routes": "node scripts/build-routes.mjs",
+    "seo:crawl": "node scripts/seo-crawl.mjs",
+    "test:seo": "node --test scripts/tests/*.test.mjs",
+    "test": "npm run test:seo"
+  }
+}
