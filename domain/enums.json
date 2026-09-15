@@ -1,0 +1,200 @@
+{
+  "$comment": "Phase 1 — Vocabulaires contrôlés du domaine Maximerit. Source de vérité des enums. Consommé par les validateurs (domain/model.mjs) et, en Phase 3, par les collections Payload. Migré vers packages/domain à la Phase 3.",
+
+  "roles": ["SUPER_ADMIN", "ADMIN", "RECRUITER", "CONTENT_MANAGER", "MARKETING", "VIEWER"],
+
+  "resources": ["candidate", "cv", "application", "job", "talentPool", "note", "page", "article", "landingPage", "resource", "cta", "lead", "company", "redirect", "tag", "user", "trackingEvent"],
+
+  "actions": ["create", "read", "update", "delete", "publish", "export", "search"],
+
+  "permissionsMatrix": {
+    "SUPER_ADMIN": { "*": ["create", "read", "update", "delete", "publish", "export", "search"] },
+    "ADMIN": {
+      "candidate": ["create", "read", "update", "delete", "export", "search"],
+      "cv": ["create", "read", "update", "delete", "export"],
+      "application": ["create", "read", "update", "delete", "export", "search"],
+      "job": ["create", "read", "update", "delete", "publish", "search"],
+      "talentPool": ["create", "read", "update", "delete", "search"],
+      "note": ["create", "read", "update", "delete"],
+      "page": ["create", "read", "update", "delete", "publish"],
+      "article": ["create", "read", "update", "delete", "publish"],
+      "landingPage": ["create", "read", "update", "delete", "publish"],
+      "resource": ["create", "read", "update", "delete", "publish"],
+      "cta": ["create", "read", "update", "delete"],
+      "lead": ["create", "read", "update", "delete", "export", "search"],
+      "company": ["create", "read", "update", "delete", "search"],
+      "redirect": ["create", "read", "update", "delete"],
+      "tag": ["create", "read", "update", "delete"],
+      "user": ["create", "read", "update"],
+      "trackingEvent": ["read", "export"]
+    },
+    "RECRUITER": {
+      "candidate": ["create", "read", "update", "export", "search"],
+      "cv": ["create", "read", "update"],
+      "application": ["read", "update", "search"],
+      "job": ["read", "search"],
+      "talentPool": ["create", "read", "update", "search"],
+      "note": ["create", "read", "update"],
+      "lead": ["read", "search"],
+      "company": ["read", "search"],
+      "tag": ["read"]
+    },
+    "CONTENT_MANAGER": {
+      "page": ["create", "read", "update", "publish"],
+      "article": ["create", "read", "update", "publish"],
+      "landingPage": ["create", "read", "update", "publish"],
+      "resource": ["create", "read", "update", "publish"],
+      "cta": ["create", "read", "update"],
+      "job": ["create", "read", "update", "publish"],
+      "redirect": ["create", "read", "update"],
+      "tag": ["read"]
+    },
+    "MARKETING": {
+      "landingPage": ["create", "read", "update", "publish"],
+      "cta": ["create", "read", "update"],
+      "lead": ["read", "export", "search"],
+      "trackingEvent": ["read", "export"],
+      "article": ["read"],
+      "resource": ["create", "read", "update", "publish"]
+    },
+    "VIEWER": {
+      "candidate": ["read", "search"],
+      "job": ["read", "search"],
+      "application": ["read"],
+      "talentPool": ["read", "search"],
+      "lead": ["read"]
+    }
+  },
+
+  "candidatePipeline": [
+    { "slug": "nouveau", "label_fr": "Nouveau", "label_en": "New", "order": 1 },
+    { "slug": "a-qualifier", "label_fr": "À qualifier", "label_en": "To qualify", "order": 2 },
+    { "slug": "qualifie", "label_fr": "Qualifié", "label_en": "Qualified", "order": 3 },
+    { "slug": "vivier", "label_fr": "Vivier", "label_en": "Talent pool", "order": 4 },
+    { "slug": "preselectionne", "label_fr": "Présélectionné", "label_en": "Shortlisted (internal)", "order": 5 },
+    { "slug": "entretien-maximerit", "label_fr": "Entretien Maximerit", "label_en": "Maximerit interview", "order": 6 },
+    { "slug": "shortlist-client", "label_fr": "Shortlist client", "label_en": "Client shortlist", "order": 7 },
+    { "slug": "entretien-client", "label_fr": "Entretien client", "label_en": "Client interview", "order": 8 },
+    { "slug": "offre", "label_fr": "Offre", "label_en": "Offer", "order": 9 },
+    { "slug": "place", "label_fr": "Placé", "label_en": "Placed", "order": 10 }
+  ],
+
+  "candidateSideStates": [
+    { "slug": "indisponible", "label_fr": "Indisponible", "label_en": "Unavailable" },
+    { "slug": "refuse", "label_fr": "Refusé", "label_en": "Rejected" },
+    { "slug": "a-recontacter", "label_fr": "À recontacter", "label_en": "To re-contact" },
+    { "slug": "archive", "label_fr": "Archivé", "label_en": "Archived" }
+  ],
+
+  "applicationStatuses": [
+    { "slug": "recue", "label_fr": "Reçue", "label_en": "Received" },
+    { "slug": "en-revue", "label_fr": "En revue", "label_en": "Under review" },
+    { "slug": "retenue", "label_fr": "Retenue", "label_en": "Retained" },
+    { "slug": "rejetee", "label_fr": "Rejetée", "label_en": "Rejected" }
+  ],
+
+  "jobStatuses": [
+    { "slug": "brouillon", "label_fr": "Brouillon", "label_en": "Draft" },
+    { "slug": "publiee", "label_fr": "Publiée", "label_en": "Published" },
+    { "slug": "expiree", "label_fr": "Expirée", "label_en": "Expired" },
+    { "slug": "pourvue", "label_fr": "Pourvue", "label_en": "Filled" },
+    { "slug": "archivee", "label_fr": "Archivée", "label_en": "Archived" }
+  ],
+
+  "languages": [
+    { "code": "fr", "label_fr": "Français", "label_en": "French" },
+    { "code": "en", "label_fr": "Anglais", "label_en": "English" },
+    { "code": "ar", "label_fr": "Arabe", "label_en": "Arabic" },
+    { "code": "pt", "label_fr": "Portugais", "label_en": "Portuguese" },
+    { "code": "es", "label_fr": "Espagnol", "label_en": "Spanish" }
+  ],
+
+  "languageProficiency": [
+    { "slug": "natif", "label_fr": "Natif", "label_en": "Native", "rank": 5 },
+    { "slug": "courant", "label_fr": "Courant", "label_en": "Fluent", "rank": 4 },
+    { "slug": "professionnel", "label_fr": "Professionnel", "label_en": "Professional", "rank": 3 },
+    { "slug": "intermediaire", "label_fr": "Intermédiaire", "label_en": "Intermediate", "rank": 2 },
+    { "slug": "notions", "label_fr": "Notions", "label_en": "Basic", "rank": 1 }
+  ],
+
+  "contractTypes": [
+    { "slug": "cdi", "label_fr": "CDI", "label_en": "Permanent" },
+    { "slug": "cdd", "label_fr": "CDD", "label_en": "Fixed-term" },
+    { "slug": "mission-interim", "label_fr": "Mission / Intérim", "label_en": "Contract / Interim" },
+    { "slug": "consultant-freelance", "label_fr": "Consultant / Freelance", "label_en": "Consultant / Freelance" },
+    { "slug": "fifo-roster", "label_fr": "FIFO / Roster", "label_en": "FIFO / Roster" },
+    { "slug": "stage", "label_fr": "Stage", "label_en": "Internship" }
+  ],
+
+  "availabilityBuckets": [
+    { "slug": "immediate", "label_fr": "Immédiate", "label_en": "Immediate", "maxDays": 0 },
+    { "slug": "sous-30j", "label_fr": "Sous 30 jours", "label_en": "Within 30 days", "maxDays": 30 },
+    { "slug": "sous-60j", "label_fr": "Sous 60 jours", "label_en": "Within 60 days", "maxDays": 60 },
+    { "slug": "sous-90j", "label_fr": "Sous 90 jours", "label_en": "Within 90 days", "maxDays": 90 },
+    { "slug": "sous-180j", "label_fr": "Sous 6 mois", "label_en": "Within 6 months", "maxDays": 180 },
+    { "slug": "non-disponible", "label_fr": "Non disponible", "label_en": "Not available", "maxDays": null }
+  ],
+
+  "mineTypes": [
+    { "slug": "souterraine", "label_fr": "Souterraine", "label_en": "Underground" },
+    { "slug": "ciel-ouvert", "label_fr": "Ciel ouvert", "label_en": "Open pit" },
+    { "slug": "les-deux", "label_fr": "Les deux", "label_en": "Both" }
+  ],
+
+  "mobilityScopes": [
+    { "slug": "locale", "label_fr": "Locale", "label_en": "Local" },
+    { "slug": "nationale", "label_fr": "Nationale", "label_en": "National" },
+    { "slug": "regionale-afrique-ouest", "label_fr": "Régionale (Afrique de l'Ouest)", "label_en": "Regional (West Africa)" },
+    { "slug": "internationale", "label_fr": "Internationale", "label_en": "International" }
+  ],
+
+  "seniority": [
+    { "slug": "junior", "label_fr": "Junior", "label_en": "Junior", "rank": 1 },
+    { "slug": "confirme", "label_fr": "Confirmé", "label_en": "Mid-level", "rank": 2 },
+    { "slug": "senior", "label_fr": "Senior", "label_en": "Senior", "rank": 3 },
+    { "slug": "manager", "label_fr": "Manager / Lead", "label_en": "Manager / Lead", "rank": 4 },
+    { "slug": "director", "label_fr": "Directeur", "label_en": "Director", "rank": 5 },
+    { "slug": "executive", "label_fr": "Executive / C-level", "label_en": "Executive / C-level", "rank": 6 }
+  ],
+
+  "sectors": [
+    { "slug": "mines-ressources-naturelles", "label_fr": "Mines & Ressources naturelles", "label_en": "Mining & Natural Resources", "priority": true },
+    { "slug": "energie", "label_fr": "Énergie", "label_en": "Energy", "priority": false },
+    { "slug": "petrole-gaz", "label_fr": "Pétrole & Gaz", "label_en": "Oil & Gas", "priority": false },
+    { "slug": "btp-infrastructures", "label_fr": "BTP & Infrastructures", "label_en": "Construction & Infrastructure", "priority": false },
+    { "slug": "industrie", "label_fr": "Industrie", "label_en": "Industry", "priority": false },
+    { "slug": "services", "label_fr": "Services", "label_en": "Services", "priority": false }
+  ],
+
+  "countries": [
+    { "code": "SN", "label_fr": "Sénégal", "label_en": "Senegal", "priority": 1 },
+    { "code": "GN", "label_fr": "Guinée", "label_en": "Guinea", "priority": 2 },
+    { "code": "CI", "label_fr": "Côte d'Ivoire", "label_en": "Ivory Coast", "priority": 3 },
+    { "code": "ML", "label_fr": "Mali", "label_en": "Mali", "priority": 4 },
+    { "code": "MR", "label_fr": "Mauritanie", "label_en": "Mauritania", "priority": 5 },
+    { "code": "BF", "label_fr": "Burkina Faso", "label_en": "Burkina Faso", "priority": 6 },
+    { "code": "GH", "label_fr": "Ghana", "label_en": "Ghana", "priority": 7 }
+  ],
+
+  "commodities": [
+    { "slug": "gold", "label_fr": "Or", "label_en": "Gold" },
+    { "slug": "bauxite", "label_fr": "Bauxite", "label_en": "Bauxite" },
+    { "slug": "iron-ore", "label_fr": "Fer", "label_en": "Iron ore" },
+    { "slug": "phosphate", "label_fr": "Phosphate", "label_en": "Phosphate" },
+    { "slug": "mineral-sands", "label_fr": "Sables minéralisés / Zircon", "label_en": "Mineral sands / Zircon" },
+    { "slug": "manganese", "label_fr": "Manganèse", "label_en": "Manganese" },
+    { "slug": "diamond", "label_fr": "Diamant", "label_en": "Diamond" },
+    { "slug": "copper", "label_fr": "Cuivre", "label_en": "Copper" },
+    { "slug": "uranium", "label_fr": "Uranium", "label_en": "Uranium" },
+    { "slug": "lithium", "label_fr": "Lithium", "label_en": "Lithium" },
+    { "slug": "oil-gas", "label_fr": "Pétrole & Gaz", "label_en": "Oil & Gas" }
+  ],
+
+  "trackingEvents": [
+    "view_service", "view_mining_page", "view_job",
+    "start_application", "submit_application", "upload_cv",
+    "start_lead_form", "submit_lead_form",
+    "download_guide", "use_tool",
+    "click_phone", "click_email", "click_whatsapp"
+  ]
+}

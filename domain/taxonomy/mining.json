@@ -1,0 +1,68 @@
+{
+  "$comment": "Phase 1 — Taxonomie Mining : Secteur → Discipline → Spécialité. Source de vérité de la verticale prioritaire. Chaque spécialité a un slug unique (placement canonique dans UNE discipline). Les rôles transverses (ex. Mine Manager, CFO) sont référencés dans une autre discipline via crossRefs (slug), sans dupliquer le nœud canonique.",
+  "sector": { "slug": "mines-ressources-naturelles", "label_fr": "Mines & Ressources naturelles", "label_en": "Mining & Natural Resources", "hubUrl": "/mines/", "priority": true },
+  "disciplines": [
+    {
+      "slug": "geologie-exploration",
+      "label_fr": "Géologie & Exploration",
+      "label_en": "Geology & Exploration",
+      "url": "/mines/geologie-exploration/",
+      "specialties": [
+        { "slug": "exploration-geologist", "label_fr": "Géologue d'exploration", "label_en": "Exploration Geologist" },
+        { "slug": "mine-geologist", "label_fr": "Géologue de mine", "label_en": "Mine Geologist" },
+        { "slug": "resource-geologist", "label_fr": "Géologue ressources", "label_en": "Resource Geologist" },
+        { "slug": "senior-geologist", "label_fr": "Géologue senior", "label_en": "Senior Geologist" },
+        { "slug": "geophysicien", "label_fr": "Géophysicien", "label_en": "Geophysicist" },
+        { "slug": "hydrogeologue", "label_fr": "Hydrogéologue", "label_en": "Hydrogeologist" },
+        { "slug": "geotechnicien", "label_fr": "Géotechnicien", "label_en": "Geotechnical Engineer" }
+      ],
+      "crossRefs": []
+    },
+    {
+      "slug": "exploitation-operations",
+      "label_fr": "Exploitation & Opérations",
+      "label_en": "Exploitation & Operations",
+      "url": "/mines/exploitation-miniere/",
+      "specialties": [
+        { "slug": "mining-engineer", "label_fr": "Ingénieur minier", "label_en": "Mining Engineer" },
+        { "slug": "mine-planning-engineer", "label_fr": "Ingénieur planification minière", "label_en": "Mine Planning Engineer" },
+        { "slug": "drill-and-blast", "label_fr": "Ingénieur Forage & Minage", "label_en": "Drill & Blast Engineer" },
+        { "slug": "process-engineer", "label_fr": "Ingénieur procédés", "label_en": "Process Engineer" },
+        { "slug": "metallurgist", "label_fr": "Métallurgiste", "label_en": "Metallurgist" },
+        { "slug": "maintenance-manager", "label_fr": "Responsable maintenance", "label_en": "Maintenance Manager" },
+        { "slug": "hse-manager", "label_fr": "Responsable HSE", "label_en": "HSE Manager" },
+        { "slug": "mine-manager", "label_fr": "Directeur de mine", "label_en": "Mine Manager" }
+      ],
+      "crossRefs": []
+    },
+    {
+      "slug": "finance-miniere",
+      "label_fr": "Finance",
+      "label_en": "Finance",
+      "url": "/mines/finance-miniere/",
+      "specialties": [
+        { "slug": "cfo-mining", "label_fr": "Directeur financier (CFO)", "label_en": "CFO" },
+        { "slug": "finance-manager-mining", "label_fr": "Finance Manager", "label_en": "Finance Manager" },
+        { "slug": "financial-controller-mining", "label_fr": "Contrôleur financier", "label_en": "Financial Controller" },
+        { "slug": "cost-controller-mining", "label_fr": "Cost Controller", "label_en": "Cost Controller" },
+        { "slug": "chief-accountant-mining", "label_fr": "Chef comptable", "label_en": "Chief Accountant" },
+        { "slug": "project-finance-mining", "label_fr": "Project Finance", "label_en": "Project Finance" }
+      ],
+      "crossRefs": []
+    },
+    {
+      "slug": "leadership-executive-search",
+      "label_fr": "Leadership & Executive Search",
+      "label_en": "Leadership & Executive Search",
+      "url": "/mines/executive-search-mining/",
+      "specialties": [
+        { "slug": "general-manager", "label_fr": "General Manager", "label_en": "General Manager" },
+        { "slug": "country-manager", "label_fr": "Country Manager", "label_en": "Country Manager" },
+        { "slug": "operations-director", "label_fr": "Directeur des opérations", "label_en": "Operations Director" },
+        { "slug": "technical-director", "label_fr": "Directeur technique", "label_en": "Technical Director" },
+        { "slug": "hr-director-mining", "label_fr": "Directeur RH", "label_en": "HR Director" }
+      ],
+      "crossRefs": ["mine-manager", "cfo-mining"]
+    }
+  ]
+}
