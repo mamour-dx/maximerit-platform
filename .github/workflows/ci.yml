@@ -37,5 +37,33 @@ jobs:
       - run: pnpm --filter web test --run
       - run: pnpm --filter web build
 
-  # NB : boot Payload + migrations PostgreSQL (Phase 3b) ajoutés au job web
-  # avec un service Postgres une fois le CMS intégré.
+  integration:
+    name: Integration — Payload + PostgreSQL (DB + RBAC)
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: maximerit
+          POSTGRES_PASSWORD: maximerit_dev
+          POSTGRES_DB: maximerit
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U maximerit"
+          --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      DATABASE_URI: postgres://maximerit:maximerit_dev@localhost:5432/maximerit
+      PAYLOAD_SECRET: ci_secret_change_me
+      PAYLOAD_CONFIG_PATH: src/payload.config.ts
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm --filter web exec payload migrate --use-swc
+      - run: pnpm --filter web test:int

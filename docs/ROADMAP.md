@@ -44,5 +44,6 @@ ACTIONS RESTANTES : …
 - ✅ **Phase 0** — GATE 0 GO (conditionnel : finalisation valeur SEO sans historique GSC, cf. ADR-0005 ; re-gate en Phase 11).
 - ✅ **Phase 1** — GATE 1 GO (domain model, 21 tests verts).
 - ✅ **Phase 2** — GATE 2 GO (164 routes, 9 tests SEO, bouclage migration).
-- 🟡 **Phase 3** — **3a GO** (monorepo Next.js 16 + design system + `@maximerit/domain`, build/lint/type-check/tests verts). **3b (Payload + PostgreSQL) en attente du démon Docker.**
-- ⬜ Phases 4–12 : à venir, gate par gate.
+- ✅ **Phase 3** — GATE 3 GO (**3a** socle Next.js 16 + design system + `@maximerit/domain` ; **3b** Payload CMS + PostgreSQL : admin, migrations, collections Users/Pages/Redirects, RBAC, /health+/ready, test d'intégration 3/3).
+- 🟡 **Phase 4** (Site public + CMS) : prochaine.
+- ⬜ Phases 5–12 : à venir, gate par gate.

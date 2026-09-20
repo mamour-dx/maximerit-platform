@@ -34,14 +34,23 @@ STATUT :
 DÉCISION : GO (3a)
 
 PHASE : 3b — CMS Payload + PostgreSQL
-DÉCISION : NO-GO (bloqué infra)
-BLOQUANT : démon Docker arrêté dans l'environnement → PostgreSQL indisponible.
-ACTION REQUISE (utilisateur) : démarrer Docker Desktop, puis `docker compose up -d`.
-Ensuite : intégration Payload dans apps/web, migrations, collections Users/Pages/Redirects, /health.
+STATUT :
+- Payload dans apps/web  : PASS (admin /admin → HTTP 200)
+- PostgreSQL             : PASS (docker compose ; /ready → db:ok)
+- Migrations versionnées : PASS (src/migrations/20260920_232903_initial.ts appliquée)
+- Collections            : PASS (Users+RBAC, Pages localisées FR/EN, Redirects)
+- RBAC                   : PASS (bootstrap 1er admin OK ; création anonyme → 403)
+- Intégration DB         : PASS (payload.int.test.ts 3/3 ; job CI `integration` + service Postgres)
+- Build                  : PASS (next build avec routes /admin, /api/*, /health, /ready)
+DÉCISION : GO
 ```
 
+## Notes techniques
+- Node 23 + tsx@4.22.4 : la CLI Payload plante sur `require(ESM)` (TLA lexical) → contournée via `--use-swc` (@swc-node/register). Documenté pour les scripts (`generate:*`, `migrate`).
+- `graphql` épinglé en ^16 (peer de Payload ; ^17 provoquait un unmet peer).
+
 ## Risques restants
-- 3b non démarré : la Phase 4 (Site + CMS) **dépend** de 3b → doit être clôturé avant P4.
+- Aucun bloquant. La Phase 4 (Site + CMS) peut démarrer.
 
 ## GO / NO-GO
-**GO pour 3a.** **3b en attente** du démon Docker (action utilisateur), à clôturer avant la Phase 4.
+**GO (3a + 3b).** Prêt pour la Phase 4 (Site public + CMS).

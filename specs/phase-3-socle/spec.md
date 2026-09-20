@@ -27,10 +27,11 @@ cohérent, sur lequel les phases suivantes (site+CMS, ATS, offres…) se constru
 4. Tests : Vitest (app ↔ domaine, rendu design system) **verts** + suites SEO/domaine Node inchangées. ✅
 5. `next build` : **succès** ; `/` et `/mines` prérendues (SSG) et consommant le domaine. ✅
 6. Design system : tokens de marque + Button + états loading/empty/error, thème-aware, focus accessible. ✅
-### 3b (à suivre — nécessite Docker)
-7. Payload monté dans `apps/web`, admin accessible, connecté à PostgreSQL. ⬜
-8. Migrations versionnées ; collections Users (RBAC), Pages, Redirects. ⬜
-9. `/health` + `/ready` (DB joignable). ⬜
+### 3b (nécessite Docker) — FAIT
+7. Payload monté dans `apps/web`, admin `/admin` accessible (HTTP 200), connecté à PostgreSQL. ✅
+8. Migrations versionnées (`src/migrations/…_initial.ts`) ; collections Users (RBAC), Pages (localisées FR/EN), Redirects. ✅
+9. `/health` (200) + `/ready` (200, `db:ok`). ✅
+10. RBAC vérifié : bootstrap du 1er admin autorisé, création anonyme suivante refusée (403) ; test d'intégration `payload.int.test.ts` (3/3). ✅
 
 ## Tests
 - `apps/web` : Vitest (`src/__tests__/smoke.test.tsx`) — 4 tests.
