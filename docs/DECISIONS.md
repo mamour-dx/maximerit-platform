@@ -65,3 +65,18 @@ Journal des décisions structurantes. Format léger : Contexte / Décision / Sta
   3. `PENDING_GSC` est réinterprété comme **`PENDING_VALUE`** : « destination proposée, arbitrage KEEP/301/410 à confirmer avec tout signal de valeur disponible ». En l'absence de tout signal, la valeur par défaut 301 est considérée comme la décision finale sûre.
 - **Conséquences** : la carte de migration reste **exploitable et sûre** même sans GSC (0 × 410 = aucune destruction). Le risque résiduel se limite à conserver quelques URL de faible valeur — sans impact négatif SEO.
 - **Question ouverte au client** : disposez-vous d'un **Google Analytics** (même ancien) ou d'un accès à l'hébergement pour les **logs d'accès** ? Sinon on applique la règle conservatrice (d).
+
+---
+
+## ADR-0006 — Base de données locale & intégration Payload dans Next
+
+- **Statut** : ✅ Accepté (2026-09-20 ; réversible)
+- **Contexte** : Phase 3. Environnement de dev sans PostgreSQL local et démon Docker arrêté. Payload 3 est conçu pour être monté **dans** l'app Next (routes `app/(payload)`), pas en package séparé.
+- **Décision** :
+  1. **PostgreSQL via `docker-compose`** en dev (service `db`), + Meilisearch (`search`). Base unique Postgres sur tous les environnements (pas de SQLite, cohérence de schéma).
+  2. **Payload monté dans `apps/web`** (idiome Payload 3) plutôt qu'un package `packages/cms` séparé — affine la vue de `docs/ARCHITECTURE.md` (§2) : le CMS/ATS reste une frontière logique (collections + access control), mais physiquement co-localisé avec le site pour une seule app déployable.
+  3. Le domaine partagé reste isolé en `packages/domain` (source unique, consommée par l'app et les scripts).
+- **Conséquences** :
+  - Le socle **front** (Next 16, design system, domaine, CI) est livrable et vérifiable **sans** DB (build SSG vert).
+  - Le boot Payload + migrations exige le démon Docker actif → sous-phase **3b** (voir `specs/phase-3-socle/`).
+- **Alternatives écartées** : base gérée (Neon/Supabase) — possible plus tard sans changer le code (juste `DATABASE_URI`) ; SQLite dev — écarté pour cohérence de schéma.

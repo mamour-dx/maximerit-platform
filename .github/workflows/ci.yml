@@ -7,18 +7,35 @@ on:
 
 jobs:
   seo-checks:
-    name: Phase 0 — URL migration integrity
+    name: SEO — URL migration & routes integrity
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      # Reconstruit inventaire + carte et vérifie la non-régression des URLs.
       - run: npm run seo:inventory
       - run: npm run seo:map
       - run: npm run seo:routes
       - run: npm run test:seo
 
-  # NB : lint / type-check / build / tests applicatifs seront ajoutés en Phase 3
-  # une fois le monorepo Next.js + Payload en place.
+  web:
+    name: Web — typecheck, lint, test, build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm --filter web exec tsc --noEmit
+      - run: pnpm --filter web lint
+      - run: pnpm --filter web test --run
+      - run: pnpm --filter web build
+
+  # NB : boot Payload + migrations PostgreSQL (Phase 3b) ajoutés au job web
+  # avec un service Postgres une fois le CMS intégré.

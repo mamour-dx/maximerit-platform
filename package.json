@@ -5,12 +5,22 @@
   "type": "module",
   "description": "Plateforme Maximerit — refonte (Spec-Driven). Le monorepo applicatif est mis en place en Phase 3.",
   "engines": { "node": ">=20" },
+  "pnpm": {
+    "onlyBuiltDependencies": ["esbuild", "unrs-resolver", "@tailwindcss/oxide", "sharp"]
+  },
   "scripts": {
     "seo:inventory": "node scripts/build-url-inventory.mjs",
     "seo:map": "node scripts/build-migration-map.mjs",
     "seo:routes": "node scripts/build-routes.mjs",
     "seo:crawl": "node scripts/seo-crawl.mjs",
     "test:seo": "node --test scripts/tests/*.test.mjs",
-    "test": "npm run test:seo"
+    "web:dev": "pnpm --filter web dev",
+    "web:build": "pnpm --filter web build",
+    "web:lint": "pnpm --filter web lint",
+    "web:typecheck": "pnpm --filter web exec tsc --noEmit",
+    "build": "pnpm --filter web build",
+    "lint": "pnpm --filter web lint",
+    "typecheck": "pnpm --filter web exec tsc --noEmit",
+    "test": "npm run test:seo && pnpm --filter web test --run"
   }
 }

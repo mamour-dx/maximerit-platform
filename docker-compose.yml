@@ -1,0 +1,34 @@
+# Socle de données local (Phase 3). Démarrage : `docker compose up -d`.
+# PostgreSQL = base unique (ADR-0001). Meilisearch = recherche full-text du vivier (Phase 5).
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: maximerit
+      POSTGRES_PASSWORD: maximerit_dev
+      POSTGRES_DB: maximerit
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U maximerit"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  search:
+    image: getmeili/meilisearch:v1.10
+    restart: unless-stopped
+    environment:
+      MEILI_MASTER_KEY: masterKey_dev_change_me
+      MEILI_ENV: development
+    ports:
+      - "7700:7700"
+    volumes:
+      - search_data:/meili_data
+
+volumes:
+  db_data:
+  search_data:

@@ -1,0 +1,14 @@
+{
+  "name": "@maximerit/domain",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Modèle de domaine Maximerit (Phase 1) : vocabulaires contrôlés, taxonomie Mining, validation candidat, recherche multicritère. Source unique consommée par l'app et les scripts.",
+  "exports": {
+    ".": { "types": "./index.d.ts", "default": "./index.mjs" },
+    "./enums.json": "./enums.json",
+    "./taxonomy/mining.json": "./taxonomy/mining.json"
+  },
+  "types": "./index.d.ts",
+  "main": "./index.mjs"
+}

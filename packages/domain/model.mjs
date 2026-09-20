@@ -3,11 +3,11 @@
  * recherche multicritère. Stack-agnostique (aucune dépendance). En Phase 3, ces règles
  * alimentent les collections Payload (validation `hooks`) et l'index Meilisearch.
  */
-import { readFileSync } from 'node:fs';
-
-const load = (rel) => JSON.parse(readFileSync(new URL(rel, import.meta.url), 'utf8'));
-export const enums = load('./enums.json');
-export const mining = load('./taxonomy/mining.json');
+// Import JSON par attribut : compatible `node --test` (Node 22+) ET bundler Next (les données
+// sont ainsi tracées/incluses au build, pas lues via fs — évite les erreurs de fichier introuvable).
+import enums from './enums.json' with { type: 'json' };
+import mining from './taxonomy/mining.json' with { type: 'json' };
+export { enums, mining };
 
 // --- Index dérivés ---
 const bySlug = (arr) => new Set(arr.map((x) => (typeof x === 'string' ? x : x.slug)));

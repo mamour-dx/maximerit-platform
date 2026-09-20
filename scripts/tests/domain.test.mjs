@@ -6,7 +6,7 @@ import assert from 'node:assert/strict';
 import {
   enums, mining, validateCandidateProfile, matchesCandidate, buildCandidateQuery,
   isMobileTo, speaksAnyOf, SPECIALTY_TO_DISCIPLINE, MINING_DISCIPLINES, ROLES,
-} from '../../domain/model.mjs';
+} from '../../packages/domain/model.mjs';
 
 // ---------- Intégrité de la taxonomie Mining ----------
 test('taxonomie : 4 disciplines Mining', () => {

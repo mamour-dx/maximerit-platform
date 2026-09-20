@@ -1,0 +1,52 @@
+@import "tailwindcss";
+
+/* ---- Design tokens Maximerit (Phase 3) ----
+   Marque : rouge Maximerit + encre quasi-noire. Thème clair par défaut,
+   variables redéfinies en sombre. Exposées à Tailwind v4 via @theme. */
+:root {
+  --background: #ffffff;
+  --surface: #f7f6f4;
+  --foreground: #17161a;
+  --muted: #5f5e5a;
+  --border: #e5e3dd;
+  --brand: #e2001a;        /* rouge Maximerit */
+  --brand-ink: #1a1a1a;    /* noir logo */
+  --brand-contrast: #ffffff;
+  --accent: #0f6e56;       /* teal — verticale Mining */
+  --radius: 10px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0e0d10;
+    --surface: #18171b;
+    --foreground: #f4f2ee;
+    --muted: #a3a19b;
+    --border: #2a2930;
+    --brand: #ff3040;
+    --brand-ink: #f4f2ee;
+    --brand-contrast: #ffffff;
+    --accent: #5dcaa5;
+  }
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-brand: var(--brand);
+  --color-brand-ink: var(--brand-ink);
+  --color-accent: var(--accent);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), system-ui, sans-serif;
+}
+
+a { color: inherit; }

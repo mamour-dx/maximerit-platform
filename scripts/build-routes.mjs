@@ -15,8 +15,8 @@ import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { dirname } from 'node:path';
 
 const load = (rel) => JSON.parse(readFileSync(new URL(rel, import.meta.url), 'utf8'));
-const enums = load('../domain/enums.json');
-const mining = load('../domain/taxonomy/mining.json');
+const enums = load('../packages/domain/enums.json');
+const mining = load('../packages/domain/taxonomy/mining.json');
 
 const slugify = (s) => s.normalize('NFD').replace(/[̀-ͯ]/g, '')
   .toLowerCase().replace(/['’]/g, ' ').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
