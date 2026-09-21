@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/Button";
+import { pushEvent, trackOnce } from "@/lib/analytics";
 
 type Status = "idle" | "loading" | "success" | "error";
 
@@ -33,7 +34,13 @@ export function ApplyForm({ jobId, jobTitle }: { jobId: number | string; jobTitl
     setStatus("loading");
     try {
       const res = await fetch("/apply", { method: "POST", body });
-      setStatus(res.ok ? "success" : "error");
+      if (res.ok) {
+        pushEvent("upload_cv", { jobId });
+        pushEvent("submit_application", { jobId });
+        setStatus("success");
+      } else {
+        setStatus("error");
+      }
     } catch {
       setStatus("error");
     }
@@ -49,7 +56,7 @@ export function ApplyForm({ jobId, jobTitle }: { jobId: number | string; jobTitl
   }
 
   return (
-    <form onSubmit={onSubmit} className="grid gap-3" noValidate>
+    <form onSubmit={onSubmit} onFocus={() => trackOnce(`apply_start:${jobId}`, "start_application", { jobId })} className="grid gap-3" noValidate>
       <input type="text" name="company_url" tabIndex={-1} autoComplete="off" aria-hidden="true" className="hidden" />
       <p className="text-sm text-muted">Postuler à : <strong>{jobTitle}</strong></p>
       <div className="grid gap-3 sm:grid-cols-2">

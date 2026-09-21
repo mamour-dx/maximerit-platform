@@ -5,6 +5,7 @@ import { getPayload } from "payload";
 import config from "@payload-config";
 import { buildJobPostingJsonLd, isExpired, isLive, type JobLike } from "@/lib/job";
 import { ApplyForm } from "@/components/ApplyForm";
+import { TrackView } from "@/components/site/TrackView";
 
 export const dynamic = "force-dynamic";
 
@@ -40,6 +41,7 @@ export default async function JobDetail({ params }: Args) {
 
   return (
     <main className="mx-auto w-full max-w-3xl px-6 py-16">
+      <TrackView event="view_job" params={{ slug }} />
       {jsonLd && (
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       )}

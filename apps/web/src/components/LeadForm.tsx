@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/Button";
+import { pushEvent, trackOnce } from "@/lib/analytics";
 
 type Status = "idle" | "loading" | "success" | "error";
 
@@ -49,7 +50,12 @@ export function LeadForm({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
-      setStatus(res.ok ? "success" : "error");
+      if (res.ok) {
+        pushEvent("submit_lead_form", { source });
+        setStatus("success");
+      } else {
+        setStatus("error");
+      }
     } catch {
       setStatus("error");
     }
@@ -65,7 +71,7 @@ export function LeadForm({
   }
 
   return (
-    <form onSubmit={onSubmit} className="grid gap-3" noValidate>
+    <form onSubmit={onSubmit} onFocus={() => trackOnce(`lead_start:${source}`, "start_lead_form", { source })} className="grid gap-3" noValidate>
       {/* honeypot anti-spam : caché, doit rester vide */}
       <input
         type="text"

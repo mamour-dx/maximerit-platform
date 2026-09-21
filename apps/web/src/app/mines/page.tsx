@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { mining } from "@maximerit/domain";
 import { EmptyState } from "@/components/ui/states";
+import { TrackView } from "@/components/site/TrackView";
 
 export const metadata: Metadata = {
   title: "Recrutement minier en Afrique de l'Ouest",
@@ -15,6 +16,7 @@ export default function MinesHub() {
 
   return (
     <main className="mx-auto w-full max-w-5xl px-6 py-16">
+      <TrackView event="view_mining_page" params={{ path: "/mines/" }} />
       <nav aria-label="Fil d'Ariane" className="text-sm text-muted">
         <Link href="/">Accueil</Link> <span aria-hidden>›</span> <span>Mines &amp; Ressources</span>
       </nav>

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/Button";
+import { pushEvent } from "@/lib/analytics";
 import {
   costOfVacancy, costOfRecruitment, salaryBenchmark, miningTeamPlan, isToolError, type ToolSlug,
 } from "@/lib/tools";
@@ -22,7 +23,7 @@ export function ToolCalculator({ tool }: { tool: ToolSlug }) {
   const [result, setResult] = useState<React.ReactNode>(null);
   const [errors, setErrors] = useState<string[]>([]);
 
-  function show(node: React.ReactNode) { setErrors([]); setResult(node); }
+  function show(node: React.ReactNode) { setErrors([]); setResult(node); pushEvent("use_tool", { tool }); }
   function fail(errs: string[]) { setResult(null); setErrors(errs); }
 
   function onSubmit(e: React.FormEvent<HTMLFormElement>) {

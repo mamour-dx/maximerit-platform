@@ -4,6 +4,7 @@ import { Geist, Geist_Mono, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import { SiteHeader } from "@/components/site/Header";
 import { SiteFooter } from "@/components/site/Footer";
+import { AnalyticsProvider } from "@/components/site/AnalyticsProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,6 +31,9 @@ export const metadata: Metadata = {
   description:
     "Cabinet de recrutement, executive search et vivier de talents en Afrique de l'Ouest, spécialisé Mines & Ressources naturelles.",
   metadataBase: new URL("https://www.maximerit.com"),
+  ...(process.env.NEXT_PUBLIC_GSC_VERIFICATION
+    ? { verification: { google: process.env.NEXT_PUBLIC_GSC_VERIFICATION } }
+    : {}),
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
@@ -42,6 +46,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <SiteHeader />
         <div className="flex-1">{children}</div>
         <SiteFooter />
+        <AnalyticsProvider />
       </body>
     </html>
   );
