@@ -70,6 +70,8 @@ export interface Config {
     users: User;
     pages: Page;
     redirects: Redirect;
+    'landing-pages': LandingPage;
+    leads: Lead;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -80,6 +82,8 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     pages: PagesSelect<false> | PagesSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
+    'landing-pages': LandingPagesSelect<false> | LandingPagesSelect<true>;
+    leads: LeadsSelect<false> | LeadsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -174,6 +178,64 @@ export interface Redirect {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "landing-pages".
+ */
+export interface LandingPage {
+  id: number;
+  title: string;
+  slug: string;
+  promise?: string | null;
+  problem?: string | null;
+  profiles?:
+    | {
+        label?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  method?: string | null;
+  proof?: string | null;
+  ctaLabel?: string | null;
+  indexable?: boolean | null;
+  seoTitle?: string | null;
+  seoDescription?: string | null;
+  status?: ('draft' | 'published') | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "leads".
+ */
+export interface Lead {
+  id: number;
+  company?: string | null;
+  contactName: string;
+  jobFunction?: string | null;
+  email: string;
+  phone?: string | null;
+  country?: string | null;
+  sector?: string | null;
+  profileSought?: string | null;
+  headcount?: number | null;
+  level?: string | null;
+  location?: string | null;
+  desiredDate?: string | null;
+  comment?: string | null;
+  source?: string | null;
+  utm?: {
+    source?: string | null;
+    medium?: string | null;
+    campaign?: string | null;
+    term?: string | null;
+    content?: string | null;
+  };
+  landingPage?: (number | null) | LandingPage;
+  status?: ('nouveau' | 'qualifie' | 'opportunite' | 'perdu') | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -207,6 +269,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'redirects';
         value: number | Redirect;
+      } | null)
+    | ({
+        relationTo: 'landing-pages';
+        value: number | LandingPage;
+      } | null)
+    | ({
+        relationTo: 'leads';
+        value: number | Lead;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -295,6 +365,64 @@ export interface RedirectsSelect<T extends boolean = true> {
   from?: T;
   to?: T;
   type?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "landing-pages_select".
+ */
+export interface LandingPagesSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  promise?: T;
+  problem?: T;
+  profiles?:
+    | T
+    | {
+        label?: T;
+        id?: T;
+      };
+  method?: T;
+  proof?: T;
+  ctaLabel?: T;
+  indexable?: T;
+  seoTitle?: T;
+  seoDescription?: T;
+  status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "leads_select".
+ */
+export interface LeadsSelect<T extends boolean = true> {
+  company?: T;
+  contactName?: T;
+  jobFunction?: T;
+  email?: T;
+  phone?: T;
+  country?: T;
+  sector?: T;
+  profileSought?: T;
+  headcount?: T;
+  level?: T;
+  location?: T;
+  desiredDate?: T;
+  comment?: T;
+  source?: T;
+  utm?:
+    | T
+    | {
+        source?: T;
+        medium?: T;
+        campaign?: T;
+        term?: T;
+        content?: T;
+      };
+  landingPage?: T;
+  status?: T;
   updatedAt?: T;
   createdAt?: T;
 }

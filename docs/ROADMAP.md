@@ -45,5 +45,5 @@ ACTIONS RESTANTES : …
 - ✅ **Phase 1** — GATE 1 GO (domain model, 21 tests verts).
 - ✅ **Phase 2** — GATE 2 GO (164 routes, 9 tests SEO, bouclage migration).
 - ✅ **Phase 3** — GATE 3 GO (**3a** socle Next.js 16 + design system + `@maximerit/domain` ; **3b** Payload CMS + PostgreSQL : admin, migrations, collections Users/Pages/Redirects, RBAC, /health+/ready, test d'intégration 3/3).
-- 🟡 **Phase 4** (Site public + CMS) : prochaine.
+- 🟡 **Phase 4** — **4a GO** (acquisition Landing Page → Lead : collections `LandingPages`/`Leads`, `/lp/[slug]`, `/submit-lead` avec validation + anti-spam + UTM, RBAC ; unit 10/10, intégration 7/7). **4b (Pages CMS + redirections + preview) à suivre.**
 - ⬜ Phases 5–12 : à venir, gate par gate.

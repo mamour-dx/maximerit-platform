@@ -18,6 +18,8 @@ const isAdminRole = (user: unknown): boolean =>
 
 const isAdmin: Access = ({ req: { user } }) => isAdminRole(user);
 const isAuthenticated: Access = ({ req: { user } }) => !!user;
+const isMarketingOrAdmin: Access = ({ req: { user } }) =>
+  isAdminRole(user) || (user as { role?: Role })?.role === "MARKETING";
 
 // Création d'utilisateur : bootstrap du tout premier compte autorisé, puis réservé aux admins.
 const canCreateUser: Access = async ({ req }) => {
@@ -93,6 +95,79 @@ export default buildConfig({
             { label: "301 (permanent)", value: "301" },
             { label: "410 (gone)", value: "410" },
             { label: "noindex", value: "noindex" },
+          ],
+        },
+      ],
+    },
+    {
+      slug: "landing-pages",
+      admin: { useAsTitle: "title", group: "Acquisition" },
+      // Lecture publique (rendu du site) ; gestion par marketing/content/admin.
+      access: { read: () => true, create: isMarketingOrAdmin, update: isMarketingOrAdmin, delete: isAdmin },
+      fields: [
+        { name: "title", type: "text", required: true, localized: true },
+        { name: "slug", type: "text", required: true, unique: true, index: true },
+        { name: "promise", type: "textarea", localized: true },
+        { name: "problem", type: "textarea", localized: true },
+        { name: "profiles", type: "array", fields: [{ name: "label", type: "text" }] },
+        { name: "method", type: "textarea", localized: true },
+        { name: "proof", type: "textarea", localized: true },
+        { name: "ctaLabel", type: "text", localized: true, defaultValue: "Confier un recrutement" },
+        { name: "indexable", type: "checkbox", defaultValue: true },
+        { name: "seoTitle", type: "text", localized: true },
+        { name: "seoDescription", type: "textarea", localized: true },
+        {
+          name: "status",
+          type: "select",
+          defaultValue: "draft",
+          options: [
+            { label: "Brouillon", value: "draft" },
+            { label: "Publiée", value: "published" },
+          ],
+        },
+      ],
+    },
+    {
+      slug: "leads",
+      admin: { useAsTitle: "email", group: "CRM" },
+      // Création publique passe par /submit-lead (anti-spam) → REST create réservé à l'interne.
+      access: { create: isAuthenticated, read: isMarketingOrAdmin, update: isMarketingOrAdmin, delete: isAdmin },
+      fields: [
+        { name: "company", type: "text" },
+        { name: "contactName", type: "text", required: true },
+        { name: "jobFunction", type: "text" },
+        { name: "email", type: "email", required: true, index: true },
+        { name: "phone", type: "text" },
+        { name: "country", type: "text" },
+        { name: "sector", type: "text" },
+        { name: "profileSought", type: "text" },
+        { name: "headcount", type: "number" },
+        { name: "level", type: "text" },
+        { name: "location", type: "text" },
+        { name: "desiredDate", type: "text" },
+        { name: "comment", type: "textarea" },
+        { name: "source", type: "text", defaultValue: "site" },
+        {
+          name: "utm",
+          type: "group",
+          fields: [
+            { name: "source", type: "text" },
+            { name: "medium", type: "text" },
+            { name: "campaign", type: "text" },
+            { name: "term", type: "text" },
+            { name: "content", type: "text" },
+          ],
+        },
+        { name: "landingPage", type: "relationship", relationTo: "landing-pages" },
+        {
+          name: "status",
+          type: "select",
+          defaultValue: "nouveau",
+          options: [
+            { label: "Nouveau", value: "nouveau" },
+            { label: "Qualifié", value: "qualifie" },
+            { label: "Opportunité", value: "opportunite" },
+            { label: "Perdu", value: "perdu" },
           ],
         },
       ],
