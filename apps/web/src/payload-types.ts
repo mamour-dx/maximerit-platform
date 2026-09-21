@@ -76,6 +76,8 @@ export interface Config {
     cvs: Cv;
     candidates: Candidate;
     'talent-pools': TalentPool;
+    jobs: Job;
+    applications: Application;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -92,6 +94,8 @@ export interface Config {
     cvs: CvsSelect<false> | CvsSelect<true>;
     candidates: CandidatesSelect<false> | CandidatesSelect<true>;
     'talent-pools': TalentPoolsSelect<false> | TalentPoolsSelect<true>;
+    jobs: JobsSelect<false> | JobsSelect<true>;
+    applications: ApplicationsSelect<false> | ApplicationsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -381,6 +385,50 @@ export interface TalentPool {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "jobs".
+ */
+export interface Job {
+  id: number;
+  title: string;
+  slug: string;
+  sector?: string | null;
+  discipline?: string | null;
+  specialty?: string | null;
+  country?: string | null;
+  location?: string | null;
+  mission?: string | null;
+  responsibilities?: string | null;
+  requirements?: string | null;
+  experienceMin?: number | null;
+  contractType?: ('cdi' | 'cdd' | 'mission-interim' | 'consultant-freelance' | 'fifo-roster' | 'stage') | null;
+  status?: ('brouillon' | 'publiee' | 'expiree' | 'pourvue' | 'archivee') | null;
+  publishedAt?: string | null;
+  expiresAt?: string | null;
+  similarJobs?: (number | Job)[] | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "applications".
+ */
+export interface Application {
+  id: number;
+  job?: (number | null) | Job;
+  candidate: number | Candidate;
+  cv?: (number | null) | Cv;
+  status?: ('recue' | 'en-revue' | 'retenue' | 'rejetee') | null;
+  source?: string | null;
+  utm?: {
+    source?: string | null;
+    medium?: string | null;
+    campaign?: string | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -438,6 +486,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'talent-pools';
         value: number | TalentPool;
+      } | null)
+    | ({
+        relationTo: 'jobs';
+        value: number | Job;
+      } | null)
+    | ({
+        relationTo: 'applications';
+        value: number | Application;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -686,6 +742,50 @@ export interface TalentPoolsSelect<T extends boolean = true> {
   query?: T;
   members?: T;
   isShortlist?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "jobs_select".
+ */
+export interface JobsSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  sector?: T;
+  discipline?: T;
+  specialty?: T;
+  country?: T;
+  location?: T;
+  mission?: T;
+  responsibilities?: T;
+  requirements?: T;
+  experienceMin?: T;
+  contractType?: T;
+  status?: T;
+  publishedAt?: T;
+  expiresAt?: T;
+  similarJobs?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "applications_select".
+ */
+export interface ApplicationsSelect<T extends boolean = true> {
+  job?: T;
+  candidate?: T;
+  cv?: T;
+  status?: T;
+  source?: T;
+  utm?:
+    | T
+    | {
+        source?: T;
+        medium?: T;
+        campaign?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }

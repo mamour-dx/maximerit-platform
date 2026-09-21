@@ -4,6 +4,7 @@ import * as migration_20260921_124701_pages_content from './20260921_124701_page
 import * as migration_20260921_125936_ats from './20260921_125936_ats';
 import * as migration_20260921_132909_parse_proposal from './20260921_132909_parse_proposal';
 import * as migration_20260921_135604_talent_pools from './20260921_135604_talent_pools';
+import * as migration_20260921_180118_jobs_applications from './20260921_180118_jobs_applications';
 
 export const migrations = [
   {
@@ -34,6 +35,11 @@ export const migrations = [
   {
     up: migration_20260921_135604_talent_pools.up,
     down: migration_20260921_135604_talent_pools.down,
-    name: '20260921_135604_talent_pools'
+    name: '20260921_135604_talent_pools',
+  },
+  {
+    up: migration_20260921_180118_jobs_applications.up,
+    down: migration_20260921_180118_jobs_applications.down,
+    name: '20260921_180118_jobs_applications'
   },
 ];

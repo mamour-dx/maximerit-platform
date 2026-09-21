@@ -47,5 +47,6 @@ ACTIONS RESTANTES : …
 - ✅ **Phase 3** — GATE 3 GO (**3a** socle Next.js 16 + design system + `@maximerit/domain` ; **3b** Payload CMS + PostgreSQL : admin, migrations, collections Users/Pages/Redirects, RBAC, /health+/ready, test d'intégration 3/3).
 - ✅ **Phase 4** — GATE 4 GO (**4a** LP→Lead : CMS `LandingPages`/`Leads`, `/lp/[slug]`, `/submit-lead` validation+anti-spam+UTM, RBAC ; **4b** Pages CMS `/[...slug]` + preview brouillon + **moteur de redirections** 301/410 depuis la carte Phase 0 + `trailingSlash`). Unit 15/15, intégration 10/10, runtime vérifié.
 - ✅ **Phase 5** — GATE 5 GO (**5a** intake ATS sécurisé ; **5b** parsing CV interne → proposition éditable ; **5c** recherche **Meilisearch** multicritère/plein texte + `TalentPools` + `/search-candidates`). Unit 31/31, intégration 23/23 (Postgres + Meili).
-- 🟡 **Phase 6** (Offres & candidatures) : prochaine.
-- ⬜ Phases 7–12 : à venir, gate par gate.
+- ✅ **Phase 6** — GATE 6 GO (Offres : `/jobs/<slug>/` + **JobPosting** JSON-LD + expiration auto + sitemap Jobs ; candidatures `Applications` reliées à l'ATS via `/apply`. Unit 36/36, intégration 26/26, smoke runtime).
+- 🟡 **Phase 7** (Contenus, outils & acquisition) : prochaine.
+- ⬜ Phases 8–12 : à venir, gate par gate.

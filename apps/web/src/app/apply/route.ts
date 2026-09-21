@@ -79,7 +79,20 @@ export async function POST(req: Request): Promise<Response> {
       overrideAccess: true,
       data: data as unknown as Candidate,
     });
-    return NextResponse.json({ ok: true, id: candidate.id, cvId: cv.id }, { status: 201 });
+
+    // Candidature à une offre précise (Phase 6) : crée une Application reliée à l'ATS.
+    const jobId = form.get("jobId");
+    let applicationId: number | string | undefined;
+    if (jobId != null && String(jobId).trim() !== "") {
+      const application = await payload.create({
+        collection: "applications",
+        overrideAccess: true,
+        data: { job: Number(jobId), candidate: candidate.id, cv: cv.id, status: "recue", source: "site" },
+      });
+      applicationId = application.id;
+    }
+
+    return NextResponse.json({ ok: true, id: candidate.id, cvId: cv.id, applicationId }, { status: 201 });
   } catch (err) {
     console.error("[apply] échec création:", err instanceof Error ? err.message : err);
     return NextResponse.json({ error: "server_error" }, { status: 500 });
