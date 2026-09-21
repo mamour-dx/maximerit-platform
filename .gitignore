@@ -12,5 +12,6 @@ coverage/
 playwright-report/
 test-results/
 
-# Uploads CV (privés, jamais commités)
-apps/web/cv-uploads/
+# Uploads CV : contenu privé jamais commité, mais on garde le dossier (Payload écrit dedans).
+apps/web/cv-uploads/*
+!apps/web/cv-uploads/.gitkeep
