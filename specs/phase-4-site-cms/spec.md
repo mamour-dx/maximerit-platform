@@ -29,7 +29,19 @@ landing pages, redirections, formulaires, CTA, metadata.
 - Unit : `src/__tests__/lead.test.ts` (6).
 - Intégration : `src/__tests__/lp-lead.int.test.ts` (4) + `payload.int.test.ts` (3).
 
-## Réserves (→ 4b)
-- Rendu des Pages CMS + preview brouillon + moteur de redirections serveur : Phase 4b.
-- Rate limiting en mémoire (best-effort) → store partagé (Redis) en production.
-- Tracking GA4/GTM des événements `submit_lead` : Phase 8 (le point de capture serveur est prêt).
+## Critères d'acceptation — 4b
+7. Champs `content` + SEO ajoutés à `Pages` (localisés) ; migration `pages_content`. ✅
+8. Route catch-all `/[...slug]` rend une Page **publiée** (404 sinon) ; metadata SEO + canonical. ✅
+9. **Preview** brouillon : `/preview` (secret) active le draft mode → brouillon visible ; `/exit-preview` le quitte ; mauvais secret → 401. ✅
+10. **Moteur de redirections serveur** (middleware) : 301/410 depuis la table générée de la carte de migration (Phase 0), sans chaîne, slash final toléré. ✅
+11. `trailingSlash: true` (URLs canoniques alignées registre Phase 2). ✅
+
+## Vérifications runtime (4b)
+- `/recrutement/` → 301 `/entreprises/recrutement/` ; `/language/en/recruitment/` → 301 `/en/entreprises/recrutement/`.
+- `/test-published/` → 200 ; `/test-draft/` → 404 ; preview (secret) → 200 ; mauvais secret → 401.
+
+## Réserves
+- Rate limiting en mémoire (best-effort) → store partagé (Redis) en production (Phase 9/12).
+- Redirections gérées par le CMS (collection `Redirects`) : sync vers la table runtime via hook Payload — Phase 6/11 (la baseline de migration Phase 0 est déjà appliquée).
+- Tracking GA4/GTM des événements `submit_lead` : Phase 8 (point de capture serveur prêt).
+- Rendu `content` en texte (paragraphes) ; rich text lexical → amélioration ultérieure.

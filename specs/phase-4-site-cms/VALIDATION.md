@@ -27,8 +27,18 @@ Security/RBAC PASS · SEO PASS (canonical/noindex/metadata) · Build PASS · Lin
 DÉCISION : GO
 
 PHASE : 4b — Pages CMS + redirections + preview
-DÉCISION : À FAIRE (prochaine sous-phase)
+Specification PASS · Implementation PASS · Unit PASS (redirects 5) · Integration PASS (pages 3)
+Runtime PASS (301 FR/EN · page publiée 200 · brouillon 404 · preview 200 · secret KO 401)
+Build PASS (middleware actif) · Lint PASS · Type-check PASS · Doc PASS
+DÉCISION : GO
 ```
+
+## Vérifications runtime 4b (serveur de production local)
+- `/recrutement/` → 301 → `/entreprises/recrutement/` · `/language/en/recruitment/` → 301 → `/en/entreprises/recrutement/`
+- `/test-published/` → 200 · `/test-draft/` → 404 · preview (bon secret) → 200 · mauvais secret → 401 · `/lp/…` → 200
+
+## Bilan tests Phase 4 (4a + 4b)
+- Unit (Vitest) : 15/15 · Intégration (PostgreSQL) : 10/10 · Node SEO/domaine : 38/39 (1 skip).
 
 ## Sécurité
 Anti-spam honeypot + rate limiting ; validation serveur systématique ; whitelist des champs (jamais

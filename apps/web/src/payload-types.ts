@@ -160,6 +160,9 @@ export interface Page {
   id: number;
   title: string;
   slug: string;
+  content?: string | null;
+  seoTitle?: string | null;
+  seoDescription?: string | null;
   status?: ('draft' | 'published') | null;
   updatedAt: string;
   createdAt: string;
@@ -353,6 +356,9 @@ export interface UsersSelect<T extends boolean = true> {
 export interface PagesSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
+  content?: T;
+  seoTitle?: T;
+  seoDescription?: T;
   status?: T;
   updatedAt?: T;
   createdAt?: T;

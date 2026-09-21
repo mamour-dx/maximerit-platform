@@ -1,0 +1,506 @@
+{
+  "/creation-de-services-et-developpement-dactivites/": {
+    "to": "/entreprises/",
+    "status": 301
+  },
+  "/formations/": {
+    "to": "/entreprises/formation/",
+    "status": 301
+  },
+  "/management-des-projet/": {
+    "to": "/entreprises/",
+    "status": 301
+  },
+  "/esg/": {
+    "to": "/entreprises/qhse-esg/",
+    "status": 301
+  },
+  "/language/en/our-strengths/": {
+    "to": "/en/qui-nous-sommes/",
+    "status": 301
+  },
+  "/language/en/who-are-we/": {
+    "to": "/en/qui-nous-sommes/",
+    "status": 301
+  },
+  "/language/en/sustainable-development/": {
+    "to": "/en/entreprises/qhse-esg/",
+    "status": 301
+  },
+  "/accueil-et-integration/": {
+    "to": "/entreprises/externalisation-rh-paie/",
+    "status": 301
+  },
+  "/developpement-durable/": {
+    "to": "/entreprises/qhse-esg/",
+    "status": 301
+  },
+  "/nos-atouts/": {
+    "to": "/qui-nous-sommes/",
+    "status": 301
+  },
+  "/language/en/environmental-and-social-impact-assessment/": {
+    "to": "/en/entreprises/qhse-esg/",
+    "status": 301
+  },
+  "/etude-dimpact-environnemental-et-social/": {
+    "to": "/entreprises/qhse-esg/",
+    "status": 301
+  },
+  "/language/en/environmental-social-and-governance/": {
+    "to": "/en/entreprises/qhse-esg/",
+    "status": 301
+  },
+  "/language/en/human-resources-management/": {
+    "to": "/en/entreprises/externalisation-rh-paie/",
+    "status": 301
+  },
+  "/gestion-des-ressources-humaines/": {
+    "to": "/entreprises/externalisation-rh-paie/",
+    "status": 301
+  },
+  "/project-management-et-it/": {
+    "to": "/entreprises/",
+    "status": 301
+  },
+  "/finance-gestion/": {
+    "to": "/entreprises/finance-performance/",
+    "status": 301
+  },
+  "/management-hygiene-qualite-et-securite/": {
+    "to": "/entreprises/qhse-esg/",
+    "status": 301
+  },
+  "/language/en/": {
+    "to": "/en/",
+    "status": 301
+  },
+  "/language/en/request-quote/": {
+    "to": "/en/contact/",
+    "status": 301
+  },
+  "/demande-de-devis/": {
+    "to": "/contact/",
+    "status": 301
+  },
+  "/operations-supervisor/": {
+    "to": "/candidats/offres-demploi/",
+    "status": 301
+  },
+  "/base-manager/": {
+    "to": "/candidats/offres-demploi/",
+    "status": 301
+  },
+  "/depot-de-candidature-2/": {
+    "to": "/candidats/deposer-mon-cv/",
+    "status": 301
+  },
+  "/depot-de-candidature-spontanee/": {
+    "to": "/candidats/rejoindre-le-vivier/",
+    "status": 301
+  },
+  "/depot-cv/": {
+    "to": "/candidats/deposer-mon-cv/",
+    "status": 301
+  },
+  "/cost-accountant/": {
+    "to": "/candidats/offres-demploi/",
+    "status": 301
+  },
+  "/offre-demplois/": {
+    "to": "/candidats/offres-demploi/",
+    "status": 301
+  },
+  "/contactez-nous/": {
+    "to": "/contact/",
+    "status": 301
+  },
+  "/language/en/job-offer/": {
+    "to": "/en/candidats/offres-demploi/",
+    "status": 301
+  },
+  "/offres-demploi/": {
+    "to": "/candidats/offres-demploi/",
+    "status": 301
+  },
+  "/un-agent-de-liaison-communautaire/": {
+    "to": "/candidats/offres-demploi/",
+    "status": 301
+  },
+  "/language/en/maintenance-of-computer-systems-and-networks/": {
+    "to": "/en/entreprises/",
+    "status": 301
+  },
+  "/language/en/community-liaison-officer/": {
+    "to": "/en/entreprises/",
+    "status": 301
+  },
+  "/tableau-de-bord-des-offres-demploi/": {
+    "to": "/entreprises/recrutement/",
+    "status": 301
+  },
+  "/publier-une-offre-demploi/": {
+    "to": "/entreprises/recrutement/",
+    "status": 301
+  },
+  "/language/en/reception-and-integration/": {
+    "to": "/en/entreprises/externalisation-rh-paie/",
+    "status": 301
+  },
+  "/formation-en-rh/": {
+    "to": "/entreprises/externalisation-rh-paie/",
+    "status": 301
+  },
+  "/language/en/hr-training/": {
+    "to": "/en/entreprises/externalisation-rh-paie/",
+    "status": 301
+  },
+  "/language/en/qhse-training/": {
+    "to": "/en/entreprises/qhse-esg/",
+    "status": 301
+  },
+  "/hotellerie-et-tourisme/": {
+    "to": "/secteurs/services/",
+    "status": 301
+  },
+  "/language/en/training/": {
+    "to": "/en/entreprises/formation/",
+    "status": 301
+  },
+  "/language/en/hospitality-and-tourism/": {
+    "to": "/en/secteurs/services/",
+    "status": 301
+  },
+  "/formation-en-finance/": {
+    "to": "/entreprises/finance-performance/",
+    "status": 301
+  },
+  "/language/en/project-management/": {
+    "to": "/en/entreprises/",
+    "status": 301
+  },
+  "/gestion-des-projets/": {
+    "to": "/entreprises/",
+    "status": 301
+  },
+  "/language/en/finance-training/": {
+    "to": "/en/entreprises/finance-performance/",
+    "status": 301
+  },
+  "/language/en/projet-managuement/": {
+    "to": "/en/entreprises/",
+    "status": 301
+  },
+  "/language/en/contact-us/": {
+    "to": "/en/contact/",
+    "status": 301
+  },
+  "/language/en/drafting-of-procedures-manual/": {
+    "to": "/en/entreprises/qhse-esg/",
+    "status": 301
+  },
+  "/maintenance-des-systemes-informatiques-et-reseaux/": {
+    "to": "/entreprises/",
+    "status": 301
+  },
+  "/conseil-en-qhse/": {
+    "to": "/entreprises/qhse-esg/",
+    "status": 301
+  },
+  "/conseils/conseils-en-rh/": {
+    "to": "/entreprises/",
+    "status": 301
+  },
+  "/conseil-en-finance/": {
+    "to": "/entreprises/finance-performance/",
+    "status": 301
+  },
+  "/installation-video-surveillance/": {
+    "to": "/entreprises/",
+    "status": 301
+  },
+  "/facilities-management/": {
+    "to": "/secteurs/services/",
+    "status": 301
+  },
+  "/audit-qhse/": {
+    "to": "/entreprises/qhse-esg/",
+    "status": 301
+  },
+  "/mise-a-disposition-equipe-qhse/": {
+    "to": "/entreprises/qhse-esg/",
+    "status": 301
+  },
+  "/mise-en-place-dune-politique-qhse/": {
+    "to": "/entreprises/qhse-esg/",
+    "status": 301
+  },
+  "/redaction-de-code-de-conduite/": {
+    "to": "/entreprises/qhse-esg/",
+    "status": 301
+  },
+  "/evaluation-du-personnel/": {
+    "to": "/entreprises/externalisation-rh-paie/",
+    "status": 301
+  },
+  "/enquetes-de-salaires/": {
+    "to": "/entreprises/externalisation-rh-paie/",
+    "status": 301
+  },
+  "/coaching/": {
+    "to": "/entreprises/externalisation-rh-paie/",
+    "status": 301
+  },
+  "/suivi-rh/": {
+    "to": "/entreprises/externalisation-rh-paie/",
+    "status": 301
+  },
+  "/interim/": {
+    "to": "/entreprises/interim/",
+    "status": 301
+  },
+  "/recrutement/": {
+    "to": "/entreprises/recrutement/",
+    "status": 301
+  },
+  "/gestion-paie-et-des-declarations/": {
+    "to": "/entreprises/externalisation-rh-paie/",
+    "status": 301
+  },
+  "/mise-en-place-doutils-delaboration-et-de-suivi-de-budget/": {
+    "to": "/entreprises/finance-performance/",
+    "status": 301
+  },
+  "/assistance-a-la-mise-en-place-de-systemes-de-reporting/": {
+    "to": "/entreprises/finance-performance/",
+    "status": 301
+  },
+  "/gestion-et-inventaire-des-immobilisations/": {
+    "to": "/entreprises/finance-performance/",
+    "status": 301
+  },
+  "/organisation-et-assistance-aux-services-comptables-et-financiers/": {
+    "to": "/entreprises/finance-performance/",
+    "status": 301
+  },
+  "/formation-en-qhse/": {
+    "to": "/entreprises/qhse-esg/",
+    "status": 301
+  },
+  "/language/en/temping/": {
+    "to": "/en/entreprises/interim/",
+    "status": 301
+  },
+  "/implementation-et-suivi-de-systeme-de-gestion-informatise/": {
+    "to": "/entreprises/",
+    "status": 301
+  },
+  "/language/en/financing/": {
+    "to": "/en/entreprises/finance-performance/",
+    "status": 301
+  },
+  "/financement/": {
+    "to": "/entreprises/finance-performance/",
+    "status": 301
+  },
+  "/language/en/definition-and-monitoring-of-performance-indicators/": {
+    "to": "/en/entreprises/finance-performance/",
+    "status": 301
+  },
+  "/language/en/development-of-business-plan/": {
+    "to": "/en/entreprises/finance-performance/",
+    "status": 301
+  },
+  "/language/en/organizational-audit/": {
+    "to": "/en/entreprises/finance-performance/",
+    "status": 301
+  },
+  "/language/en/creation-of-services-and-development-of-activities/": {
+    "to": "/en/entreprises/",
+    "status": 301
+  },
+  "/language/en/financial-consulting/": {
+    "to": "/en/entreprises/",
+    "status": 301
+  },
+  "/language/en/submission-of-application/": {
+    "to": "/en/candidats/deposer-mon-cv/",
+    "status": 301
+  },
+  "/elaboration-de-business-plan/": {
+    "to": "/entreprises/finance-performance/",
+    "status": 301
+  },
+  "/definition-et-suivi-des-indicateurs-de-performance/": {
+    "to": "/entreprises/finance-performance/",
+    "status": 301
+  },
+  "/redaction-de-manuel-des-procedures/": {
+    "to": "/entreprises/qhse-esg/",
+    "status": 301
+  },
+  "/audit-organisationnel/": {
+    "to": "/entreprises/finance-performance/",
+    "status": 301
+  },
+  "/language/en/implementation-and-monitoring-of-computerised-management-systems/": {
+    "to": "/en/entreprises/",
+    "status": 301
+  },
+  "/conseil-et-formation/": {
+    "to": "/entreprises/formation/",
+    "status": 301
+  },
+  "/language/en/video-surveillance-installation/": {
+    "to": "/en/entreprises/",
+    "status": 301
+  },
+  "/support-it/": {
+    "to": "/entreprises/",
+    "status": 301
+  },
+  "/language/en/salary-surveys/": {
+    "to": "/en/entreprises/externalisation-rh-paie/",
+    "status": 301
+  },
+  "/language/en/staff-evaluation/": {
+    "to": "/en/entreprises/externalisation-rh-paie/",
+    "status": 301
+  },
+  "/language/en/recruitment/": {
+    "to": "/en/entreprises/recrutement/",
+    "status": 301
+  },
+  "/services-generaux/": {
+    "to": "/secteurs/services/",
+    "status": 301
+  },
+  "/language/en/qhse-consulting/": {
+    "to": "/en/entreprises/qhse-esg/",
+    "status": 301
+  },
+  "/language/en/payroll-and-returns-management/": {
+    "to": "/en/entreprises/externalisation-rh-paie/",
+    "status": 301
+  },
+  "/language/en/provision-of-qhse-team/": {
+    "to": "/en/entreprises/qhse-esg/",
+    "status": 301
+  },
+  "/language/en/organisation-and-assistance-to-the-accounting-and-financial-services/": {
+    "to": "/en/entreprises/finance-performance/",
+    "status": 301
+  },
+  "/language/en/organisation-of-company-events/": {
+    "to": "/en/secteurs/services/",
+    "status": 301
+  },
+  "/language/en/qhse-audit/": {
+    "to": "/en/entreprises/qhse-esg/",
+    "status": 301
+  },
+  "/language/en/qhes-management/": {
+    "to": "/en/entreprises/qhse-esg/",
+    "status": 301
+  },
+  "/management-qhes/": {
+    "to": "/entreprises/qhse-esg/",
+    "status": 301
+  },
+  "/language/en/it-support/": {
+    "to": "/en/entreprises/",
+    "status": 301
+  },
+  "/language/en/implementation-of-budget-preparation-and-monitoring-tools/": {
+    "to": "/en/entreprises/finance-performance/",
+    "status": 301
+  },
+  "/language/en/implementation-of-a-qhse-policy/": {
+    "to": "/en/entreprises/qhse-esg/",
+    "status": 301
+  },
+  "/language/en/hr-monitoring/": {
+    "to": "/en/entreprises/externalisation-rh-paie/",
+    "status": 301
+  },
+  "/language/en/hr-consulting/": {
+    "to": "/en/entreprises/externalisation-rh-paie/",
+    "status": 301
+  },
+  "/language/en/general-services/": {
+    "to": "/en/secteurs/services/",
+    "status": 301
+  },
+  "/language/en/g-hr/": {
+    "to": "/en/entreprises/externalisation-rh-paie/",
+    "status": 301
+  },
+  "/g-rh/": {
+    "to": "/entreprises/externalisation-rh-paie/",
+    "status": 301
+  },
+  "/language/en/finance/": {
+    "to": "/en/entreprises/finance-performance/",
+    "status": 301
+  },
+  "/language/en/facility-management/": {
+    "to": "/en/secteurs/services/",
+    "status": 301
+  },
+  "/finances/": {
+    "to": "/entreprises/finance-performance/",
+    "status": 301
+  },
+  "/language/en/drafting-of-a-code-of-conduct/": {
+    "to": "/en/entreprises/qhse-esg/",
+    "status": 301
+  },
+  "/language/en/corporate-services/": {
+    "to": "/en/secteurs/services/",
+    "status": 301
+  },
+  "/language/en/consulting-and-finance-2/": {
+    "to": "/en/entreprises/finance-performance/",
+    "status": 301
+  },
+  "/conception-et-realisation-de-site-web/": {
+    "to": "/entreprises/",
+    "status": 301
+  },
+  "/language/en/coaching-2/": {
+    "to": "/en/entreprises/externalisation-rh-paie/",
+    "status": 301
+  },
+  "/language/en/assistance-in-setting-up-reporting-systems/": {
+    "to": "/en/entreprises/finance-performance/",
+    "status": 301
+  },
+  "/language/en/asset-management-and-inventory/": {
+    "to": "/en/entreprises/finance-performance/",
+    "status": 301
+  },
+  "/language/en/website-design-and-development/": {
+    "to": "/en/entreprises/",
+    "status": 301
+  },
+  "/contact-2/": {
+    "to": "/contact/",
+    "status": 301
+  },
+  "/about/": {
+    "to": "/qui-nous-sommes/",
+    "status": 301
+  },
+  "/home/": {
+    "to": "/",
+    "status": 301
+  },
+  "/language/en/consulting/": {
+    "to": "/en/entreprises/",
+    "status": 301
+  },
+  "/conseils/": {
+    "to": "/entreprises/",
+    "status": 301
+  }
+}

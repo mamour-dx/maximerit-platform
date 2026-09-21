@@ -17,6 +17,7 @@ jobs:
       - run: npm run seo:inventory
       - run: npm run seo:map
       - run: npm run seo:routes
+      - run: npm run seo:redirects
       - run: npm run test:seo
 
   web:

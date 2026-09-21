@@ -4,6 +4,8 @@ import { withPayload } from "@payloadcms/next/withPayload";
 const nextConfig: NextConfig = {
   // Package de domaine partagé (monorepo) transpilé par Next.
   transpilePackages: ["@maximerit/domain"],
+  // URLs canoniques avec slash final (aligné registre de routes Phase 2 + carte de migration).
+  trailingSlash: true,
 };
 
 export default withPayload(nextConfig);

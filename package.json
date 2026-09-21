@@ -12,6 +12,7 @@
     "seo:inventory": "node scripts/build-url-inventory.mjs",
     "seo:map": "node scripts/build-migration-map.mjs",
     "seo:routes": "node scripts/build-routes.mjs",
+    "seo:redirects": "node scripts/build-redirects.mjs",
     "seo:crawl": "node scripts/seo-crawl.mjs",
     "test:seo": "node --test scripts/tests/*.test.mjs",
     "web:dev": "pnpm --filter web dev",

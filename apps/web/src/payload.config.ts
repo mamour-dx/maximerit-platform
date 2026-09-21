@@ -67,6 +67,9 @@ export default buildConfig({
       fields: [
         { name: "title", type: "text", required: true, localized: true },
         { name: "slug", type: "text", required: true, unique: true, index: true },
+        { name: "content", type: "textarea", localized: true },
+        { name: "seoTitle", type: "text", localized: true },
+        { name: "seoDescription", type: "textarea", localized: true },
         {
           name: "status",
           type: "select",
