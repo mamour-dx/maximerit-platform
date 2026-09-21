@@ -17,12 +17,12 @@ function readUtm(): Record<string, string> {
 }
 
 export function LeadForm({
-  slug,
+  source,
   landingPageId,
   ctaLabel = "Confier un recrutement",
 }: {
-  slug: string;
-  landingPageId: number;
+  source: string;
+  landingPageId?: number;
   ctaLabel?: string;
 }) {
   const [status, setStatus] = useState<Status>("idle");
@@ -39,8 +39,8 @@ export function LeadForm({
       profileSought: fd.get("profileSought"),
       comment: fd.get("comment"),
       company_url: fd.get("company_url"), // honeypot
-      landingPage: landingPageId,
-      source: `lp:${slug}`,
+      ...(landingPageId != null ? { landingPage: landingPageId } : {}),
+      source,
       utm: readUtm(),
     };
     try {

@@ -77,7 +77,7 @@ export default async function LandingPageView({ params }: Args) {
       <section className="mt-12 rounded-[var(--radius)] border border-border p-6">
         <h2 className="text-2xl font-bold">Parlons de votre besoin</h2>
         <p className="mt-1 mb-5 text-sm text-muted">Réponse rapide d&apos;un consultant spécialisé.</p>
-        <LeadForm slug={slug} landingPageId={lp.id as number} ctaLabel={(lp.ctaLabel as string) || undefined} />
+        <LeadForm source={`lp:${slug}`} landingPageId={lp.id as number} ctaLabel={(lp.ctaLabel as string) || undefined} />
       </section>
     </main>
   );
