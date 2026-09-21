@@ -1,5 +1,6 @@
 import type { NextConfig } from "next";
 import { withPayload } from "@payloadcms/next/withPayload";
+import { headersConfig } from "./src/lib/security-headers";
 
 const nextConfig: NextConfig = {
   // Package de domaine partagé (monorepo) transpilé par Next.
@@ -8,6 +9,10 @@ const nextConfig: NextConfig = {
   trailingSlash: true,
   // Libs de parsing CV côté serveur, hors bundle Next.
   serverExternalPackages: ["pdf-parse", "mammoth"],
+  // En-têtes de sécurité (Phase 9).
+  async headers() {
+    return headersConfig();
+  },
 };
 
 export default withPayload(nextConfig);

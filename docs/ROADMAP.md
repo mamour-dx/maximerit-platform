@@ -50,5 +50,6 @@ ACTIONS RESTANTES : …
 - ✅ **Phase 6** — GATE 6 GO (Offres : `/jobs/<slug>/` + **JobPosting** JSON-LD + expiration auto + sitemap Jobs ; candidatures `Applications` reliées à l'ATS via `/apply`. Unit 36/36, intégration 26/26, smoke runtime).
 - ✅ **Phase 7** — GATE 7 GO (**7a** 4 outils d'acquisition testés + pages SSG + lead ; **7b** éditorial : `Articles`/`Resources`, blog listing/détail, ressources par type + contenu *gated*→lead). Unit 44/44, intégration 28/28.
 - ✅ **Phase 8** — GATE 8 GO (Tracking : dataLayer/GTM/GA4/GSC par env, **consentement** RGPD, UTM conservés, catalogue versionné aligné domaine, tunnel instrumenté ; unit 53/53 + runtime vérifié).
-- 🟡 **Phase 9** (Sécurité — audit consolidé) : prochaine.
-- ⬜ Phases 10–12 : à venir, gate par gate.
+- ✅ **Phase 9** — GATE 9 GO (Sécurité : en-têtes globaux testés+runtime, audit RBAC consolidé, endpoints 401, uploads/anti-spam, **0 vulnérabilité** après overrides ; `SECURITY.md`). Unit 55/55, intégration 37/37.
+- 🟡 **Phase 10** (Performance & qualité) : prochaine.
+- ⬜ Phases 11–12 : à venir, gate par gate.

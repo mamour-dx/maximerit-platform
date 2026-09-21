@@ -6,7 +6,11 @@
   "description": "Plateforme Maximerit — refonte (Spec-Driven). Le monorepo applicatif est mis en place en Phase 3.",
   "engines": { "node": ">=20" },
   "pnpm": {
-    "onlyBuiltDependencies": ["esbuild", "unrs-resolver", "@tailwindcss/oxide", "sharp", "@swc/core"]
+    "onlyBuiltDependencies": ["esbuild", "unrs-resolver", "@tailwindcss/oxide", "sharp", "@swc/core"],
+    "overrides": {
+      "dompurify": ">=3.4.13",
+      "esbuild": ">=0.25.0"
+    }
   },
   "scripts": {
     "seo:inventory": "node scripts/build-url-inventory.mjs",
