@@ -48,10 +48,11 @@ Journal des décisions structurantes. Format léger : Contexte / Décision / Sta
 
 ## ADR-0004 — Fournisseur de parsing CV
 
-- **Statut** : 🕓 En attente (à trancher en Phase 1/5)
+- **Statut** : ✅ Accepté (2026-09-21, validé par le client)
 - **Contexte** : §15 exige extraction éditable/validable (nom, poste, expériences, employeurs, dates, formation, compétences, langues, pays, certifications) depuis PDF/DOCX.
-- **Options envisagées** : service tiers (Affinda, Sovren/Textkernel, HrFlow.ai) vs. pipeline interne (extraction texte `pdf-parse`/`mammoth` + LLM structuré). Impact RGPD (données candidats envoyées à un tiers) à évaluer.
-- **Décision** : à documenter en Phase 5 après spécification détaillée et évaluation coût/RGPD/qualité.
+- **Décision** : **pipeline interne** — extraction texte (`pdf-parse` / `mammoth`) puis structuration (règles + LLM optionnel), **sans envoi du CV à un service tiers**. Cohérent avec « stockage CV sécurisé, aucun accès public » (Art. VI) et souveraineté des données candidats (RGPD maîtrisé).
+- **Conséquences** : qualité d'extraction à construire itérativement ; données extraites toujours **éditables/validables** par le recruteur (jamais appliquées en aveugle). Un service tiers reste branchable ultérieurement si besoin de volume/précision (le point d'extraction est isolé). Implémenté en **Phase 5b**.
+- **Alternatives écartées** : service tiers (Affinda/Textkernel/HrFlow) — qualité immédiate mais CV envoyé à un tiers (clause de sous-traitance RGPD + coût/CV).
 
 ---
 

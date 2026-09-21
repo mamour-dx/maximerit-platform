@@ -72,6 +72,9 @@ export interface Config {
     redirects: Redirect;
     'landing-pages': LandingPage;
     leads: Lead;
+    tags: Tag;
+    cvs: Cv;
+    candidates: Candidate;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -84,6 +87,9 @@ export interface Config {
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     'landing-pages': LandingPagesSelect<false> | LandingPagesSelect<true>;
     leads: LeadsSelect<false> | LeadsSelect<true>;
+    tags: TagsSelect<false> | TagsSelect<true>;
+    cvs: CvsSelect<false> | CvsSelect<true>;
+    candidates: CandidatesSelect<false> | CandidatesSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -239,6 +245,108 @@ export interface Lead {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tags".
+ */
+export interface Tag {
+  id: number;
+  label: string;
+  slug: string;
+  category?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "cvs".
+ */
+export interface Cv {
+  id: number;
+  candidateName?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "candidates".
+ */
+export interface Candidate {
+  id: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone?: string | null;
+  whatsapp?: string | null;
+  countryOfResidence?: string | null;
+  nationality?: string | null;
+  internationalMobility?: boolean | null;
+  currentPosition?: string | null;
+  targetSpecialty?: string | null;
+  targetDiscipline?: string | null;
+  sector?: string | null;
+  yearsExperience?: number | null;
+  seniority?: string | null;
+  currentCompany?: string | null;
+  salaryExpectation?: number | null;
+  availabilityDays?: number | null;
+  languages?:
+    | {
+        code?: string | null;
+        proficiency?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  mining?: {
+    commodities?: string[] | null;
+    mineType?: string[] | null;
+    disciplines?: string[] | null;
+    countriesExperience?: string[] | null;
+    fifoRoster?: boolean | null;
+  };
+  cv?: (number | null) | Cv;
+  tags?: (number | Tag)[] | null;
+  notes?:
+    | {
+        body?: string | null;
+        author?: (number | null) | User;
+        id?: string | null;
+      }[]
+    | null;
+  status?:
+    | (
+        | 'nouveau'
+        | 'a-qualifier'
+        | 'qualifie'
+        | 'vivier'
+        | 'preselectionne'
+        | 'entretien-maximerit'
+        | 'shortlist-client'
+        | 'entretien-client'
+        | 'offre'
+        | 'place'
+        | 'indisponible'
+        | 'refuse'
+        | 'a-recontacter'
+        | 'archive'
+      )
+    | null;
+  parseStatus?: ('pending' | 'parsed' | 'validated' | 'failed') | null;
+  source?: string | null;
+  consent: boolean;
+  consentAt?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -280,6 +388,18 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'leads';
         value: number | Lead;
+      } | null)
+    | ({
+        relationTo: 'tags';
+        value: number | Tag;
+      } | null)
+    | ({
+        relationTo: 'cvs';
+        value: number | Cv;
+      } | null)
+    | ({
+        relationTo: 'candidates';
+        value: number | Candidate;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -429,6 +549,90 @@ export interface LeadsSelect<T extends boolean = true> {
       };
   landingPage?: T;
   status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tags_select".
+ */
+export interface TagsSelect<T extends boolean = true> {
+  label?: T;
+  slug?: T;
+  category?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "cvs_select".
+ */
+export interface CvsSelect<T extends boolean = true> {
+  candidateName?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "candidates_select".
+ */
+export interface CandidatesSelect<T extends boolean = true> {
+  firstName?: T;
+  lastName?: T;
+  email?: T;
+  phone?: T;
+  whatsapp?: T;
+  countryOfResidence?: T;
+  nationality?: T;
+  internationalMobility?: T;
+  currentPosition?: T;
+  targetSpecialty?: T;
+  targetDiscipline?: T;
+  sector?: T;
+  yearsExperience?: T;
+  seniority?: T;
+  currentCompany?: T;
+  salaryExpectation?: T;
+  availabilityDays?: T;
+  languages?:
+    | T
+    | {
+        code?: T;
+        proficiency?: T;
+        id?: T;
+      };
+  mining?:
+    | T
+    | {
+        commodities?: T;
+        mineType?: T;
+        disciplines?: T;
+        countriesExperience?: T;
+        fifoRoster?: T;
+      };
+  cv?: T;
+  tags?: T;
+  notes?:
+    | T
+    | {
+        body?: T;
+        author?: T;
+        id?: T;
+      };
+  status?: T;
+  parseStatus?: T;
+  source?: T;
+  consent?: T;
+  consentAt?: T;
   updatedAt?: T;
   createdAt?: T;
 }

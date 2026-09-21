@@ -1,6 +1,7 @@
 import * as migration_20260920_232903_initial from './20260920_232903_initial';
 import * as migration_20260921_105512_acquisition from './20260921_105512_acquisition';
 import * as migration_20260921_124701_pages_content from './20260921_124701_pages_content';
+import * as migration_20260921_125936_ats from './20260921_125936_ats';
 
 export const migrations = [
   {
@@ -16,6 +17,11 @@ export const migrations = [
   {
     up: migration_20260921_124701_pages_content.up,
     down: migration_20260921_124701_pages_content.down,
-    name: '20260921_124701_pages_content'
+    name: '20260921_124701_pages_content',
+  },
+  {
+    up: migration_20260921_125936_ats.up,
+    down: migration_20260921_125936_ats.down,
+    name: '20260921_125936_ats'
   },
 ];

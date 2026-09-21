@@ -175,5 +175,99 @@ export default buildConfig({
         },
       ],
     },
+    {
+      slug: "tags",
+      admin: { useAsTitle: "label", group: "ATS" },
+      // Taxonomie administrée (cahier §17) : pas de création libre côté public.
+      access: { read: isAuthenticated, create: isAdmin, update: isAdmin, delete: isAdmin },
+      fields: [
+        { name: "label", type: "text", required: true },
+        { name: "slug", type: "text", required: true, unique: true, index: true },
+        { name: "category", type: "text" },
+      ],
+    },
+    {
+      slug: "cvs",
+      admin: { useAsTitle: "filename", group: "ATS" },
+      upload: {
+        staticDir: path.resolve(dirname, "../cv-uploads"),
+        mimeTypes: [
+          "application/pdf",
+          "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        ],
+      },
+      // CRITIQUE : aucun CV accessible publiquement (Art. VI). Lecture réservée aux internes.
+      access: { read: isAuthenticated, create: isAuthenticated, update: isAuthenticated, delete: isAdmin },
+      fields: [{ name: "candidateName", type: "text" }],
+    },
+    {
+      slug: "candidates",
+      admin: { useAsTitle: "email", group: "ATS" },
+      // Données personnelles : jamais lisibles publiquement ; création via /apply (overrideAccess).
+      access: { read: isAuthenticated, create: isAuthenticated, update: isAuthenticated, delete: isAdmin },
+      fields: [
+        // Identité
+        { name: "firstName", type: "text", required: true },
+        { name: "lastName", type: "text", required: true },
+        { name: "email", type: "email", required: true, index: true },
+        { name: "phone", type: "text" },
+        { name: "whatsapp", type: "text" },
+        { name: "countryOfResidence", type: "text" },
+        { name: "nationality", type: "text" },
+        { name: "internationalMobility", type: "checkbox" },
+        // Professionnel
+        { name: "currentPosition", type: "text" },
+        { name: "targetSpecialty", type: "text" },
+        { name: "targetDiscipline", type: "text" },
+        { name: "sector", type: "text" },
+        { name: "yearsExperience", type: "number" },
+        { name: "seniority", type: "text" },
+        { name: "currentCompany", type: "text" },
+        { name: "salaryExpectation", type: "number" },
+        { name: "availabilityDays", type: "number" },
+        { name: "languages", type: "array", fields: [{ name: "code", type: "text" }, { name: "proficiency", type: "text" }] },
+        // Bloc Mining
+        {
+          name: "mining",
+          type: "group",
+          fields: [
+            { name: "commodities", type: "text", hasMany: true },
+            { name: "mineType", type: "text", hasMany: true },
+            { name: "disciplines", type: "text", hasMany: true },
+            { name: "countriesExperience", type: "text", hasMany: true },
+            { name: "fifoRoster", type: "checkbox" },
+          ],
+        },
+        // ATS
+        { name: "cv", type: "relationship", relationTo: "cvs" },
+        { name: "tags", type: "relationship", relationTo: "tags", hasMany: true },
+        { name: "notes", type: "array", fields: [{ name: "body", type: "textarea" }, { name: "author", type: "relationship", relationTo: "users" }] },
+        {
+          name: "status",
+          type: "select",
+          defaultValue: "nouveau",
+          index: true,
+          options: [
+            "nouveau", "a-qualifier", "qualifie", "vivier", "preselectionne",
+            "entretien-maximerit", "shortlist-client", "entretien-client", "offre", "place",
+            "indisponible", "refuse", "a-recontacter", "archive",
+          ].map((v) => ({ label: v, value: v })),
+        },
+        {
+          name: "parseStatus",
+          type: "select",
+          defaultValue: "pending",
+          options: [
+            { label: "En attente", value: "pending" },
+            { label: "Analysé", value: "parsed" },
+            { label: "Validé", value: "validated" },
+            { label: "Échec", value: "failed" },
+          ],
+        },
+        { name: "source", type: "text", defaultValue: "site" },
+        { name: "consent", type: "checkbox", required: true },
+        { name: "consentAt", type: "date" },
+      ],
+    },
   ],
 });
