@@ -46,5 +46,5 @@ ACTIONS RESTANTES : …
 - ✅ **Phase 2** — GATE 2 GO (164 routes, 9 tests SEO, bouclage migration).
 - ✅ **Phase 3** — GATE 3 GO (**3a** socle Next.js 16 + design system + `@maximerit/domain` ; **3b** Payload CMS + PostgreSQL : admin, migrations, collections Users/Pages/Redirects, RBAC, /health+/ready, test d'intégration 3/3).
 - ✅ **Phase 4** — GATE 4 GO (**4a** LP→Lead : CMS `LandingPages`/`Leads`, `/lp/[slug]`, `/submit-lead` validation+anti-spam+UTM, RBAC ; **4b** Pages CMS `/[...slug]` + preview brouillon + **moteur de redirections** 301/410 depuis la carte Phase 0 + `trailingSlash`). Unit 15/15, intégration 10/10, runtime vérifié.
-- 🟡 **Phase 5** — **5a GO** (ATS : collections `Candidates`/`CVs`(privé)/`Tags`, intake `/apply` avec validation domaine + consentement + anti-spam + upload sécurisé, RBAC ; unit 21/21, intégration 17/17). **5b (parsing CV) + 5c (recherche Meilisearch/vivier) à suivre.**
+- 🟡 **Phase 5** — **5a + 5b GO** (ATS : collections `Candidates`/`CVs`(privé)/`Tags`, intake `/apply` sécurisé ; **parsing CV interne** PDF/DOCX → proposition `proposedProfile` éditable, `/reparse-cv` ; unit 27/27, intégration 19/19). **5c (recherche Meilisearch + viviers + shortlist) à suivre.**
 - ⬜ Phases 6–12 : à venir, gate par gate.

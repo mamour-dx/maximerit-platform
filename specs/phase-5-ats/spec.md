@@ -29,6 +29,18 @@ structuration, recherche multicritère, pipeline. Données personnelles protég�
 - Unit : `src/__tests__/upload.test.ts` (7).
 - Intégration : `src/__tests__/apply.int.test.ts` (7).
 
-## Réserves (→ 5b / 5c)
-- Parsing CV (extraction éditable) : 5b. Recherche Meilisearch + viviers + shortlist : 5c.
-- Stockage CV local en dev → stockage objet privé (S3-like) en production (Phase 12).
+## Critères d'acceptation — 5b (parsing CV)
+7. Extraction texte **PDF** (`pdf-parse` v2) et **DOCX** (`mammoth`), server-only (hors bundle). ✅
+8. Structuration heuristique déterministe → proposition (nom, poste, email, tél, langues+niveau, commodities, pays, années, compétences, certifications, formation, expériences). ✅
+9. Proposition stockée dans `proposedProfile` (**jamais appliquée en aveugle**) ; `parseStatus` pending→parsed (failed si erreur). ✅
+10. Endpoint interne `/reparse-cv` réservé aux authentifiés (401 sinon). ✅
+11. Tests : unit (structuration, texte fixture) + intégration (DOCX réel via jszip → proposition + parseStatus). ✅
+
+## Tests (5b)
+- Unit : `src/__tests__/cv-parse.test.ts` (6).
+- Intégration : `src/__tests__/cv-parse.int.test.ts` (2, DOCX réel).
+
+## Réserves (→ 5c)
+- Recherche Meilisearch + viviers sauvegardés + shortlist : 5c.
+- Stockage CV local en dev → objet privé (S3-like) en production (Phase 12).
+- Structuration LLM optionnelle (améliore l'extraction) branchable sur le même point, sans envoi tiers par défaut.

@@ -24,9 +24,19 @@ Specification PASS · Implementation PASS · Unit PASS (21/21) · Integration PA
 Security/RBAC PASS (CV privé, upload contrôlé) · Build PASS · Lint PASS · Type-check PASS · Doc PASS
 DÉCISION : GO
 
-PHASE : 5b — Parsing CV (pipeline interne, ADR-0004)   → À FAIRE
+PHASE : 5b — Parsing CV (pipeline interne, ADR-0004)
+Specification PASS · Implementation PASS · Unit PASS (cv-parse 6) · Integration PASS (DOCX réel 2)
+Build PASS · Lint PASS · Type-check PASS · Sécurité PASS (aucun envoi tiers ; /reparse-cv auth-only)
+DÉCISION : GO
+
 PHASE : 5c — Recherche Meilisearch + viviers + shortlist → À FAIRE
 ```
+
+## Phase 5b — détail
+- Extraction PDF (`pdf-parse` v2 : `new PDFParse({data}).getText()`) + DOCX (`mammoth`), en `serverExternalPackages`.
+- `structureCv` déterministe : email/tél, langues+niveau (fenêtre aval), commodities, pays (7 prioritaires), années, nom, poste, compétences/certifs/formation/expériences.
+- Proposition → `proposedProfile` (éditable/validable) ; `parseStatus` pending→parsed→(validated par recruteur).
+- Bilan tests Phase 5 (5a+5b) : Unit 27/27 · Intégration 19/19 · Node SEO/domaine 38/39.
 
 ## Sécurité
 Upload : whitelist MIME (PDF/DOCX), taille ≤ 5 Mo, cohérence extension, nom sanitisé (anti

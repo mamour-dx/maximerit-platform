@@ -264,6 +264,8 @@ export default buildConfig({
             { label: "Échec", value: "failed" },
           ],
         },
+        // Proposition issue du parsing CV (Phase 5b) — éditable/validable, jamais appliquée en aveugle.
+        { name: "proposedProfile", type: "json" },
         { name: "source", type: "text", defaultValue: "site" },
         { name: "consent", type: "checkbox", required: true },
         { name: "consentAt", type: "date" },

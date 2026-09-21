@@ -339,6 +339,15 @@ export interface Candidate {
       )
     | null;
   parseStatus?: ('pending' | 'parsed' | 'validated' | 'failed') | null;
+  proposedProfile?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
   source?: string | null;
   consent: boolean;
   consentAt?: string | null;
@@ -630,6 +639,7 @@ export interface CandidatesSelect<T extends boolean = true> {
       };
   status?: T;
   parseStatus?: T;
+  proposedProfile?: T;
   source?: T;
   consent?: T;
   consentAt?: T;
