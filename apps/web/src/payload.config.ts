@@ -370,5 +370,73 @@ export default buildConfig({
         },
       ],
     },
+    {
+      slug: "articles",
+      admin: { useAsTitle: "title", group: "Contenu" },
+      access: { read: () => true, create: isAuthenticated, update: isAuthenticated, delete: isAdmin },
+      fields: [
+        { name: "title", type: "text", required: true, localized: true },
+        { name: "slug", type: "text", required: true, unique: true, index: true },
+        {
+          name: "category",
+          type: "select",
+          index: true,
+          options: ["mining", "recrutement", "rh", "finance", "qhse", "carriere", "salaires", "marche"].map((v) => ({ label: v, value: v })),
+        },
+        { name: "author", type: "text" },
+        { name: "excerpt", type: "textarea", localized: true },
+        { name: "content", type: "textarea", localized: true },
+        { name: "seoTitle", type: "text", localized: true },
+        { name: "seoDescription", type: "textarea", localized: true },
+        { name: "related", type: "relationship", relationTo: "articles", hasMany: true }, // maillage interne
+        {
+          name: "status",
+          type: "select",
+          defaultValue: "draft",
+          index: true,
+          options: [
+            { label: "Brouillon", value: "draft" },
+            { label: "Publié", value: "published" },
+          ],
+        },
+        { name: "publishedAt", type: "date" },
+      ],
+    },
+    {
+      slug: "resources",
+      admin: { useAsTitle: "title", group: "Contenu" },
+      access: { read: () => true, create: isAuthenticated, update: isAuthenticated, delete: isAdmin },
+      fields: [
+        {
+          name: "type",
+          type: "select",
+          required: true,
+          index: true,
+          options: [
+            { label: "Guide", value: "guides" },
+            { label: "Étude", value: "etudes" },
+            { label: "Baromètre", value: "barometres" },
+          ],
+        },
+        { name: "title", type: "text", required: true, localized: true },
+        { name: "slug", type: "text", required: true, unique: true, index: true },
+        { name: "description", type: "textarea", localized: true },
+        { name: "content", type: "textarea", localized: true },
+        { name: "gated", type: "checkbox", defaultValue: false }, // true = contenu derrière formulaire lead
+        { name: "seoTitle", type: "text", localized: true },
+        { name: "seoDescription", type: "textarea", localized: true },
+        {
+          name: "status",
+          type: "select",
+          defaultValue: "draft",
+          index: true,
+          options: [
+            { label: "Brouillon", value: "draft" },
+            { label: "Publié", value: "published" },
+          ],
+        },
+        { name: "publishedAt", type: "date" },
+      ],
+    },
   ],
 });

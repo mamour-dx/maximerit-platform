@@ -27,7 +27,17 @@ infrastructure éditoriale (blog/guides/études) pour la topical authority.
 - Smoke runtime : 4 pages 200, 404 sur slug inconnu, calculateur + CTA lead présents.
 - Lead : réutilise le chemin `/submit-lead` déjà testé (Phase 4a).
 
-## Réserves (→ 7b)
-- Blog/guides/études (collections + rendu + maillage) : Phase 7b.
-- Tracking `use_tool` / `submit_lead` : Phase 8 (points d'ancrage prêts, `source=tool:*`).
+## Critères d'acceptation — 7b (éditorial)
+7. Collections `Articles` (blog : catégorie, auteur, contenu, SEO, statut, maillage `related`) et `Resources` (guides/études/baromètres, `gated`). ✅
+8. Blog : listing `/ressources/blog/` + détail `/ressources/blog/<slug>/` (publiés uniquement, 404 sinon), metadata/canonical, bloc « À lire aussi » (maillage). ✅
+9. Ressources : listing `/ressources/<type>/` (guides|etudes|barometres) + détail `/ressources/<type>/<slug>/` ; **contenu `gated` remplacé par un formulaire lead** (`source=resource:<slug>`). ✅
+10. Type inconnu → 404. ✅
+11. Tests : intégration (publié vs brouillon, flag gated). ✅
+
+## Tests (7b)
+- Intégration : `src/__tests__/editorial.int.test.ts` (2).
+
+## Réserves
+- Tracking `use_tool` / `download_guide` / `submit_lead` : Phase 8 (`source` déjà porté).
 - Valeurs des barèmes = hypothèses indicatives, à calibrer avec les données propriétaires (baromètre) — cf. stratégie §13.
+- Rendu `content` en texte (paragraphes) ; rich text lexical → amélioration ultérieure.

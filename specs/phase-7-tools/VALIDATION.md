@@ -19,8 +19,16 @@ Specification PASS · Implementation PASS · Unit PASS (44/44) · Build PASS · 
 SEO PASS (canonical par outil) · Acquisition PASS (lead par outil) · Doc PASS
 DÉCISION : GO
 
-PHASE : 7b — Infrastructure éditoriale (blog/guides/études) → À FAIRE
+PHASE : 7b — Infrastructure éditoriale (blog/guides/études)
+Specification PASS · Implementation PASS · Integration PASS (editorial 2)
+Build PASS (routes blog + ressources) · Lint PASS · Type-check PASS · Doc PASS
+DÉCISION : GO  →  PHASE 7 CLÔTURÉE
 ```
+
+## Phase 7b — détail
+- Collections `Articles` (maillage `related`) et `Resources` (gated). Blog listing/détail publiés uniquement.
+- Ressources par type (guides/etudes/barometres) ; contenu gated → formulaire lead (`source=resource:<slug>`).
+- Bilan tests Phase 7 : Unit 44/44 · Intégration 28/28.
 
 ## Risques restants
 - Barèmes indicatifs à calibrer avec données propriétaires (baromètre — stratégie §13).

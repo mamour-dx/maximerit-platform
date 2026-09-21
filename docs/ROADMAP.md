@@ -48,5 +48,6 @@ ACTIONS RESTANTES : …
 - ✅ **Phase 4** — GATE 4 GO (**4a** LP→Lead : CMS `LandingPages`/`Leads`, `/lp/[slug]`, `/submit-lead` validation+anti-spam+UTM, RBAC ; **4b** Pages CMS `/[...slug]` + preview brouillon + **moteur de redirections** 301/410 depuis la carte Phase 0 + `trailingSlash`). Unit 15/15, intégration 10/10, runtime vérifié.
 - ✅ **Phase 5** — GATE 5 GO (**5a** intake ATS sécurisé ; **5b** parsing CV interne → proposition éditable ; **5c** recherche **Meilisearch** multicritère/plein texte + `TalentPools` + `/search-candidates`). Unit 31/31, intégration 23/23 (Postgres + Meili).
 - ✅ **Phase 6** — GATE 6 GO (Offres : `/jobs/<slug>/` + **JobPosting** JSON-LD + expiration auto + sitemap Jobs ; candidatures `Applications` reliées à l'ATS via `/apply`. Unit 36/36, intégration 26/26, smoke runtime).
-- 🟡 **Phase 7** — **7a GO** (4 outils d'acquisition : coût vacance, coût recrutement, benchmark salaire, Mining Team Planner — moteur pur testé 8, pages SSG + lead par outil). **7b (blog/guides/études) à suivre.**
-- ⬜ Phases 8–12 : à venir, gate par gate.
+- ✅ **Phase 7** — GATE 7 GO (**7a** 4 outils d'acquisition testés + pages SSG + lead ; **7b** éditorial : `Articles`/`Resources`, blog listing/détail, ressources par type + contenu *gated*→lead). Unit 44/44, intégration 28/28.
+- 🟡 **Phase 8** (Tracking & data) : prochaine.
+- ⬜ Phases 9–12 : à venir, gate par gate.
