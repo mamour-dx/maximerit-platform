@@ -39,7 +39,7 @@ jobs:
       - run: pnpm --filter web build
 
   integration:
-    name: Integration — Payload + PostgreSQL (DB + RBAC)
+    name: Integration — Payload + PostgreSQL + Meilisearch (DB, RBAC, recherche)
     runs-on: ubuntu-latest
     services:
       postgres:
@@ -52,10 +52,18 @@ jobs:
         options: >-
           --health-cmd "pg_isready -U maximerit"
           --health-interval 5s --health-timeout 5s --health-retries 10
+      meilisearch:
+        image: getmeili/meilisearch:v1.10
+        env:
+          MEILI_MASTER_KEY: masterKey_dev_change_me
+          MEILI_ENV: development
+        ports: ["7700:7700"]
     env:
       DATABASE_URI: postgres://maximerit:maximerit_dev@localhost:5432/maximerit
       PAYLOAD_SECRET: ci_secret_change_me
       PAYLOAD_CONFIG_PATH: src/payload.config.ts
+      MEILI_HOST: http://localhost:7700
+      MEILI_MASTER_KEY: masterKey_dev_change_me
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
@@ -66,5 +74,7 @@ jobs:
           node-version: 20
           cache: pnpm
       - run: pnpm install --frozen-lockfile
+      - name: Attendre Meilisearch
+        run: for i in $(seq 1 30); do curl -sf http://localhost:7700/health && break || sleep 2; done
       - run: pnpm --filter web exec payload migrate --use-swc
       - run: pnpm --filter web test:int

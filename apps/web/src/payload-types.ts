@@ -75,6 +75,7 @@ export interface Config {
     tags: Tag;
     cvs: Cv;
     candidates: Candidate;
+    'talent-pools': TalentPool;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -90,6 +91,7 @@ export interface Config {
     tags: TagsSelect<false> | TagsSelect<true>;
     cvs: CvsSelect<false> | CvsSelect<true>;
     candidates: CandidatesSelect<false> | CandidatesSelect<true>;
+    'talent-pools': TalentPoolsSelect<false> | TalentPoolsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -356,6 +358,29 @@ export interface Candidate {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "talent-pools".
+ */
+export interface TalentPool {
+  id: number;
+  name: string;
+  owner?: (number | null) | User;
+  type?: ('dynamic' | 'static') | null;
+  query?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  members?: (number | Candidate)[] | null;
+  isShortlist?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -409,6 +434,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'candidates';
         value: number | Candidate;
+      } | null)
+    | ({
+        relationTo: 'talent-pools';
+        value: number | TalentPool;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -643,6 +672,20 @@ export interface CandidatesSelect<T extends boolean = true> {
   source?: T;
   consent?: T;
   consentAt?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "talent-pools_select".
+ */
+export interface TalentPoolsSelect<T extends boolean = true> {
+  name?: T;
+  owner?: T;
+  type?: T;
+  query?: T;
+  members?: T;
+  isShortlist?: T;
   updatedAt?: T;
   createdAt?: T;
 }

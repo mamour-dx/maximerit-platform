@@ -40,7 +40,18 @@ structuration, recherche multicritère, pipeline. Données personnelles protég�
 - Unit : `src/__tests__/cv-parse.test.ts` (6).
 - Intégration : `src/__tests__/cv-parse.int.test.ts` (2, DOCX réel).
 
-## Réserves (→ 5c)
-- Recherche Meilisearch + viviers sauvegardés + shortlist : 5c.
+## Critères d'acceptation — 5c (recherche & vivier)
+12. Indexation Meilisearch des candidats via hooks Payload (`afterChange`/`afterDelete`), **fail-soft** (n'empêche jamais la création). ✅
+13. Recherche multicritère + plein texte : `buildMeiliFilter` traduit les filtres métier (Phase 1) ; requête canonique du cahier fonctionnelle. ✅
+14. Collection `TalentPools` (viviers sauvegardés : dynamique/statique, membres, shortlist). ✅
+15. Endpoint `/search-candidates` réservé aux authentifiés (401 sinon). ✅
+16. Tests : unit (filtres, mapping+mobilité) + intégration (index → recherche canonique, exclusions, plein texte, RBAC). ✅
+
+## Tests (5c)
+- Unit : `src/__tests__/search.test.ts` (4).
+- Intégration : `src/__tests__/search.int.test.ts` (4, Meilisearch réel).
+
+## Réserves
 - Stockage CV local en dev → objet privé (S3-like) en production (Phase 12).
 - Structuration LLM optionnelle (améliore l'extraction) branchable sur le même point, sans envoi tiers par défaut.
+- Mobilité indexée depuis `internationalMobility` + `countriesExperience` (champs mobilityScopes/Countries à enrichir si besoin).

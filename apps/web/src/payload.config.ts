@@ -205,6 +205,11 @@ export default buildConfig({
       admin: { useAsTitle: "email", group: "ATS" },
       // Données personnelles : jamais lisibles publiquement ; création via /apply (overrideAccess).
       access: { read: isAuthenticated, create: isAuthenticated, update: isAuthenticated, delete: isAdmin },
+      hooks: {
+        // Sync Meilisearch (import paresseux : n'alourdit pas l'éval du config ni la CLI ; fail-soft).
+        afterChange: [async ({ doc }) => { const { indexCandidate } = await import("./lib/search"); await indexCandidate(doc as never); }],
+        afterDelete: [async ({ doc }) => { const { removeCandidate } = await import("./lib/search"); await removeCandidate((doc as { id: number }).id); }],
+      },
       fields: [
         // Identité
         { name: "firstName", type: "text", required: true },
@@ -269,6 +274,28 @@ export default buildConfig({
         { name: "source", type: "text", defaultValue: "site" },
         { name: "consent", type: "checkbox", required: true },
         { name: "consentAt", type: "date" },
+      ],
+    },
+    {
+      slug: "talent-pools",
+      labels: { singular: "Vivier", plural: "Viviers" },
+      admin: { useAsTitle: "name", group: "ATS" },
+      access: { read: isAuthenticated, create: isAuthenticated, update: isAuthenticated, delete: isAdmin },
+      fields: [
+        { name: "name", type: "text", required: true },
+        { name: "owner", type: "relationship", relationTo: "users" },
+        {
+          name: "type",
+          type: "select",
+          defaultValue: "static",
+          options: [
+            { label: "Dynamique (requête)", value: "dynamic" },
+            { label: "Statique (membres figés)", value: "static" },
+          ],
+        },
+        { name: "query", type: "json" }, // filtres pour un vivier dynamique
+        { name: "members", type: "relationship", relationTo: "candidates", hasMany: true }, // vivier statique / shortlist
+        { name: "isShortlist", type: "checkbox", defaultValue: false },
       ],
     },
   ],

@@ -29,8 +29,19 @@ Specification PASS · Implementation PASS · Unit PASS (cv-parse 6) · Integrati
 Build PASS · Lint PASS · Type-check PASS · Sécurité PASS (aucun envoi tiers ; /reparse-cv auth-only)
 DÉCISION : GO
 
-PHASE : 5c — Recherche Meilisearch + viviers + shortlist → À FAIRE
+PHASE : 5c — Recherche Meilisearch + viviers + shortlist
+Specification PASS · Implementation PASS · Unit PASS (search 4) · Integration PASS (Meili réel 4)
+Build PASS · Lint PASS · Type-check PASS · Sécurité PASS (recherche auth-only ; sync fail-soft)
+DÉCISION : GO  →  PHASE 5 CLÔTURÉE
 ```
+
+## Phase 5c — détail
+- Sync Meilisearch via hooks Payload (import paresseux, fail-soft : jamais bloquant).
+- `buildMeiliFilter` : filtres métier (Phase 1) → filtres Meili ; `mobileTo` calculé par `isMobileTo`.
+- Requête canonique (« géologues Gold FR/EN 8+ ans mobiles GN dispo 60j ») : retourne le bon profil, exclut les non-conformes.
+- `TalentPools` (viviers dynamiques/statiques + shortlist). Endpoint `/search-candidates` auth-only.
+- CI : service Meilisearch ajouté au job d'intégration.
+- Bilan tests Phase 5 : Unit 31/31 · Intégration 23/23.
 
 ## Phase 5b — détail
 - Extraction PDF (`pdf-parse` v2 : `new PDFParse({data}).getText()`) + DOCX (`mammoth`), en `serverExternalPackages`.
