@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 
 export default async function JobsListing() {
   const payload = await getPayload({ config });
-  const res = await payload.find({ collection: "jobs", where: { status: { equals: "publiee" } }, limit: 100, sort: "-publishedAt" });
+  const res = await payload.find({ collection: "jobs", where: { status: { equals: "publiee" } }, limit: 100, depth: 0, sort: "-publishedAt" });
   const jobs = (res.docs as JobLike[]).filter((j) => isLive(j));
 
   return (

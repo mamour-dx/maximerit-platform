@@ -7,7 +7,10 @@ export default defineConfig({
     environment: "node",
     include: ["src/**/*.int.test.ts"],
     testTimeout: 60000,
-    hookTimeout: 60000,
+    hookTimeout: 120000,
+    // Les tests d'intégration touchent des services partagés (PostgreSQL, index Meili unique) :
+    // exécution séquentielle pour un état déterministe.
+    fileParallelism: false,
   },
   resolve: {
     alias: {

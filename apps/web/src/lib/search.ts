@@ -110,6 +110,7 @@ export interface SearchFilters {
   seniorityMin?: string;
   status?: string;
   limit?: number;
+  offset?: number;
 }
 
 const quote = (s: unknown) => `"${String(s).replace(/"/g, "")}"`;
@@ -130,5 +131,5 @@ export function buildMeiliFilter(f: SearchFilters): string[] {
 
 export async function searchCandidates(f: SearchFilters) {
   const index = meili().index(CANDIDATES_INDEX);
-  return index.search(f.text ?? "", { filter: buildMeiliFilter(f), limit: f.limit ?? 20 });
+  return index.search(f.text ?? "", { filter: buildMeiliFilter(f), limit: f.limit ?? 20, offset: f.offset ?? 0 });
 }

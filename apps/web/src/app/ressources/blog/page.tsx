@@ -16,7 +16,7 @@ type Article = { id: number; slug?: string; title?: string; excerpt?: string; ca
 
 export default async function Blog() {
   const payload = await getPayload({ config });
-  const res = await payload.find({ collection: "articles", where: { status: { equals: "published" } }, limit: 50, sort: "-publishedAt" });
+  const res = await payload.find({ collection: "articles", where: { status: { equals: "published" } }, limit: 50, depth: 0, sort: "-publishedAt" });
   const articles = res.docs as Article[];
 
   return (

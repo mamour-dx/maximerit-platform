@@ -21,7 +21,7 @@ export default async function ResourceListing({ params }: Args) {
   const { type } = await params;
   if (!TYPES[type]) notFound();
   const payload = await getPayload({ config });
-  const res = await payload.find({ collection: "resources", where: { and: [{ type: { equals: type } }, { status: { equals: "published" } }] }, limit: 50, sort: "-publishedAt" });
+  const res = await payload.find({ collection: "resources", where: { and: [{ type: { equals: type } }, { status: { equals: "published" } }] }, limit: 50, depth: 0, sort: "-publishedAt" });
   const items = res.docs as Resource[];
 
   return (

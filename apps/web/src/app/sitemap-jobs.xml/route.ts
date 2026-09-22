@@ -10,7 +10,7 @@ const SITE = process.env.NEXT_PUBLIC_SITE_URL || "https://www.maximerit.com";
 // Sitemap dédié aux offres (cahier §28) : uniquement les offres actives (publiées, non expirées).
 export async function GET(): Promise<Response> {
   const payload = await getPayload({ config });
-  const res = await payload.find({ collection: "jobs", where: { status: { equals: "publiee" } }, limit: 1000 });
+  const res = await payload.find({ collection: "jobs", where: { status: { equals: "publiee" } }, limit: 1000, depth: 0 });
   const jobs = (res.docs as JobLike[]).filter((j) => isLive(j));
 
   const urls = jobs
