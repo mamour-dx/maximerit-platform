@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { SERVICES, SECTORS } from "@/lib/content";
 
 // Phase 11 — logique SEO (robots + sitemap), pure et testable.
 
@@ -7,9 +8,17 @@ export const SITE = (process.env.NEXT_PUBLIC_SITE_URL || "https://www.maximerit.
 // Pages publiques indexables construites en routes réelles (hors contenu CMS/DB).
 export const STATIC_INDEXABLE = [
   "/",
-  "/mines/",
+  "/qui-nous-sommes/",
   "/contact/",
+  "/entreprises/",
+  ...SERVICES.map((s) => `/entreprises/${s.slug}/`),
+  "/secteurs/",
+  ...SECTORS.map((s) => `/secteurs/${s.slug}/`),
+  "/mines/",
   "/candidats/offres-demploi/",
+  "/candidats/deposer-mon-cv/",
+  "/candidats/rejoindre-le-vivier/",
+  "/candidats/conseils-carriere/",
   "/ressources/blog/",
   "/ressources/outils/cout-vacance/",
   "/ressources/outils/cout-recrutement/",

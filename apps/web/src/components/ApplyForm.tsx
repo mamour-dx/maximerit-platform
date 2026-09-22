@@ -6,7 +6,8 @@ import { pushEvent, trackOnce } from "@/lib/analytics";
 
 type Status = "idle" | "loading" | "success" | "error";
 
-export function ApplyForm({ jobId, jobTitle }: { jobId: number | string; jobTitle: string }) {
+export function ApplyForm({ jobId, jobTitle }: { jobId?: number | string; jobTitle?: string }) {
+  const trackId = jobId ?? "spontanee";
   const [status, setStatus] = useState<Status>("idle");
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -26,7 +27,7 @@ export function ApplyForm({ jobId, jobTitle }: { jobId: number | string; jobTitl
     };
     const body = new FormData();
     body.set("profile", JSON.stringify(profile));
-    body.set("jobId", String(jobId));
+    if (jobId != null) body.set("jobId", String(jobId));
     const cv = fd.get("cv");
     if (cv) body.set("cv", cv);
     body.set("company_url", String(fd.get("company_url") ?? "")); // honeypot
@@ -35,8 +36,8 @@ export function ApplyForm({ jobId, jobTitle }: { jobId: number | string; jobTitl
     try {
       const res = await fetch("/apply", { method: "POST", body });
       if (res.ok) {
-        pushEvent("upload_cv", { jobId });
-        pushEvent("submit_application", { jobId });
+        pushEvent("upload_cv", { jobId: trackId });
+        pushEvent("submit_application", { jobId: trackId });
         setStatus("success");
       } else {
         setStatus("error");
@@ -56,9 +57,9 @@ export function ApplyForm({ jobId, jobTitle }: { jobId: number | string; jobTitl
   }
 
   return (
-    <form onSubmit={onSubmit} onFocus={() => trackOnce(`apply_start:${jobId}`, "start_application", { jobId })} className="grid gap-3" noValidate>
+    <form onSubmit={onSubmit} onFocus={() => trackOnce(`apply_start:${trackId}`, "start_application", { jobId: trackId })} className="grid gap-3" noValidate>
       <input type="text" name="company_url" tabIndex={-1} autoComplete="off" aria-hidden="true" className="hidden" />
-      <p className="text-sm text-muted">Postuler à : <strong>{jobTitle}</strong></p>
+      {jobTitle ? <p className="text-sm text-muted">Postuler à : <strong>{jobTitle}</strong></p> : null}
       <div className="grid gap-3 sm:grid-cols-2">
         <input name="firstName" required placeholder="Prénom *" className="rounded-[var(--radius)] border border-border bg-background px-3 py-2 text-sm" />
         <input name="lastName" required placeholder="Nom *" className="rounded-[var(--radius)] border border-border bg-background px-3 py-2 text-sm" />
