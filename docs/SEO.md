@@ -66,3 +66,43 @@ Toute `/language/en/…` → `301` vers `/en/…`. Pas de traduction auto brute 
 ## 8. Suivi post-migration (Phase 11)
 Contrôles à J+1 / J+7 / J+30 / J+90 : 404, 5xx, redirections, indexation, pages exclues, canonical,
 trafic organique, positions, impressions, Core Web Vitals, conversions, backlinks conservés.
+
+---
+
+## Recette de migration (Phase 11)
+
+### robots.txt & sitemaps
+- `/robots.txt` (généré, env-driven) : **staging** = `Disallow: /` (`SEO_STAGING=1`) ; **production** = indexable
+  sauf `/admin/`, `/api/` (dont CV via `/api/cvs`), et actions (`/apply/`, `/submit-lead/`, `/reparse-cv/`,
+  `/search-candidates/`, `/preview/`). Déclare `Sitemap:` pages + jobs.
+- `/sitemap.xml` : pages statiques indexables + contenus CMS publiés (Pages, Articles, Ressources) + offres actives.
+- `/sitemap-jobs.xml` : offres actives uniquement (Phase 6).
+
+### Tests de non-régression des URLs — mode LIVE
+`BASE_URL=<url> node --test scripts/tests/migration-map.test.mjs` → vérifie contre le serveur réel que
+chaque ancienne URL renvoie le statut attendu (200/301/410) et la bonne destination, **sans chaîne**.
+✅ Exécuté en recette locale sur les 129 URLs (KEEP→200, 301→destination correcte).
+
+### Checklist de recette (cahier §40)
+- [x] 100 % des anciennes URL connues → 200/301/410 intentionnel (test live).
+- [x] 0 redirection 301 vers une destination non pertinente (carte justifiée + test sans chaîne).
+- [x] 0 CV publiquement accessible (RBAC + robots `/api/` + collection privée).
+- [x] Pages indexables avec `canonical` auto-référencée (metadata par page).
+- [x] Offres avec URL individuelle + `JobPosting` valide (Phase 6).
+- [x] 100 % des candidatures dans l'ATS avec CV associé (Phase 5/6).
+- [x] Tracking vérifié avant prod (Phase 8).
+- [ ] hreflang FR/EN : à finaliser quand les routes `/en/` seront rendues (réserve — voir ci-dessous).
+- [ ] Crawl production-like complet + Lighthouse (à exécuter sur l'environnement de recette).
+
+### Réserve hreflang FR/EN
+La stratégie i18n (`/en/…` + hreflang) est **spécifiée** (ADR-0002, registre de routes Phase 2) mais le
+**rendu** des routes `/en/` n'est pas encore branché (localization Payload + segment de langue Next) :
+à implémenter avant l'ouverture du volet anglais. Les redirections `/language/en/…` → `/en/…` sont déjà en place.
+
+### Suivi post-migration
+| Jalon | Contrôles |
+|---|---|
+| **J+1** | 404 / 5xx, redirections effectives, robots/sitemap soumis à Search Console, indexation démarrée |
+| **J+7** | pages indexées, premières impressions/clics, erreurs de couverture |
+| **J+30** | trafic organique vs référence, positions des URL conservées, pages exclues |
+| **J+90** | trafic/positions/backlinks conservés, conversions (leads/candidatures), ajustements |

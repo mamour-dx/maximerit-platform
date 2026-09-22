@@ -52,5 +52,5 @@ ACTIONS RESTANTES : …
 - ✅ **Phase 8** — GATE 8 GO (Tracking : dataLayer/GTM/GA4/GSC par env, **consentement** RGPD, UTM conservés, catalogue versionné aligné domaine, tunnel instrumenté ; unit 53/53 + runtime vérifié).
 - ✅ **Phase 9** — GATE 9 GO (Sécurité : en-têtes globaux testés+runtime, audit RBAC consolidé, endpoints 401, uploads/anti-spam, **0 vulnérabilité** après overrides ; `SECURITY.md`). Unit 55/55, intégration 37/37.
 - ✅ **Phase 10** — GATE 10 GO (Perf : recherche 3000 candidats `<150ms` + pagination, index DB vérifiés, listes `depth:0`, rendu statique/SSG, JS client minimal ; `PERFORMANCE.md`). Unit 55/55, intégration 39/39.
-- 🟡 **Phase 11** (Migration SEO & recette) : prochaine.
-- ⬜ Phase 12 : à venir.
+- ✅ **Phase 11** — GATE 11 GO (robots env-driven + sitemap.xml + sitemap-jobs ; **redirections vérifiées en mode LIVE** sur 129 URLs ; 0 CV indexable ; checklist §40 + suivi J+1/7/30/90 ; page À propos). Unit 59/59, intégration 39/39.
+- 🟡 **Phase 12** (Production) : dernière phase.
