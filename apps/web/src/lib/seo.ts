@@ -24,6 +24,10 @@ export const STATIC_INDEXABLE = [
   "/ressources/outils/cout-recrutement/",
   "/ressources/outils/benchmark-salaire/",
   "/ressources/outils/mining-team-planner/",
+  // Volet anglais (fondation i18n)
+  "/en/",
+  "/en/mines/",
+  "/en/contact/",
 ];
 
 // Chemins jamais indexables (admin, API — dont les CV servis via /api/cvs — et actions).

@@ -3,12 +3,13 @@ import type { Metadata } from "next";
 import { mining } from "@maximerit/domain";
 import { EmptyState } from "@/components/ui/states";
 import { TrackView } from "@/components/site/TrackView";
+import { hreflang } from "@/lib/i18n";
 
 export const metadata: Metadata = {
   title: "Recrutement minier en Afrique de l'Ouest",
   description:
     "Hub Mining Maximerit : géologie & exploration, exploitation & opérations, finance et leadership. Les compétences qui font fonctionner les opérations minières.",
-  alternates: { canonical: "/mines/" },
+  alternates: { canonical: "/mines/", languages: hreflang("/mines/", "/en/mines/") },
 };
 
 export default function MinesHub() {

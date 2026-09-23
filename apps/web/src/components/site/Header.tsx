@@ -1,7 +1,23 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
+import { counterpartPath } from "@/lib/i18n";
+
+// Pages disposant d'une version dans l'autre langue (sinon repli sur l'accueil de la langue cible).
+const MIRRORED = new Set(["/", "/mines/", "/contact/", "/en/", "/en/mines/", "/en/contact/"]);
+
+function LangSwitch() {
+  const pathname = usePathname() || "/";
+  const { locale, href } = counterpartPath(pathname);
+  const target = MIRRORED.has(pathname) ? href : locale === "en" ? "/en/" : "/";
+  return (
+    <Link href={target} className="text-sm font-semibold text-muted transition hover:text-brand" aria-label={`Passer en ${locale === "en" ? "anglais" : "français"}`}>
+      {locale === "en" ? "EN" : "FR"}
+    </Link>
+  );
+}
 
 const NAV = [
   { href: "/#expertises", label: "Entreprises" },
@@ -38,6 +54,7 @@ export function SiteHeader() {
               {n.label}
             </Link>
           ))}
+          <LangSwitch />
           <Link href="/contact/" className="rounded-[var(--radius)] bg-brand px-4 py-2 text-sm font-semibold text-white transition hover:opacity-90">
             Confier un recrutement
           </Link>

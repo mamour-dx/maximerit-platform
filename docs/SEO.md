@@ -94,10 +94,12 @@ chaque ancienne URL renvoie le statut attendu (200/301/410) et la bonne destinat
 - [ ] hreflang FR/EN : à finaliser quand les routes `/en/` seront rendues (réserve — voir ci-dessous).
 - [ ] Crawl production-like complet + Lighthouse (à exécuter sur l'environnement de recette).
 
-### Réserve hreflang FR/EN
-La stratégie i18n (`/en/…` + hreflang) est **spécifiée** (ADR-0002, registre de routes Phase 2) mais le
-**rendu** des routes `/en/` n'est pas encore branché (localization Payload + segment de langue Next) :
-à implémenter avant l'ouverture du volet anglais. Les redirections `/language/en/…` → `/en/…` sont déjà en place.
+### i18n FR/EN — fondation en place
+Le volet anglais est **branché** pour les pages clés (`/en/`, `/en/mines/`, `/en/contact/`) avec
+**hreflang réciproque** (`fr` / `en` / `x-default`) + `canonical` auto-référencée, un **sélecteur de langue**
+dans le header, et l'ajout au `sitemap.xml`. Les redirections `/language/en/…` → `/en/…` sont en place (Phase 0).
+**Reste** : étendre le rendu EN aux autres pages (services, secteurs, blog, offres…) sur le même patron
+(`hreflang()` + `SetLang`), et localiser les contenus CMS via le paramètre `locale` de Payload.
 
 ### Suivi post-migration
 | Jalon | Contrôles |

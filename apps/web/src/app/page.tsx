@@ -1,5 +1,11 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 import { mining } from "@maximerit/domain";
+import { hreflang } from "@/lib/i18n";
+
+export const metadata: Metadata = {
+  alternates: { canonical: "/", languages: hreflang("/", "/en/") },
+};
 
 const EXPERTISES = [
   ["Recrutement", "/entreprises/recrutement/"],
