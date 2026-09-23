@@ -53,4 +53,7 @@ ACTIONS RESTANTES : …
 - ✅ **Phase 9** — GATE 9 GO (Sécurité : en-têtes globaux testés+runtime, audit RBAC consolidé, endpoints 401, uploads/anti-spam, **0 vulnérabilité** après overrides ; `SECURITY.md`). Unit 55/55, intégration 37/37.
 - ✅ **Phase 10** — GATE 10 GO (Perf : recherche 3000 candidats `<150ms` + pagination, index DB vérifiés, listes `depth:0`, rendu statique/SSG, JS client minimal ; `PERFORMANCE.md`). Unit 55/55, intégration 39/39.
 - ✅ **Phase 11** — GATE 11 GO (robots env-driven + sitemap.xml + sitemap-jobs ; **redirections vérifiées en mode LIVE** sur 129 URLs ; 0 CV indexable ; checklist §40 + suivi J+1/7/30/90 ; page À propos). Unit 59/59, intégration 39/39.
-- 🟡 **Phase 12** (Production) : dernière phase.
+- ✅ **Phase 12** — GATE FINAL GO / **production-ready** (procédure `DEPLOYMENT.md`, checklist §34, rollback, monitoring `/health`+`/ready`). Items code = PASS ; items infra prêts (config prod côté client).
+
+**Les 13 phases (0 → 12) sont validées, CI verte à chaque palier.** Voir `specs/phase-12-production/VALIDATION.md`.
+Réserves ouvertes (hors code) : rendu `/en/` (hreflang), durcissements prod (CSP/MFA/Redis/S3/email), finalisation « valeur » de la carte de migration (ADR-0005), habillage/contenu à enrichir dans le CMS.

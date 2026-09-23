@@ -27,4 +27,20 @@ Le scaffolding applicatif est mis en place en **Phase 3** (après GATE 0/1/2).
 | `specs/` | Spécifications par phase/feature |
 
 ## État
-Étapes A–F terminées. **Phase 0 (audit & migration SEO)** en cours. Voir `docs/ROADMAP.md`.
+**Les 13 phases (0 → 12) sont validées, CI verte à chaque palier — plateforme production-ready.**
+Voir `docs/ROADMAP.md` et les `specs/phase-*/VALIDATION.md`.
+
+### Lancer en local
+```bash
+docker compose up -d           # PostgreSQL + Meilisearch
+pnpm install
+pnpm --filter web exec payload migrate --use-swc
+pnpm --filter web dev          # http://localhost:3000  (admin : /admin)
+```
+
+### Tests
+```bash
+pnpm --filter web test --run   # unit
+pnpm --filter web test:int     # intégration (DB + Meili requis)
+npm run test:seo               # SEO / migration URLs
+```
