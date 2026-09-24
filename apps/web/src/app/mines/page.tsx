@@ -26,6 +26,9 @@ export default function MinesHub() {
       <p className="mt-3 max-w-2xl text-lg text-muted">
         Les compétences qui font fonctionner les opérations minières, organisées en quatre pôles.
       </p>
+      <Link href="/mines/recrutement-minier/" className="mt-3 inline-block text-sm font-semibold text-brand hover:underline">
+        Notre approche du recrutement minier →
+      </Link>
 
       {disciplines.length === 0 ? (
         <div className="mt-10">

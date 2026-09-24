@@ -17,6 +17,7 @@ export const STATIC_INDEXABLE = [
   "/secteurs/",
   ...SECTORS.map((s) => `/secteurs/${s.slug}/`),
   "/mines/",
+  "/mines/recrutement-minier/",
   ...miningIndexablePaths(),
   ...countryPaths(),
   "/candidats/offres-demploi/",

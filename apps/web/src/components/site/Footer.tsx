@@ -7,7 +7,7 @@ const COLS = [
       ["/entreprises/recrutement/", "Recrutement"],
       ["/entreprises/executive-search/", "Executive Search"],
       ["/entreprises/interim/", "Intérim & mise à disposition"],
-      ["/mines/", "Recrutement minier"],
+      ["/mines/recrutement-minier/", "Recrutement minier"],
     ],
   },
   {
