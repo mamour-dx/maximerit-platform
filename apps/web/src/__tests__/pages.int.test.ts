@@ -12,7 +12,7 @@ async function ensurePage(slug: string, status: "draft" | "published") {
   return payload.create({ collection: "pages", data: { title: `Page ${slug}`, slug, status, content: "Contenu de test.\n\nDeuxième paragraphe." } });
 }
 
-// Réplique la logique de requête de src/app/[...slug]/page.tsx
+// Réplique la logique de requête de src/app/(frontend)/[...slug]/page.tsx
 async function getPage(slug: string, preview: boolean) {
   const conditions: Where[] = [{ slug: { equals: slug } }];
   if (!preview) conditions.push({ status: { equals: "published" } });

@@ -54,7 +54,8 @@ function Wordmark({ isEn }: { isEn: boolean }) {
         alt="Maximerit"
         width={493}
         height={93}
-        priority
+        loading="eager"
+        fetchPriority="high"
         className="h-9 w-auto sm:h-10"
       />
     </Link>
