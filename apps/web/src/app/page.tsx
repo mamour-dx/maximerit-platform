@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { mining } from "@maximerit/domain";
 import { hreflang } from "@/lib/i18n";
 import { TrustedBy } from "@/components/site/TrustedBy";
+import { LocationMap } from "@/components/site/LocationMap";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/", languages: hreflang("/", "/en/") },
@@ -149,6 +150,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Localisation (carte Google Maps) */}
+      <LocationMap lang="fr" />
 
       {/* CTA final */}
       <section className="bg-brand text-white">

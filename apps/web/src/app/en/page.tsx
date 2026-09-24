@@ -4,6 +4,7 @@ import { mining } from "@maximerit/domain";
 import { hreflang } from "@/lib/i18n";
 import { SetLang } from "@/components/site/SetLang";
 import { TrustedBy } from "@/components/site/TrustedBy";
+import { LocationMap } from "@/components/site/LocationMap";
 
 export const metadata: Metadata = {
   title: "Maximerit — Recruitment & talent in West Africa",
@@ -58,6 +59,8 @@ export default function HomeEn() {
           <Link href="/en/mines/" className="mt-8 inline-block rounded-[var(--radius)] bg-brand px-5 py-3 text-sm font-semibold text-white transition hover:opacity-90">Explore the Mining vertical</Link>
         </div>
       </section>
+
+      <LocationMap lang="en" />
 
       <section className="bg-brand text-white">
         <div className="mx-auto flex w-full max-w-6xl flex-col items-start gap-6 px-6 py-14 md:flex-row md:items-center md:justify-between">
