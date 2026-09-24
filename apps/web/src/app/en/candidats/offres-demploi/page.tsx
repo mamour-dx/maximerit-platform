@@ -32,7 +32,7 @@ export default async function JobsListingEn() {
         <ul className="mt-10 divide-y divide-border">
           {jobs.map((j) => (
             <li key={j.id} className="py-4">
-              <Link href={`/jobs/${j.slug}/`} className="text-xl font-semibold hover:text-brand">{j.title}</Link>
+              <Link href={`/en/jobs/${j.slug}/`} className="text-xl font-semibold hover:text-brand">{j.title}</Link>
               <p className="mt-1 text-sm text-muted">{[j.location, j.country, j.contractType].filter(Boolean).join(" · ")}</p>
             </li>
           ))}
