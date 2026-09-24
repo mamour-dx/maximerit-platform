@@ -1,34 +1,20 @@
 @import "tailwindcss";
 
-/* ---- Design tokens Maximerit (Phase 3) ----
-   Marque : rouge Maximerit + encre quasi-noire. Thème clair par défaut,
-   variables redéfinies en sombre. Exposées à Tailwind v4 via @theme. */
+/* ---- Design tokens Maximerit ----
+   Thème CLAIR sur toute la plateforme (quel que soit le réglage système). Exposé à Tailwind v4 via @theme. */
 :root {
+  color-scheme: light;
   --background: #ffffff;
   --surface: #f7f6f4;
   --foreground: #17161a;
   --muted: #5f5e5a;
   --border: #e5e3dd;
   --brand: #e2001a;        /* rouge Maximerit */
-  --brand-ink: #1a1a1a;    /* noir logo (suit le thème) */
+  --brand-ink: #1a1a1a;    /* noir du logo (texte) */
   --brand-contrast: #ffffff;
-  --ink: #141318;          /* encre FIXE (bandes sombres, identique en clair/sombre) */
+  --ink: #f0eeea;          /* bande « pôle prioritaire » (claire, teintée) */
   --accent: #0f6e56;       /* teal — verticale Mining */
   --radius: 10px;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0e0d10;
-    --surface: #18171b;
-    --foreground: #f4f2ee;
-    --muted: #a3a19b;
-    --border: #2a2930;
-    --brand: #ff3040;
-    --brand-ink: #f4f2ee;
-    --brand-contrast: #ffffff;
-    --accent: #5dcaa5;
-  }
 }
 
 @theme inline {

@@ -39,16 +39,16 @@ export default function HomeEn() {
         </div>
       </section>
 
-      <section className="bg-ink text-white">
-        <div className="mx-auto w-full max-w-6xl px-6 py-16">
-          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-white/70">Priority vertical</p>
+      <section className="border-y border-border bg-ink">
+        <div className="mx-auto w-full max-w-6xl border-l-4 border-brand px-6 py-16 pl-8">
+          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-brand">Priority vertical</p>
           <h2 className="mt-3 font-display text-3xl font-bold sm:text-4xl">Mining recruitment in West Africa</h2>
-          <p className="mt-3 max-w-2xl text-white/80">The skills that keep mining operations running, organised into four pillars.</p>
+          <p className="mt-3 max-w-2xl text-muted">The skills that keep mining operations running, organised into four pillars.</p>
           <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {disciplines.map((d) => (
-              <div key={d.slug} className="rounded-[var(--radius)] border border-white/15 bg-white/5 p-5">
+              <div key={d.slug} className="rounded-[var(--radius)] border border-border bg-background p-5">
                 <span className="font-semibold">{d.label_en}</span>
-                <span className="mt-1 block text-sm text-white/70">{d.specialties.length} roles</span>
+                <span className="mt-1 block text-sm text-muted">{d.specialties.length} roles</span>
               </div>
             ))}
           </div>

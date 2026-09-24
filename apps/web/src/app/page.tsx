@@ -98,17 +98,17 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Mining — verticale prioritaire (bande sombre) */}
-      <section className="bg-ink text-white">
-        <div className="mx-auto w-full max-w-6xl px-6 py-16">
-          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-white/70">Verticale prioritaire</p>
+      {/* Mining — verticale prioritaire (bande claire teintée + accent rouge) */}
+      <section className="border-y border-border bg-ink">
+        <div className="mx-auto w-full max-w-6xl border-l-4 border-brand px-6 py-16 pl-8">
+          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-brand">Verticale prioritaire</p>
           <h2 className="mt-3 font-display text-3xl font-bold sm:text-4xl">Recrutement minier en Afrique de l&apos;Ouest</h2>
-          <p className="mt-3 max-w-2xl text-white/80">Les compétences qui font fonctionner les opérations minières, organisées en quatre pôles.</p>
+          <p className="mt-3 max-w-2xl text-muted">Les compétences qui font fonctionner les opérations minières, organisées en quatre pôles.</p>
           <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {disciplines.map((d) => (
-              <Link key={d.slug} href={d.url} className="rounded-[var(--radius)] border border-white/15 bg-white/5 p-5 transition hover:bg-white/10">
+              <Link key={d.slug} href={d.url} className="rounded-[var(--radius)] border border-border bg-background p-5 transition hover:border-brand hover:shadow-sm">
                 <span className="font-semibold">{d.label_fr}</span>
-                <span className="mt-1 block text-sm text-white/70">{d.specialties.length} métiers</span>
+                <span className="mt-1 block text-sm text-muted">{d.specialties.length} métiers</span>
               </Link>
             ))}
           </div>
