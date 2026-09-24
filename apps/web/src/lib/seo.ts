@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { SERVICES, SECTORS } from "@/lib/content";
 import { miningIndexablePaths } from "@/lib/mining-nav";
+import { countryPaths } from "@/lib/mining-countries";
 
 // Phase 11 — logique SEO (robots + sitemap), pure et testable.
 
@@ -17,6 +18,7 @@ export const STATIC_INDEXABLE = [
   ...SECTORS.map((s) => `/secteurs/${s.slug}/`),
   "/mines/",
   ...miningIndexablePaths(),
+  ...countryPaths(),
   "/candidats/offres-demploi/",
   "/candidats/deposer-mon-cv/",
   "/candidats/rejoindre-le-vivier/",

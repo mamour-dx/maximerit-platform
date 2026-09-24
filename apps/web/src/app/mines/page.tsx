@@ -4,6 +4,7 @@ import { mining } from "@maximerit/domain";
 import { EmptyState } from "@/components/ui/states";
 import { TrackView } from "@/components/site/TrackView";
 import { hreflang } from "@/lib/i18n";
+import { MINING_COUNTRIES } from "@/lib/mining-countries";
 
 export const metadata: Metadata = {
   title: "Recrutement minier en Afrique de l'Ouest",
@@ -47,6 +48,16 @@ export default function MinesHub() {
           ))}
         </div>
       )}
+
+      <section className="mt-14">
+        <h2 className="text-sm font-semibold uppercase tracking-wide text-muted">Par pays</h2>
+        <div className="mt-3 flex flex-wrap gap-2">
+          {MINING_COUNTRIES.map((c) => (
+            <Link key={c.slug} href={`/mines/${c.slug}/`} className="rounded-full border border-border px-3 py-1 text-sm transition hover:border-brand">{c.label}</Link>
+          ))}
+        </div>
+      </section>
+
       <div className="mt-10 flex flex-wrap gap-3">
         <Link href="/mines/metiers/" className="rounded-[var(--radius)] bg-brand px-5 py-3 text-sm font-semibold text-white transition hover:opacity-90">Voir tous les métiers</Link>
         <Link href="/contact/" className="rounded-[var(--radius)] border border-border px-5 py-3 text-sm font-semibold transition hover:bg-surface">Confier un recrutement</Link>
