@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { SERVICES, SECTORS } from "@/lib/content";
 import { miningIndexablePaths } from "@/lib/mining-nav";
 import { countryPaths } from "@/lib/mining-countries";
+import { TOOLS } from "@/lib/tools";
 
 // Phase 11 — logique SEO (robots + sitemap), pure et testable.
 
@@ -46,6 +47,7 @@ export const STATIC_INDEXABLE = [
   "/en/candidats/rejoindre-le-vivier/",
   "/en/candidats/conseils-carriere/",
   "/en/ressources/blog/",
+  ...Object.keys(TOOLS).map((t) => `/en/ressources/outils/${t}/`),
 ];
 
 // Chemins jamais indexables (admin, API — dont les CV servis via /api/cvs — et actions).

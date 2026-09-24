@@ -25,6 +25,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...(articles.docs as Doc[]).map((d) => ({ path: `/ressources/blog/${d.slug}/`, lastmod: d.updatedAt })),
     ...(articles.docs as Doc[]).map((d) => ({ path: `/en/ressources/blog/${d.slug}/`, lastmod: d.updatedAt })),
     ...(resources.docs as Doc[]).map((d) => ({ path: `/ressources/${d.type}/${d.slug}/`, lastmod: d.updatedAt })),
+    ...(resources.docs as Doc[]).map((d) => ({ path: `/en/ressources/${d.type}/${d.slug}/`, lastmod: d.updatedAt })),
     ...(jobs.docs as (Doc & JobLike)[]).filter((j) => isLive(j)).map((d) => ({ path: `/jobs/${d.slug}/`, lastmod: d.publishedAt ?? d.updatedAt })),
   ];
   return buildSitemap(entries);

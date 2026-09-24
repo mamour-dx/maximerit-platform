@@ -9,12 +9,12 @@ import { counterpartPath } from "@/lib/i18n";
 // Tout le reste (blog, guides, outils, offres CMS…) retombe sur l'accueil de la langue cible.
 const MIRRORED_RE =
   /^\/(qui-nous-sommes|contact|entreprises|secteurs|mines|candidats|mentions-legales|politique-confidentialite)(\/|$)/;
-// Dans /ressources, seul le blog est traduit (guides, outils… restent FR).
-const MIRRORED_BLOG_RE = /^\/ressources\/blog(\/|$)/;
+// Tout /ressources est traduit (blog, guides/études/baromètres, outils).
+const MIRRORED_RESOURCES_RE = /^\/ressources\/(blog|guides|etudes|barometres|outils)(\/|$)/;
 
 function isMirrored(pathname: string): boolean {
   const fr = pathname.replace(/^\/en(?=\/|$)/, "") || "/";
-  return fr === "/" || MIRRORED_RE.test(fr) || MIRRORED_BLOG_RE.test(fr);
+  return fr === "/" || MIRRORED_RE.test(fr) || MIRRORED_RESOURCES_RE.test(fr);
 }
 
 function LangSwitch({ isEn }: { isEn: boolean }) {
