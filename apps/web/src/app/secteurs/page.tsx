@@ -1,11 +1,12 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { SECTORS } from "@/lib/content";
+import { hreflang } from "@/lib/i18n";
 
 export const metadata: Metadata = {
   title: "Secteurs",
   description: "Mines & Ressources (prioritaire), énergie, pétrole & gaz, BTP & infrastructures, industrie, services.",
-  alternates: { canonical: "/secteurs/" },
+  alternates: { canonical: "/secteurs/", languages: hreflang("/secteurs/", "/en/secteurs/") },
 };
 
 export default function SecteursHub() {

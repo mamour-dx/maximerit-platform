@@ -34,7 +34,7 @@ export default function ContactEn() {
         <div className="rounded-[var(--radius)] border border-border p-6">
           <h2 className="font-display text-2xl font-bold">Hire with us</h2>
           <p className="mt-1 mb-5 text-sm text-muted">Describe your need and we&apos;ll come back within 48h.</p>
-          <LeadForm source="contact-en" ctaLabel="Send" />
+          <LeadForm source="contact-en" lang="en" ctaLabel="Send" />
         </div>
       </div>
     </main>

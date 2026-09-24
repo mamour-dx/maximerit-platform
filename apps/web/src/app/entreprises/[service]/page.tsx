@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { SERVICES, getService } from "@/lib/content";
+import { hreflang } from "@/lib/i18n";
 
 type Args = { params: Promise<{ service: string }> };
 
@@ -13,7 +14,7 @@ export async function generateMetadata({ params }: Args): Promise<Metadata> {
   const { service } = await params;
   const s = getService(service);
   if (!s) return {};
-  return { title: s.title, description: s.intro, alternates: { canonical: `/entreprises/${service}/` } };
+  return { title: s.title, description: s.intro, alternates: { canonical: `/entreprises/${service}/`, languages: hreflang(`/entreprises/${service}/`, `/en/entreprises/${service}/`) } };
 }
 
 export default async function ServicePage({ params }: Args) {

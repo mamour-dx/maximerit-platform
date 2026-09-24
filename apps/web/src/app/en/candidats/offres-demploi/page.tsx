@@ -5,27 +5,29 @@ import config from "@payload-config";
 import { isLive, type JobLike } from "@/lib/job";
 import { EmptyState } from "@/components/ui/states";
 import { hreflang } from "@/lib/i18n";
+import { SetLang } from "@/components/site/SetLang";
 
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Offres d'emploi",
-  description: "Offres d'emploi Maximerit — recrutement en Afrique de l'Ouest, verticale Mines & Ressources.",
-  alternates: { canonical: "/candidats/offres-demploi/", languages: hreflang("/candidats/offres-demploi/", "/en/candidats/offres-demploi/") },
+  title: "Job openings",
+  description: "Maximerit job openings — recruitment across West Africa, Mining & Resources vertical.",
+  alternates: { canonical: "/en/candidats/offres-demploi/", languages: hreflang("/candidats/offres-demploi/", "/en/candidats/offres-demploi/") },
 };
 
-export default async function JobsListing() {
+export default async function JobsListingEn() {
   const payload = await getPayload({ config });
   const res = await payload.find({ collection: "jobs", where: { status: { equals: "publiee" } }, limit: 100, depth: 0, sort: "-publishedAt" });
   const jobs = (res.docs as JobLike[]).filter((j) => isLive(j));
 
   return (
     <main className="mx-auto w-full max-w-4xl px-6 py-16">
-      <h1 className="text-4xl font-bold">Offres d&apos;emploi</h1>
-      <p className="mt-3 text-lg text-muted">Recrutement en Afrique de l&apos;Ouest — Mines &amp; Ressources et secteurs adjacents.</p>
+      <SetLang lang="en" />
+      <h1 className="text-4xl font-bold">Job openings</h1>
+      <p className="mt-3 text-lg text-muted">Recruitment across West Africa — Mining &amp; Resources and adjacent sectors.</p>
 
       {jobs.length === 0 ? (
-        <div className="mt-10"><EmptyState title="Aucune offre active pour le moment" hint="Déposez votre CV pour rejoindre notre vivier." action={<Link href="/candidats/deposer-mon-cv/" className="text-brand underline">Déposer mon CV</Link>} /></div>
+        <div className="mt-10"><EmptyState title="No active openings right now" hint="Submit your CV to join our talent pool." action={<Link href="/en/candidats/deposer-mon-cv/" className="text-brand underline">Submit my CV</Link>} /></div>
       ) : (
         <ul className="mt-10 divide-y divide-border">
           {jobs.map((j) => (

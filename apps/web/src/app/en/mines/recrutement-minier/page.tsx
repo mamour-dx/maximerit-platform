@@ -83,7 +83,7 @@ export default function RecrutementMinierEn() {
         <div className="mx-auto w-full max-w-3xl px-6 py-16">
           <h2 className="font-display text-3xl font-bold">Hire with us</h2>
           <p className="mt-1 mb-6 text-muted">Describe your need — we&apos;ll come back with a first short-list.</p>
-          <LeadForm source="mines-recrutement-en" ctaLabel="Send" />
+          <LeadForm source="mines-recrutement-en" lang="en" ctaLabel="Send" />
         </div>
       </section>
     </main>

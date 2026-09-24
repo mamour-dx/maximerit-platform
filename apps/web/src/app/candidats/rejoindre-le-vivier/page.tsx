@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import { ApplyForm } from "@/components/ApplyForm";
+import { hreflang } from "@/lib/i18n";
 
 export const metadata: Metadata = {
   title: "Rejoindre le vivier Maximerit",
   description: "Intégrez le vivier de talents Maximerit : soyez sollicité pour les opportunités qui correspondent à votre profil.",
-  alternates: { canonical: "/candidats/rejoindre-le-vivier/" },
+  alternates: { canonical: "/candidats/rejoindre-le-vivier/", languages: hreflang("/candidats/rejoindre-le-vivier/", "/en/candidats/rejoindre-le-vivier/") },
 };
 
 const AVANTAGES = [

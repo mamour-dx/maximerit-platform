@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { hreflang } from "@/lib/i18n";
 
 export const metadata: Metadata = {
   title: "Qui sommes-nous",
   description: "Maximerit — cabinet de recrutement, executive search et mise à disposition de talents en Afrique de l'Ouest, spécialiste Mines & Ressources.",
-  alternates: { canonical: "/qui-nous-sommes/" },
+  alternates: { canonical: "/qui-nous-sommes/", languages: hreflang("/qui-nous-sommes/", "/en/qui-nous-sommes/") },
 };
 
 const PILIERS = [

@@ -29,13 +29,22 @@ export const STATIC_INDEXABLE = [
   "/ressources/outils/cout-recrutement/",
   "/ressources/outils/benchmark-salaire/",
   "/ressources/outils/mining-team-planner/",
-  // Volet anglais (fondation i18n + silo Mining mirroré sous /en)
+  // Volet anglais (i18n + silo Mining mirroré sous /en)
   "/en/",
+  "/en/qui-nous-sommes/",
+  "/en/contact/",
+  "/en/entreprises/",
+  ...SERVICES.map((s) => `/en/entreprises/${s.slug}/`),
+  "/en/secteurs/",
+  ...SECTORS.map((s) => `/en/secteurs/${s.slug}/`),
   "/en/mines/",
   "/en/mines/recrutement-minier/",
   ...miningIndexablePaths().map((p) => `/en${p}`),
   ...countryPaths().map((p) => `/en${p}`),
-  "/en/contact/",
+  "/en/candidats/offres-demploi/",
+  "/en/candidats/deposer-mon-cv/",
+  "/en/candidats/rejoindre-le-vivier/",
+  "/en/candidats/conseils-carriere/",
 ];
 
 // Chemins jamais indexables (admin, API — dont les CV servis via /api/cvs — et actions).

@@ -17,15 +17,38 @@ function readUtm(): Record<string, string> {
   return utm;
 }
 
+const LEAD_COPY = {
+  fr: {
+    successTitle: "Merci — votre demande est bien reçue.",
+    successBody: "Un consultant Maximerit vous recontacte rapidement.",
+    contactName: "Nom *", email: "Email professionnel *", company: "Société", phone: "Téléphone",
+    profileSought: "Profil recherché", comment: "Votre besoin",
+    error: "Une erreur est survenue. Vérifiez vos informations et réessayez.",
+    sending: "Envoi…", cta: "Confier un recrutement",
+  },
+  en: {
+    successTitle: "Thank you — your request has been received.",
+    successBody: "A Maximerit consultant will get back to you shortly.",
+    contactName: "Name *", email: "Work email *", company: "Company", phone: "Phone",
+    profileSought: "Profile sought", comment: "Your need",
+    error: "Something went wrong. Check your details and try again.",
+    sending: "Sending…", cta: "Send",
+  },
+} as const;
+
 export function LeadForm({
   source,
   landingPageId,
-  ctaLabel = "Confier un recrutement",
+  lang = "fr",
+  ctaLabel,
 }: {
   source: string;
   landingPageId?: number;
+  lang?: "fr" | "en";
   ctaLabel?: string;
 }) {
+  const t = LEAD_COPY[lang];
+  const cta = ctaLabel ?? t.cta;
   const [status, setStatus] = useState<Status>("idle");
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -64,8 +87,8 @@ export function LeadForm({
   if (status === "success") {
     return (
       <div role="status" className="rounded-[var(--radius)] border border-border bg-surface p-6">
-        <p className="font-semibold text-accent">Merci — votre demande est bien reçue.</p>
-        <p className="mt-1 text-sm text-muted">Un consultant Maximerit vous recontacte rapidement.</p>
+        <p className="font-semibold text-accent">{t.successTitle}</p>
+        <p className="mt-1 text-sm text-muted">{t.successBody}</p>
       </div>
     );
   }
@@ -82,18 +105,18 @@ export function LeadForm({
         className="hidden"
       />
       <div className="grid gap-3 sm:grid-cols-2">
-        <input name="contactName" required placeholder="Nom *" className="rounded-[var(--radius)] border border-border bg-background px-3 py-2 text-sm" />
-        <input name="email" type="email" required placeholder="Email professionnel *" className="rounded-[var(--radius)] border border-border bg-background px-3 py-2 text-sm" />
-        <input name="company" placeholder="Société" className="rounded-[var(--radius)] border border-border bg-background px-3 py-2 text-sm" />
-        <input name="phone" placeholder="Téléphone" className="rounded-[var(--radius)] border border-border bg-background px-3 py-2 text-sm" />
-        <input name="profileSought" placeholder="Profil recherché" className="rounded-[var(--radius)] border border-border bg-background px-3 py-2 text-sm sm:col-span-2" />
+        <input name="contactName" required placeholder={t.contactName} className="rounded-[var(--radius)] border border-border bg-background px-3 py-2 text-sm" />
+        <input name="email" type="email" required placeholder={t.email} className="rounded-[var(--radius)] border border-border bg-background px-3 py-2 text-sm" />
+        <input name="company" placeholder={t.company} className="rounded-[var(--radius)] border border-border bg-background px-3 py-2 text-sm" />
+        <input name="phone" placeholder={t.phone} className="rounded-[var(--radius)] border border-border bg-background px-3 py-2 text-sm" />
+        <input name="profileSought" placeholder={t.profileSought} className="rounded-[var(--radius)] border border-border bg-background px-3 py-2 text-sm sm:col-span-2" />
       </div>
-      <textarea name="comment" placeholder="Votre besoin" rows={3} className="rounded-[var(--radius)] border border-border bg-background px-3 py-2 text-sm" />
+      <textarea name="comment" placeholder={t.comment} rows={3} className="rounded-[var(--radius)] border border-border bg-background px-3 py-2 text-sm" />
       {status === "error" && (
-        <p role="alert" className="text-sm text-brand">Une erreur est survenue. Vérifiez vos informations et réessayez.</p>
+        <p role="alert" className="text-sm text-brand">{t.error}</p>
       )}
       <Button type="submit" disabled={status === "loading"}>
-        {status === "loading" ? "Envoi…" : ctaLabel}
+        {status === "loading" ? t.sending : cta}
       </Button>
     </form>
   );

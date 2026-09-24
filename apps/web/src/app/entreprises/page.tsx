@@ -1,11 +1,12 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { SERVICES } from "@/lib/content";
+import { hreflang } from "@/lib/i18n";
 
 export const metadata: Metadata = {
   title: "Entreprises — nos expertises",
   description: "Recrutement, executive search, intérim, RH & paie, finance, QHSE & ESG, formation — en Afrique de l'Ouest.",
-  alternates: { canonical: "/entreprises/" },
+  alternates: { canonical: "/entreprises/", languages: hreflang("/entreprises/", "/en/entreprises/") },
 };
 
 export default function EntreprisesHub() {
