@@ -53,6 +53,7 @@ const COLS_EN = [
     title: "Company",
     links: [
       ["/en/qui-nous-sommes/", "About us"],
+      ["/en/ressources/blog/", "Blog"],
       ["/en/secteurs/", "Sectors"],
       ["/en/contact/", "Contact"],
     ],

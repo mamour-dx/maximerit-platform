@@ -9,10 +9,12 @@ import { counterpartPath } from "@/lib/i18n";
 // Tout le reste (blog, guides, outils, offres CMS…) retombe sur l'accueil de la langue cible.
 const MIRRORED_RE =
   /^\/(qui-nous-sommes|contact|entreprises|secteurs|mines|candidats|mentions-legales|politique-confidentialite)(\/|$)/;
+// Dans /ressources, seul le blog est traduit (guides, outils… restent FR).
+const MIRRORED_BLOG_RE = /^\/ressources\/blog(\/|$)/;
 
 function isMirrored(pathname: string): boolean {
   const fr = pathname.replace(/^\/en(?=\/|$)/, "") || "/";
-  return fr === "/" || MIRRORED_RE.test(fr);
+  return fr === "/" || MIRRORED_RE.test(fr) || MIRRORED_BLOG_RE.test(fr);
 }
 
 function LangSwitch({ isEn }: { isEn: boolean }) {
@@ -39,7 +41,7 @@ const NAV_EN = [
   { href: "/en/secteurs/", label: "Sectors" },
   { href: "/en/mines/", label: "Mining & Resources" },
   { href: "/en/candidats/offres-demploi/", label: "Jobs" },
-  { href: "/en/qui-nous-sommes/", label: "About" },
+  { href: "/en/ressources/blog/", label: "Resources" },
   { href: "/en/contact/", label: "Contact" },
 ];
 

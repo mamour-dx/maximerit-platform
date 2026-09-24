@@ -45,6 +45,7 @@ export const STATIC_INDEXABLE = [
   "/en/candidats/deposer-mon-cv/",
   "/en/candidats/rejoindre-le-vivier/",
   "/en/candidats/conseils-carriere/",
+  "/en/ressources/blog/",
 ];
 
 // Chemins jamais indexables (admin, API — dont les CV servis via /api/cvs — et actions).
