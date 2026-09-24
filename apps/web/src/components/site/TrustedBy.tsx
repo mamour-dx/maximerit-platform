@@ -2,8 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { CLIENT_LOGOS, type ClientLogo } from "@/lib/clients";
 
-// Section « Ils nous font confiance » : deux bandeaux de logos qui défilent en sens inverse
-// (CSS pur, cf. .marquee dans globals.css). Chaque piste = 4 copies de la liste ; l'animation
+// Section « Ils nous font confiance » : un bandeau de logos qui défile en continu
+// (CSS pur, cf. .marquee dans globals.css). La piste = 4 copies de la liste ; l'animation
 // translate de -50 % (2 copies) pour une boucle sans couture. Copies dupliquées masquées aux
 // lecteurs d'écran ; en prefers-reduced-motion, la 1re copie devient une grille statique.
 
@@ -37,17 +37,17 @@ function Tile({ logo }: { logo: ClientLogo }) {
         title={logo.name}
         width={logo.width}
         height={logo.height}
-        className="client-logo w-auto max-w-[180px] object-contain"
+        className="w-auto max-w-[180px] object-contain"
         style={{ height: logo.h }}
       />
     </div>
   );
 }
 
-function Row({ logos, reverse, duration, label }: { logos: ClientLogo[]; reverse?: boolean; duration: number; label?: string }) {
+function Row({ logos, duration, label }: { logos: ClientLogo[]; duration: number; label: string }) {
   return (
-    <div className={`marquee${reverse ? " marquee-secondary" : ""}`} role={label ? "region" : undefined} aria-label={label} aria-hidden={label ? undefined : true}>
-      <ul className="marquee-track" data-reverse={reverse || undefined} style={{ "--marquee-duration": `${duration}s` } as React.CSSProperties}>
+    <div className="marquee" role="region" aria-label={label}>
+      <ul className="marquee-track" style={{ "--marquee-duration": `${duration}s` } as React.CSSProperties}>
         {Array.from({ length: COPIES }, (_, copy) =>
           logos.map((logo) => (
             <li key={`${copy}-${logo.slug}`} className="px-2" data-dup={copy > 0 || undefined} aria-hidden={copy > 0 || undefined}>
@@ -62,8 +62,6 @@ function Row({ logos, reverse, duration, label }: { logos: ClientLogo[]; reverse
 
 export function TrustedBy({ lang = "fr" }: { lang?: "fr" | "en" }) {
   const t = COPY[lang];
-  // 2e bandeau : ordre décalé pour éviter l'effet « miroir » entre les deux lignes.
-  const shifted = [...CLIENT_LOGOS.slice(4), ...CLIENT_LOGOS.slice(0, 4)].reverse();
 
   return (
     <section className="overflow-hidden border-b border-border bg-surface py-16">
@@ -74,9 +72,8 @@ export function TrustedBy({ lang = "fr" }: { lang?: "fr" | "en" }) {
         <p className="mx-auto mt-4 max-w-2xl text-muted">{t.intro}</p>
       </div>
 
-      <div className="mt-10 space-y-4">
+      <div className="mt-10">
         <Row logos={CLIENT_LOGOS} duration={48} label={t.region} />
-        <Row logos={shifted} duration={62} reverse />
       </div>
 
       <div className="mt-10 text-center">
