@@ -47,6 +47,10 @@ export default function MinesHub() {
           ))}
         </div>
       )}
+      <div className="mt-10 flex flex-wrap gap-3">
+        <Link href="/mines/metiers/" className="rounded-[var(--radius)] bg-brand px-5 py-3 text-sm font-semibold text-white transition hover:opacity-90">Voir tous les métiers</Link>
+        <Link href="/contact/" className="rounded-[var(--radius)] border border-border px-5 py-3 text-sm font-semibold transition hover:bg-surface">Confier un recrutement</Link>
+      </div>
     </main>
   );
 }
