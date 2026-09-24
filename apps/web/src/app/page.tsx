@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { mining } from "@maximerit/domain";
 import { hreflang } from "@/lib/i18n";
+import { TrustedBy } from "@/components/site/TrustedBy";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/", languages: hreflang("/", "/en/") },
@@ -30,7 +31,6 @@ const OUTILS = [
   ["Benchmark salaire", "/ressources/outils/benchmark-salaire/"],
   ["Mining Team Planner", "/ressources/outils/mining-team-planner/"],
 ];
-const REFERENCES = ["Senelec", "SGS", "BMN", "Endeavour", "Teranga", "GCO"];
 
 function TitleAccent({ children }: { children: React.ReactNode }) {
   return (
@@ -82,6 +82,9 @@ export default function Home() {
           </dl>
         </div>
       </section>
+
+      {/* Preuve sociale : logos clients en défilement */}
+      <TrustedBy lang="fr" />
 
       {/* Expertises entreprises */}
       <section id="expertises" className="scroll-mt-20">
@@ -142,19 +145,6 @@ export default function Home() {
               <Link key={href} href={href} className="rounded-[var(--radius)] border border-border bg-background p-5 transition hover:border-brand">
                 <span className="font-semibold">{label}</span>
               </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Références (preuve) */}
-      <section>
-        <div className="mx-auto w-full max-w-6xl px-6 py-16 text-center">
-          <h2 className="font-display text-3xl font-bold sm:text-4xl">Nos références</h2>
-          <span className="mx-auto mt-3 block h-1 w-16 rounded bg-brand" />
-          <div className="mt-10 flex flex-wrap items-center justify-center gap-x-10 gap-y-4">
-            {REFERENCES.map((r) => (
-              <span key={r} className="text-lg font-semibold text-muted">{r}</span>
             ))}
           </div>
         </div>

@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { mining } from "@maximerit/domain";
 import { hreflang } from "@/lib/i18n";
 import { SetLang } from "@/components/site/SetLang";
+import { TrustedBy } from "@/components/site/TrustedBy";
 
 export const metadata: Metadata = {
   title: "Maximerit — Recruitment & talent in West Africa",
@@ -39,7 +40,9 @@ export default function HomeEn() {
         </div>
       </section>
 
-      <section className="border-y border-border bg-ink">
+      <TrustedBy lang="en" />
+
+      <section className="border-b border-border bg-ink">
         <div className="mx-auto w-full max-w-6xl border-l-4 border-brand px-6 py-16 pl-8">
           <p className="text-sm font-semibold uppercase tracking-[0.2em] text-brand">Priority vertical</p>
           <h2 className="mt-3 font-display text-3xl font-bold sm:text-4xl">Mining recruitment in West Africa</h2>
