@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { counterpartPath } from "@/lib/i18n";
@@ -8,7 +9,7 @@ import { counterpartPath } from "@/lib/i18n";
 // Chemins disposant d'une version dans l'autre langue (forme FR canonique, préfixe /en retiré).
 // Tout le reste (blog, guides, outils, offres CMS…) retombe sur l'accueil de la langue cible.
 const MIRRORED_RE =
-  /^\/(qui-nous-sommes|contact|entreprises|secteurs|mines|candidats|mentions-legales|politique-confidentialite)(\/|$)/;
+  /^\/(qui-nous-sommes|contact|entreprises|secteurs|mines|candidats|jobs|lp|mentions-legales|politique-confidentialite)(\/|$)/;
 // Tout /ressources est traduit (blog, guides/études/baromètres, outils).
 const MIRRORED_RESOURCES_RE = /^\/ressources\/(blog|guides|etudes|barometres|outils)(\/|$)/;
 
@@ -47,14 +48,15 @@ const NAV_EN = [
 
 function Wordmark({ isEn }: { isEn: boolean }) {
   return (
-    <Link href={isEn ? "/en/" : "/"} className="flex flex-col leading-none" aria-label="Maximerit — home">
-      <span className="text-2xl font-extrabold tracking-tight">
-        <span className="text-brand">MAXI</span>
-        <span className="text-foreground">MERIT</span>
-      </span>
-      <span className="mt-0.5 text-[10px] font-medium uppercase tracking-[0.2em] text-muted">
-        {isEn ? "Advisory · Training · Recruitment" : "Conseil · Formation · Recrutement"}
-      </span>
+    <Link href={isEn ? "/en/" : "/"} className="inline-flex items-center" aria-label="Maximerit — Conseil, Formation, Recrutement">
+      <Image
+        src="/maximerit-logo.png"
+        alt="Maximerit"
+        width={493}
+        height={93}
+        priority
+        className="h-9 w-auto sm:h-10"
+      />
     </Link>
   );
 }

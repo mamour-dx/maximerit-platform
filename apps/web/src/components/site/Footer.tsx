@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 
 const COLS_FR = [
@@ -85,9 +86,7 @@ export function SiteFooter() {
     <footer className="mt-20 border-t border-border bg-surface">
       <div className="mx-auto grid w-full max-w-6xl gap-10 px-6 py-14 md:grid-cols-4">
         <div>
-          <div className="text-xl font-extrabold tracking-tight">
-            <span className="text-brand">MAXI</span><span className="text-foreground">MERIT</span>
-          </div>
+          <Image src="/maximerit-logo.png" alt="Maximerit" width={493} height={93} className="h-9 w-auto" />
           <p className="mt-3 text-sm text-muted">{t.tagline}</p>
           <address className="mt-4 not-italic text-sm text-muted">
             <div>Sacré Cœur 3 Pyrotechnie, lot 115 — Dakar</div>
