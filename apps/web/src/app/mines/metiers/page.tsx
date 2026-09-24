@@ -2,11 +2,12 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { mining } from "@maximerit/domain";
 import { disciplineSeg } from "@/lib/mining-nav";
+import { hreflang } from "@/lib/i18n";
 
 export const metadata: Metadata = {
   title: "Métiers miniers",
   description: "Tous les métiers miniers recrutés par Maximerit en Afrique de l'Ouest : géologie, exploitation, finance, leadership.",
-  alternates: { canonical: "/mines/metiers/" },
+  alternates: { canonical: "/mines/metiers/", languages: hreflang("/mines/metiers/", "/en/mines/metiers/") },
 };
 
 export default function MetiersListing() {

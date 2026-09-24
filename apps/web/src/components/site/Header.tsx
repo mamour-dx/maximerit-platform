@@ -6,12 +6,15 @@ import { useState } from "react";
 import { counterpartPath } from "@/lib/i18n";
 
 // Pages disposant d'une version dans l'autre langue (sinon repli sur l'accueil de la langue cible).
-const MIRRORED = new Set(["/", "/mines/", "/contact/", "/en/", "/en/mines/", "/en/contact/"]);
+const MIRRORED = new Set(["/", "/contact/", "/en/", "/en/contact/"]);
+// Tout le silo Mining est mirroré (FR /mines/** ↔ EN /en/mines/**).
+const MIRRORED_RE = /^\/(en\/)?mines(\/|$)/;
 
 function LangSwitch() {
   const pathname = usePathname() || "/";
   const { locale, href } = counterpartPath(pathname);
-  const target = MIRRORED.has(pathname) ? href : locale === "en" ? "/en/" : "/";
+  const mirrored = MIRRORED.has(pathname) || MIRRORED_RE.test(pathname);
+  const target = mirrored ? href : locale === "en" ? "/en/" : "/";
   return (
     <Link href={target} className="text-sm font-semibold text-muted transition hover:text-brand" aria-label={`Passer en ${locale === "en" ? "anglais" : "français"}`}>
       {locale === "en" ? "EN" : "FR"}

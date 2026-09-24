@@ -29,9 +29,12 @@ export const STATIC_INDEXABLE = [
   "/ressources/outils/cout-recrutement/",
   "/ressources/outils/benchmark-salaire/",
   "/ressources/outils/mining-team-planner/",
-  // Volet anglais (fondation i18n)
+  // Volet anglais (fondation i18n + silo Mining mirroré sous /en)
   "/en/",
   "/en/mines/",
+  "/en/mines/recrutement-minier/",
+  ...miningIndexablePaths().map((p) => `/en${p}`),
+  ...countryPaths().map((p) => `/en${p}`),
   "/en/contact/",
 ];
 

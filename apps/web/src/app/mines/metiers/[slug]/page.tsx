@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { specialtyParams, findSpecialty } from "@/lib/mining-nav";
+import { hreflang } from "@/lib/i18n";
 
 type Args = { params: Promise<{ slug: string }> };
 
@@ -16,7 +17,7 @@ export async function generateMetadata({ params }: Args): Promise<Metadata> {
   return {
     title: `Recrutement ${r.specialty.label_fr} — Afrique de l'Ouest`,
     description: `Recruter un ${r.specialty.label_fr} (${r.specialty.label_en}) pour vos opérations minières en Afrique de l'Ouest — ${r.discipline.label_fr}.`,
-    alternates: { canonical: `/mines/metiers/${slug}/` },
+    alternates: { canonical: `/mines/metiers/${slug}/`, languages: hreflang(`/mines/metiers/${slug}/`, `/en/mines/metiers/${slug}/`) },
   };
 }
 

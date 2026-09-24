@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { mining } from "@maximerit/domain";
 import { disciplineParams, findDiscipline, disciplineSeg } from "@/lib/mining-nav";
 import { countryParams, findCountry } from "@/lib/mining-countries";
+import { hreflang } from "@/lib/i18n";
 
 type Args = { params: Promise<{ slug: string }> };
 
@@ -15,10 +16,11 @@ export async function generateMetadata({ params }: Args): Promise<Metadata> {
   const { slug } = await params;
   const d = findDiscipline(slug);
   if (d) {
+    const seg = disciplineSeg(d.url);
     return {
       title: `${d.label_fr} — recrutement minier`,
       description: `Recrutement ${d.label_fr} pour les opérations minières en Afrique de l'Ouest : ${d.specialties.length} métiers.`,
-      alternates: { canonical: `/mines/${disciplineSeg(d.url)}/` },
+      alternates: { canonical: `/mines/${seg}/`, languages: hreflang(`/mines/${seg}/`, `/en/mines/${seg}/`) },
     };
   }
   const c = findCountry(slug);
@@ -26,7 +28,7 @@ export async function generateMetadata({ params }: Args): Promise<Metadata> {
     return {
       title: `Recrutement minier — ${c.label}`,
       description: `Recrutement minier en ${c.label} : ${c.commodities.join(", ")}. ${c.context}`,
-      alternates: { canonical: `/mines/${c.slug}/` },
+      alternates: { canonical: `/mines/${c.slug}/`, languages: hreflang(`/mines/${c.slug}/`, `/en/mines/${c.slug}/`) },
     };
   }
   return {};

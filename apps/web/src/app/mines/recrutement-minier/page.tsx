@@ -3,11 +3,12 @@ import type { Metadata } from "next";
 import { mining } from "@maximerit/domain";
 import { MINING_COUNTRIES } from "@/lib/mining-countries";
 import { LeadForm } from "@/components/LeadForm";
+import { hreflang } from "@/lib/i18n";
 
 export const metadata: Metadata = {
   title: "Cabinet de recrutement minier en Afrique de l'Ouest",
   description: "Maximerit, cabinet spécialisé du recrutement minier en Afrique de l'Ouest : géologie, exploitation, finance et executive search. Short-list qualifiée, rapidement.",
-  alternates: { canonical: "/mines/recrutement-minier/" },
+  alternates: { canonical: "/mines/recrutement-minier/", languages: hreflang("/mines/recrutement-minier/", "/en/mines/recrutement-minier/") },
 };
 
 const PROBLEMES = [
