@@ -58,5 +58,5 @@ ACTIONS RESTANTES : …
 **Les 13 phases (0 → 12) sont validées, CI verte à chaque palier.** Voir `specs/phase-12-production/VALIDATION.md`.
 
 ### Évolutions post-GATE FINAL
-- ✅ **Phase 13** — GATE 13 GO (job board filtrable FR/EN : mots-clés sans accents, pays, pôle, contrat, facettes live, noindex filtré ; page offre enrichie + offres similaires ; design system tokens/composants/icônes, accueil FR/EN unifié ; seed démo `seed:demo`). Unit 85/85, intégration 39/39. Voir `specs/phase-13-job-board/VALIDATION.md`.
+- ✅ **Phase 13** — GATE 13 GO (job board filtrable FR/EN : mots-clés sans accents, pays, pôle, contrat, facettes live, noindex filtré ; page offre enrichie + offres similaires ; design system tokens/composants/icônes, accueil FR/EN unifié ; seed démo `seed:demo`) ; **13b** design system déployé sur toutes les pages publiques (kit de mise en page + vues FR/EN partagées). Unit 85/85, intégration 39/39. Voir `specs/phase-13-job-board/VALIDATION.md`.
 Réserves ouvertes (hors code) : rendu `/en/` (hreflang), durcissements prod (CSP/MFA/Redis/S3/email), finalisation « valeur » de la carte de migration (ADR-0005), habillage/contenu à enrichir dans le CMS.

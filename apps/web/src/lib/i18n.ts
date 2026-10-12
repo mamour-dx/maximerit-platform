@@ -9,6 +9,11 @@ export function hreflang(fr: string, en: string): Record<string, string> {
   return { fr, en, "x-default": fr };
 }
 
+/** Chemin FR canonique → chemin de la langue demandée (EN = préfixe /en). */
+export function localePath(locale: Locale, path: string): string {
+  return locale === "en" ? `/en${path}` : path;
+}
+
 /** Chemin équivalent dans l'autre langue (pour le sélecteur de langue). */
 export function counterpartPath(pathname: string): { locale: Locale; href: string } {
   if (pathname === "/en" || pathname.startsWith("/en/")) {

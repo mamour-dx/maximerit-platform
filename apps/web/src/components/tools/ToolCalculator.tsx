@@ -8,7 +8,7 @@ import {
   type ToolSlug, type Lang,
 } from "@/lib/tools";
 
-const inputCls = "rounded-[var(--radius)] border border-border bg-background px-3 py-2 text-sm";
+const inputCls = "field";
 
 const DISCIPLINES_FR = [
   ["geologie-exploration", "Géologie & Exploration"],
@@ -96,7 +96,7 @@ export function ToolCalculator({ tool, lang = "fr" }: { tool: ToolSlug; lang?: L
 
   return (
     <div>
-      <form onSubmit={onSubmit} className="grid gap-3 sm:max-w-md">
+      <form onSubmit={onSubmit} className="grid gap-3">
         {tool === "cout-vacance" && (<>
           <input name="monthlySalary" type="number" min="1" required placeholder={t.monthlySalary} className={inputCls} />
           <input name="vacancyDays" type="number" min="1" required placeholder={t.vacancyDays} className={inputCls} />
@@ -113,10 +113,10 @@ export function ToolCalculator({ tool, lang = "fr" }: { tool: ToolSlug; lang?: L
         {tool === "mining-team-planner" && (
           <select name="phase" className={inputCls}>{phases.map(([v, l]) => <option key={v} value={v}>{l}</option>)}</select>
         )}
-        <Button type="submit">{t.calc}</Button>
+        <Button type="submit" className="mt-1 py-3">{t.calc}</Button>
       </form>
       {errors.length > 0 && <p role="alert" className="mt-4 text-sm text-brand">{errors.join(" · ")}</p>}
-      {result && <div className="mt-4 rounded-[var(--radius)] border border-border bg-surface p-4 text-sm">{result}</div>}
+      {result && <div role="status" className="mt-5 rounded-[var(--radius)] border border-brand/25 bg-brand-soft/40 p-5 text-sm leading-relaxed [&_span]:mt-2 [&_span]:block">{result}</div>}
     </div>
   );
 }

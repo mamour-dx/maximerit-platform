@@ -105,17 +105,17 @@ export function LeadForm({
         className="hidden"
       />
       <div className="grid gap-3 sm:grid-cols-2">
-        <input name="contactName" required placeholder={t.contactName} className="rounded-[var(--radius)] border border-border bg-background px-3 py-2 text-sm" />
-        <input name="email" type="email" required placeholder={t.email} className="rounded-[var(--radius)] border border-border bg-background px-3 py-2 text-sm" />
-        <input name="company" placeholder={t.company} className="rounded-[var(--radius)] border border-border bg-background px-3 py-2 text-sm" />
-        <input name="phone" placeholder={t.phone} className="rounded-[var(--radius)] border border-border bg-background px-3 py-2 text-sm" />
-        <input name="profileSought" placeholder={t.profileSought} className="rounded-[var(--radius)] border border-border bg-background px-3 py-2 text-sm sm:col-span-2" />
+        <input name="contactName" required placeholder={t.contactName} className="field" />
+        <input name="email" type="email" required placeholder={t.email} className="field" />
+        <input name="company" placeholder={t.company} className="field" />
+        <input name="phone" placeholder={t.phone} className="field" />
+        <input name="profileSought" placeholder={t.profileSought} className="field sm:col-span-2" />
       </div>
-      <textarea name="comment" placeholder={t.comment} rows={3} className="rounded-[var(--radius)] border border-border bg-background px-3 py-2 text-sm" />
+      <textarea name="comment" placeholder={t.comment} rows={3} className="field" />
       {status === "error" && (
         <p role="alert" className="text-sm text-brand">{t.error}</p>
       )}
-      <Button type="submit" disabled={status === "loading"}>
+      <Button type="submit" disabled={status === "loading"} className="mt-1 py-3">
         {status === "loading" ? t.sending : cta}
       </Button>
     </form>

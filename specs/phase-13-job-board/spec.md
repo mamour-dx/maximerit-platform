@@ -31,3 +31,11 @@ réellement utilisable (recherche + filtres) et élève le niveau visuel de la p
 
 ### Données de démonstration
 - R14 — Commande `pnpm --filter web seed:demo` (idempotente, FR + EN) pour la recette locale ; jamais en prod.
+
+### 13b — Déploiement du design system sur tout le site
+- R15 — Toutes les pages publiques (Mining, entreprises, secteurs, à propos, contact, candidats, légal,
+  blog, guides/études/baromètres, outils, landing pages, pages CMS, 404) utilisent le même kit de mise en
+  page (`components/site/PageKit.tsx`) : en-tête de page, sections, cartes, étapes, bandeau CTA.
+- R16 — Une vue partagée FR/EN par type de page (`components/views/*`) ; les routes ne portent plus que
+  métadonnées SEO, paramètres statiques et chargement des données (aucun changement d'URL, canonical ou hreflang).
+- R17 — Formulaires (lead, candidature, outils) alignés sur le composant `field` du design system.

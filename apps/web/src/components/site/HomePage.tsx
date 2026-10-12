@@ -6,6 +6,8 @@ import { TrustedBy } from "@/components/site/TrustedBy";
 import { LocationMap } from "@/components/site/LocationMap";
 import { SERVICES, SECTORS } from "@/lib/content";
 import { MINING_COUNTRIES } from "@/lib/mining-countries";
+import { SERVICE_ICONS } from "@/components/views/company";
+import { Steps } from "@/components/site/PageKit";
 
 // Accueil partagé FR/EN : mêmes sections, textes par langue, liens préfixés /en en anglais.
 
@@ -144,15 +146,6 @@ const COPY = {
   },
 } as const;
 
-const SERVICE_ICONS: Record<string, IconName> = {
-  recrutement: "users",
-  "executive-search": "target",
-  interim: "clock",
-  "externalisation-rh-paie": "file",
-  "finance-performance": "chart",
-  "qhse-esg": "shield",
-  formation: "compass",
-};
 const DISCIPLINE_ICONS: IconName[] = ["compass", "pickaxe", "chart", "users"];
 
 export function HomePage({ lang }: { lang: Lang }) {
@@ -309,20 +302,7 @@ export function HomePage({ lang }: { lang: Lang }) {
         <div className="container-page py-20">
           <p className="eyebrow">{t.methodEyebrow}</p>
           <h2 className="section-title mt-3">{t.methodTitle}</h2>
-          <ol className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-            {t.method.map(([title, body], i) => (
-              <li key={title} className="relative">
-                {i < t.method.length - 1 ? (
-                  <span className="absolute left-12 right-0 top-5 hidden h-px bg-border lg:block" aria-hidden="true" />
-                ) : null}
-                <span className="relative flex h-10 w-10 items-center justify-center rounded-full bg-brand font-display text-lg font-bold text-white shadow-[0_6px_16px_-6px_rgba(226,0,26,0.6)]">
-                  {i + 1}
-                </span>
-                <h3 className="mt-5 text-lg font-semibold">{title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted">{body}</p>
-              </li>
-            ))}
-          </ol>
+          <div className="mt-12"><Steps steps={t.method} /></div>
         </div>
       </section>
 

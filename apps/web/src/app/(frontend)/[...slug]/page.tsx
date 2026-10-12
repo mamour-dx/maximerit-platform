@@ -3,6 +3,7 @@ import { draftMode } from "next/headers";
 import type { Metadata } from "next";
 import { getPayload, type Where } from "payload";
 import config from "@payload-config";
+import { Page, PageHero, Prose, Section } from "@/components/site/PageKit";
 
 export const dynamic = "force-dynamic";
 
@@ -36,21 +37,17 @@ export default async function CmsPage({ params }: Args) {
   const page = await getPage(slug.join("/"), isEnabled);
   if (!page) notFound();
 
-  const paragraphs = String(page.content ?? "").split(/\n{2,}/).filter(Boolean);
-
   return (
-    <main className="mx-auto w-full max-w-3xl px-6 py-16">
-      {isEnabled && page.status !== "published" ? (
-        <p className="mb-4 inline-block rounded-full bg-brand px-3 py-1 text-xs font-semibold text-white">
-          Aperçu — brouillon
-        </p>
-      ) : null}
-      <h1 className="text-4xl font-bold">{page.title as string}</h1>
-      <div className="mt-6 space-y-4 text-muted">
-        {paragraphs.map((p, i) => (
-          <p key={i}>{p}</p>
-        ))}
-      </div>
-    </main>
+    <Page lang="fr">
+      <PageHero
+        lang="fr"
+        title={page.title as string}
+        compact
+        eyebrow={isEnabled && page.status !== "published" ? "Aperçu — brouillon" : undefined}
+      />
+      <Section narrow>
+        <Prose text={page.content as string} />
+      </Section>
+    </Page>
   );
 }
