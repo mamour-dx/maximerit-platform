@@ -5,6 +5,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { counterpartPath } from "@/lib/i18n";
+import { Icon } from "@/components/ui/Icon";
 
 // Chemins disposant d'une version dans l'autre langue (forme FR canonique, préfixe /en retiré).
 // Tout le reste (blog, guides, outils, offres CMS…) retombe sur l'accueil de la langue cible.
@@ -23,7 +24,11 @@ function LangSwitch({ isEn }: { isEn: boolean }) {
   const { locale, href } = counterpartPath(pathname);
   const target = isMirrored(pathname) ? href : locale === "en" ? "/en/" : "/";
   return (
-    <Link href={target} className="text-sm font-semibold text-muted transition hover:text-brand" aria-label={isEn ? "Switch to French" : "Passer en anglais"}>
+    <Link
+      href={target}
+      className="inline-flex h-8 items-center rounded-full border border-border px-3 text-xs font-semibold tracking-wider text-muted transition hover:border-brand hover:text-brand"
+      aria-label={isEn ? "Switch to French" : "Passer en anglais"}
+    >
       {locale === "en" ? "EN" : "FR"}
     </Link>
   );
@@ -32,7 +37,7 @@ function LangSwitch({ isEn }: { isEn: boolean }) {
 const NAV_FR = [
   { href: "/#expertises", label: "Entreprises" },
   { href: "/#secteurs", label: "Secteurs" },
-  { href: "/mines/", label: "Mines & Resources" },
+  { href: "/mines/", label: "Mines & Ressources" },
   { href: "/candidats/offres-demploi/", label: "Offres" },
   { href: "/ressources/blog/", label: "Ressources" },
   { href: "/contact/", label: "Contact" },
@@ -62,6 +67,12 @@ function Wordmark({ isEn }: { isEn: boolean }) {
   );
 }
 
+/** Lien actif : même section (les ancres de l'accueil ne sont jamais « actives »). */
+function isActive(pathname: string, href: string): boolean {
+  if (href.includes("#")) return false;
+  return pathname === href || (href !== "/" && href !== "/en/" && pathname.startsWith(href));
+}
+
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname() || "/";
@@ -71,41 +82,66 @@ export function SiteHeader() {
   const ctaLabel = isEn ? "Hire with us" : "Confier un recrutement";
 
   return (
-    <header className="sticky top-0 z-50 border-b border-border bg-background/90 backdrop-blur">
-      <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-3">
+    <header className="sticky top-0 z-50 border-b border-border bg-background/85 backdrop-blur-md supports-[backdrop-filter]:bg-background/75">
+      <div className="container-page flex h-16 items-center justify-between gap-6 lg:h-[72px]">
         <Wordmark isEn={isEn} />
-        <nav className="hidden items-center gap-6 lg:flex" aria-label={isEn ? "Main navigation" : "Navigation principale"}>
-          {nav.map((n) => (
-            <Link key={n.href} href={n.href} className="text-sm font-medium text-foreground/80 transition hover:text-brand">
-              {n.label}
-            </Link>
-          ))}
+        <nav className="hidden items-center gap-1 lg:flex" aria-label={isEn ? "Main navigation" : "Navigation principale"}>
+          {nav.map((n) => {
+            const active = isActive(pathname, n.href);
+            return (
+              <Link
+                key={n.href}
+                href={n.href}
+                aria-current={active ? "page" : undefined}
+                className={`relative whitespace-nowrap rounded-full px-2.5 py-2 text-sm font-medium transition hover:bg-surface hover:text-brand xl:px-3 ${active ? "text-brand" : "text-foreground/75"}`}
+              >
+                {n.label}
+                {active ? <span className="absolute inset-x-2.5 -bottom-[17px] h-0.5 rounded-full bg-brand xl:inset-x-3" aria-hidden="true" /> : null}
+              </Link>
+            );
+          })}
+        </nav>
+        <div className="hidden items-center gap-3 lg:flex">
           <LangSwitch isEn={isEn} />
-          <Link href={ctaHref} className="rounded-[var(--radius)] bg-brand px-4 py-2 text-sm font-semibold text-white transition hover:opacity-90">
+          <Link href={ctaHref} className="btn btn-primary btn-sm hidden xl:inline-flex">
             {ctaLabel}
           </Link>
-        </nav>
+        </div>
         <button
           type="button"
-          className="lg:hidden inline-flex h-10 w-10 items-center justify-center rounded-[var(--radius)] border border-border"
+          className="inline-flex h-10 w-10 items-center justify-center rounded-[var(--radius)] border border-border transition hover:border-foreground lg:hidden"
           aria-label="Menu"
           aria-expanded={open}
+          aria-controls="mobile-nav"
           onClick={() => setOpen((v) => !v)}
         >
-          <span className="text-xl">{open ? "✕" : "☰"}</span>
+          {open ? <Icon name="x" /> : (
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" /></svg>
+          )}
         </button>
       </div>
       {open && (
-        <nav className="border-t border-border bg-background px-6 py-4 lg:hidden" aria-label={isEn ? "Mobile navigation" : "Navigation mobile"}>
-          <ul className="flex flex-col gap-3">
-            {nav.map((n) => (
-              <li key={n.href}>
-                <Link href={n.href} className="block text-sm font-medium" onClick={() => setOpen(false)}>{n.label}</Link>
-              </li>
-            ))}
-            <li className="pt-1"><LangSwitch isEn={isEn} /></li>
-            <li>
-              <Link href={ctaHref} className="mt-1 inline-block rounded-[var(--radius)] bg-brand px-4 py-2 text-sm font-semibold text-white" onClick={() => setOpen(false)}>
+        <nav id="mobile-nav" className="border-t border-border bg-background lg:hidden" aria-label={isEn ? "Mobile navigation" : "Navigation mobile"}>
+          <ul className="container-page grid gap-1 py-4">
+            {nav.map((n) => {
+              const active = isActive(pathname, n.href);
+              return (
+                <li key={n.href}>
+                  <Link
+                    href={n.href}
+                    aria-current={active ? "page" : undefined}
+                    className={`flex items-center justify-between rounded-[var(--radius)] px-3 py-3 text-base font-medium transition hover:bg-surface ${active ? "bg-surface text-brand" : ""}`}
+                    onClick={() => setOpen(false)}
+                  >
+                    {n.label}
+                    <Icon name="arrowRight" size={16} className="text-muted" />
+                  </Link>
+                </li>
+              );
+            })}
+            <li className="mt-3 flex items-center gap-3 border-t border-border pt-4">
+              <LangSwitch isEn={isEn} />
+              <Link href={ctaHref} className="btn btn-primary flex-1" onClick={() => setOpen(false)}>
                 {ctaLabel}
               </Link>
             </li>

@@ -83,11 +83,11 @@ export function SiteFooter() {
   const t = isEn ? COPY.en : COPY.fr;
 
   return (
-    <footer className="mt-20 border-t border-border bg-surface">
-      <div className="mx-auto grid w-full max-w-6xl gap-10 px-6 py-14 md:grid-cols-4">
-        <div>
+    <footer className="border-t border-border bg-surface">
+      <div className="container-page grid gap-10 py-16 sm:grid-cols-2 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
+        <div className="sm:col-span-2 md:col-span-1">
           <Image src="/maximerit-logo.png" alt="Maximerit" width={493} height={93} className="h-9 w-auto" />
-          <p className="mt-3 text-sm text-muted">{t.tagline}</p>
+          <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted">{t.tagline}</p>
           <address className="mt-4 not-italic text-sm text-muted">
             <div>Sacré Cœur 3 Pyrotechnie, lot 115 — Dakar</div>
             <div className="mt-1"><a href="tel:+221338244606" className="hover:text-brand">+221 33 824 46 06</a></div>
@@ -96,17 +96,17 @@ export function SiteFooter() {
         </div>
         {cols.map((c) => (
           <div key={c.title}>
-            <h3 className="text-sm font-semibold">{c.title}</h3>
-            <ul className="mt-3 space-y-2">
+            <h3 className="text-xs font-semibold uppercase tracking-[0.16em] text-foreground">{c.title}</h3>
+            <ul className="mt-4 space-y-2.5">
               {c.links.map(([href, label]) => (
-                <li key={href}><Link href={href} className="text-sm text-muted hover:text-brand">{label}</Link></li>
+                <li key={href}><Link href={href} className="text-sm text-muted transition hover:text-brand">{label}</Link></li>
               ))}
             </ul>
           </div>
         ))}
       </div>
       <div className="border-t border-border">
-        <div className="mx-auto flex w-full max-w-6xl flex-col items-center justify-between gap-2 px-6 py-4 text-xs text-muted sm:flex-row">
+        <div className="container-page flex flex-col items-center justify-between gap-2 py-5 text-xs text-muted sm:flex-row">
           <span>© {new Date().getFullYear()} Maximerit. {t.rights}</span>
           <span className="flex gap-4">
             <Link href={t.legalHref} className="hover:text-brand">{t.legal}</Link>

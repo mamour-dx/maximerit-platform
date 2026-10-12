@@ -41,6 +41,8 @@ export default buildConfig({
   // i18n réel FR/EN (ADR-0002)
   localization: { locales: ["fr", "en"], defaultLocale: "fr" },
   typescript: { outputFile: path.resolve(dirname, "payload-types.ts") },
+  // Commandes CLI projet (`payload <key>`). seed-demo : offres de démonstration (dev/recette uniquement).
+  bin: [{ key: "seed-demo", scriptPath: path.resolve(dirname, "../scripts/seed-demo-jobs.ts") }],
   collections: [
     {
       slug: "users",

@@ -85,19 +85,19 @@ export function ApplyForm({ jobId, jobTitle, lang = "fr" }: { jobId?: number | s
       <input type="text" name="company_url" tabIndex={-1} autoComplete="off" aria-hidden="true" className="hidden" />
       {jobTitle ? <p className="text-sm text-muted">{t.applyTo} <strong>{jobTitle}</strong></p> : null}
       <div className="grid gap-3 sm:grid-cols-2">
-        <input name="firstName" required placeholder={t.firstName} className="rounded-[var(--radius)] border border-border bg-background px-3 py-2 text-sm" />
-        <input name="lastName" required placeholder={t.lastName} className="rounded-[var(--radius)] border border-border bg-background px-3 py-2 text-sm" />
-        <input name="email" type="email" required placeholder={t.email} className="rounded-[var(--radius)] border border-border bg-background px-3 py-2 text-sm" />
-        <input name="phone" required placeholder={t.phone} className="rounded-[var(--radius)] border border-border bg-background px-3 py-2 text-sm" />
+        <input name="firstName" required placeholder={t.firstName} className="field" />
+        <input name="lastName" required placeholder={t.lastName} className="field" />
+        <input name="email" type="email" required placeholder={t.email} className="field" />
+        <input name="phone" required placeholder={t.phone} className="field" />
       </div>
-      <input name="currentPosition" placeholder={t.currentPosition} className="rounded-[var(--radius)] border border-border bg-background px-3 py-2 text-sm" />
-      <label className="text-sm">{t.cv}<input name="cv" type="file" required accept=".pdf,.docx" className="mt-1 block w-full text-sm" /></label>
+      <input name="currentPosition" placeholder={t.currentPosition} className="field" />
+      <label className="grid gap-1.5 text-sm font-medium">{t.cv}<input name="cv" type="file" required accept=".pdf,.docx" className="block w-full rounded-[var(--radius)] border border-dashed border-border bg-surface p-3 text-sm text-muted file:mr-3 file:rounded-full file:border-0 file:bg-brand-soft file:px-3 file:py-1.5 file:text-xs file:font-semibold file:text-brand" /></label>
       <label className="flex items-start gap-2 text-sm text-muted">
         <input name="consent" type="checkbox" required className="mt-1" />
         <span>{t.consent}</span>
       </label>
       {status === "error" && <p role="alert" className="text-sm text-brand">{t.error}</p>}
-      <Button type="submit" disabled={status === "loading"}>{status === "loading" ? t.sending : t.submit}</Button>
+      <Button type="submit" disabled={status === "loading"} className="mt-1 py-3">{status === "loading" ? t.sending : t.submit}</Button>
     </form>
   );
 }

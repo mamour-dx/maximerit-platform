@@ -35,6 +35,7 @@ Voir `docs/ROADMAP.md` et les `specs/phase-*/VALIDATION.md`.
 docker compose up -d           # PostgreSQL + Meilisearch
 pnpm install
 pnpm --filter web exec payload migrate --use-swc
+pnpm --filter web seed:demo    # optionnel : offres de démonstration FR/EN (jamais en prod)
 pnpm --filter web dev          # http://localhost:3000  (admin : /admin)
 ```
 
