@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 const CARDS = [
   { label: "Téléphone", value: "+221 33 824 46 06", href: "tel:+221338244606" },
   { label: "Email", value: "contact@maximerit.com", href: "mailto:contact@maximerit.com" },
-  { label: "Adresse", value: "Sacré Cœur 3 Pyrotechnie, lot 115 — Dakar" },
+  { label: "Adresse", value: "Sacré Cœur 3 Pyrotechnie, lot 115 — en face arrêt BRT Sacré Coeur - Dakar" },
 ];
 
 export default function ContactPage() {

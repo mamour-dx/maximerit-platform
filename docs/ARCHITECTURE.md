@@ -13,15 +13,15 @@
                                        │  API (REST/GraphQL Payload) + Server Actions
                                        ▼
                          ┌───────────────────────────┐
-                         │        API / MÉTIER        │  Payload (auth, RBAC, validation
-                         │  Auth · RBAC · Validation  │  serveur, business logic, hooks)
+                         │        API / MÉTIER       │  Payload (auth, RBAC, validation
+                         │  Auth · RBAC · Validation │  serveur, business logic, hooks)
                          └─────────────┬─────────────┘
              ┌─────────────────────────┼─────────────────────────┐
              ▼                         ▼                         ▼
      ┌───────────────┐        ┌─────────────────┐       ┌────────────────┐
      │  PostgreSQL   │        │  File storage   │       │  Meilisearch   │
      │  (Drizzle)    │        │  CV / médias    │       │  full-text     │
-     │  migrations   │        │  (privé, S3-like)│      │  multicritère  │
+     │  migrations   │        │  (privé, S3-like│       │  multicritère  │
      └───────┬───────┘        └─────────────────┘       └────────────────┘
              │
              ▼
