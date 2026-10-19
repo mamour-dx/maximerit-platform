@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { getPayload } from "payload";
 import config from "@payload-config";
+import { safeRead } from "@/lib/db-safe";
 import { buildSitemap, STATIC_INDEXABLE, type SitemapInput } from "@/lib/seo";
 import { isLive, type JobLike } from "@/lib/job";
 
@@ -10,14 +11,18 @@ type Doc = { slug?: string; type?: string; updatedAt?: string; publishedAt?: str
 
 // /sitemap.xml — pages statiques indexables + contenus CMS publiés (Pages, Articles, Ressources, Offres actives).
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const payload = await getPayload({ config });
-  const pub = { status: { equals: "published" } };
-  const [pages, articles, resources, jobs] = await Promise.all([
-    payload.find({ collection: "pages", where: pub, limit: 1000, depth: 0 }),
-    payload.find({ collection: "articles", where: pub, limit: 1000, depth: 0 }),
-    payload.find({ collection: "resources", where: pub, limit: 1000, depth: 0 }),
-    payload.find({ collection: "jobs", where: { status: { equals: "publiee" } }, limit: 1000, depth: 0 }),
-  ]);
+  const none = { docs: [] as unknown[] };
+  // DB indisponible : le sitemap reste valide avec les seules pages statiques.
+  const [pages, articles, resources, jobs] = await safeRead("sitemap", async () => {
+    const payload = await getPayload({ config });
+    const pub = { status: { equals: "published" } };
+    return Promise.all([
+      payload.find({ collection: "pages", where: pub, limit: 1000, depth: 0 }),
+      payload.find({ collection: "articles", where: pub, limit: 1000, depth: 0 }),
+      payload.find({ collection: "resources", where: pub, limit: 1000, depth: 0 }),
+      payload.find({ collection: "jobs", where: { status: { equals: "publiee" } }, limit: 1000, depth: 0 }),
+    ]);
+  }, [none, none, none, none] as never);
 
   const entries: SitemapInput[] = [
     ...STATIC_INDEXABLE.map((path) => ({ path })),

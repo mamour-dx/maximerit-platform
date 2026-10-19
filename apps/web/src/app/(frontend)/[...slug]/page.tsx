@@ -3,6 +3,7 @@ import { draftMode } from "next/headers";
 import type { Metadata } from "next";
 import { getPayload, type Where } from "payload";
 import config from "@payload-config";
+import { safeRead } from "@/lib/db-safe";
 import { Page, PageHero, Prose, Section } from "@/components/site/PageKit";
 
 export const dynamic = "force-dynamic";
@@ -10,11 +11,13 @@ export const dynamic = "force-dynamic";
 type Args = { params: Promise<{ slug: string[] }> };
 
 async function getPage(slug: string, preview: boolean) {
-  const payload = await getPayload({ config });
-  const conditions: Where[] = [{ slug: { equals: slug } }];
-  if (!preview) conditions.push({ status: { equals: "published" } });
-  const res = await payload.find({ collection: "pages", where: { and: conditions }, limit: 1 });
-  return res.docs[0] ?? null;
+  return safeRead("page", async () => {
+    const payload = await getPayload({ config });
+    const conditions: Where[] = [{ slug: { equals: slug } }];
+    if (!preview) conditions.push({ status: { equals: "published" } });
+    const res = await payload.find({ collection: "pages", where: { and: conditions }, limit: 1 });
+    return res.docs[0] ?? null;
+  }, null);
 }
 
 export async function generateMetadata({ params }: Args): Promise<Metadata> {

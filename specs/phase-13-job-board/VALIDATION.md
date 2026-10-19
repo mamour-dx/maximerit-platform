@@ -32,6 +32,18 @@ Job board filtrable FR/EN, page offre enrichie, montée en gamme du design syste
   gated/ouverte, landing page, page CMS) → 200, calculateur d'outil fonctionnel, rendu 1440px et 375px,
   0 erreur console (onglet neuf). Unit 85/85, intégration 39/39, SEO 38 pass / 1 skip, build OK (138 pages statiques).
 
+## 13c — Robustesse & liens
+- Incident (démo Vercel sans base de données prête) : `/candidats/offres-demploi/` renvoyait « A server error
+  occurred ». Cause : lectures DB publiques non protégées → 500 (jobs, blog, ressources, landing pages, sitemaps,
+  et même les URL inconnues via la route CMS `[...slug]`).
+- Correctif : `lib/db-safe.ts` (`safeRead`) autour de toutes les lectures publiques → liste vide / 404 / sitemap
+  statique au lieu de 500 ; `app/(frontend)/error.tsx` (filet de sécurité stylé, FR/EN). Reproduit puis vérifié en
+  build de production avec une base injoignable : accueil, offres, blog, ressources, sitemaps → 200 ; slug inconnu → 404.
+- Crawler `scripts/check-links.mjs` (`npm run test:links`) : suit tous les `<a>`, `<form action>` GET, hreflang et
+  canonical, vérifie statut HTTP et ancres `#id`. Résultat sur build de production + base remplie :
+  176 URL internes (dont 10 offres FR + 10 EN) → 176 × 200, 0 redirection, 0 lien cassé, 0 ancre cassée.
+- Tests : unit 85/85, intégration 39/39, tsc 0, eslint 0.
+
 ## Statut du gate
 ```
 PHASE : 13 — Job board & refonte visuelle

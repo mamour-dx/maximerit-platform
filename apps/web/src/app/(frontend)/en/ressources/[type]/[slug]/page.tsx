@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { getPayload } from "payload";
 import config from "@payload-config";
+import { safeRead } from "@/lib/db-safe";
 import { hreflang } from "@/lib/i18n";
 import { ResourcePage, type ResourceType } from "@/components/views/resources";
 
@@ -12,9 +13,11 @@ type Args = { params: Promise<{ type: string; slug: string }> };
 type Resource = { id: number; type?: string; slug?: string; title?: string; description?: string; content?: string; gated?: boolean; seoTitle?: string; seoDescription?: string };
 
 async function getResource(type: string, slug: string): Promise<Resource | null> {
-  const payload = await getPayload({ config });
-  const res = await payload.find({ collection: "resources", where: { and: [{ type: { equals: type } }, { slug: { equals: slug } }, { status: { equals: "published" } }] }, limit: 1, locale: "en" });
-  return (res.docs[0] as Resource) ?? null;
+  return safeRead("resource", async () => {
+    const payload = await getPayload({ config });
+    const res = await payload.find({ collection: "resources", where: { and: [{ type: { equals: type } }, { slug: { equals: slug } }, { status: { equals: "published" } }] }, limit: 1, locale: "en" });
+    return (res.docs[0] as Resource) ?? null;
+  }, null);
 }
 
 export async function generateMetadata({ params }: Args): Promise<Metadata> {

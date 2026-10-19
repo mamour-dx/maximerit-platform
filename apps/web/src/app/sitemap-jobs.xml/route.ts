@@ -1,5 +1,6 @@
 import { getPayload } from "payload";
 import config from "@payload-config";
+import { safeRead } from "@/lib/db-safe";
 import { isLive, type JobLike } from "@/lib/job";
 
 export const runtime = "nodejs";
@@ -9,9 +10,12 @@ const SITE = process.env.NEXT_PUBLIC_SITE_URL || "https://www.maximerit.com";
 
 // Sitemap dédié aux offres (cahier §28) : uniquement les offres actives (publiées, non expirées).
 export async function GET(): Promise<Response> {
-  const payload = await getPayload({ config });
-  const res = await payload.find({ collection: "jobs", where: { status: { equals: "publiee" } }, limit: 1000, depth: 0 });
-  const jobs = (res.docs as JobLike[]).filter((j) => isLive(j));
+  const docs = await safeRead("sitemap-jobs", async () => {
+    const payload = await getPayload({ config });
+    const res = await payload.find({ collection: "jobs", where: { status: { equals: "publiee" } }, limit: 1000, depth: 0 });
+    return res.docs as JobLike[];
+  }, [] as JobLike[]);
+  const jobs = docs.filter((j) => isLive(j));
 
   const urls = jobs
     .map((j) => `  <url><loc>${SITE}/jobs/${j.slug}/</loc>${j.publishedAt ? `<lastmod>${new Date(j.publishedAt).toISOString()}</lastmod>` : ""}</url>`)

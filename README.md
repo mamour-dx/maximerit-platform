@@ -44,4 +44,5 @@ pnpm --filter web dev          # http://localhost:3000  (admin : /admin)
 pnpm --filter web test --run   # unit
 pnpm --filter web test:int     # intégration (DB + Meili requis)
 npm run test:seo               # SEO / migration URLs
+npm run test:links -- http://localhost:3000   # crawl des liens internes (serveur lancé : build + start)
 ```

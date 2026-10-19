@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { getPayload } from "payload";
 import config from "@payload-config";
+import { safeRead } from "@/lib/db-safe";
 import { hreflang } from "@/lib/i18n";
 import { LandingPage, type LandingDoc } from "@/components/views/resources";
 
@@ -10,13 +11,15 @@ export const dynamic = "force-dynamic";
 type Args = { params: Promise<{ slug: string }> };
 
 async function getLandingPage(slug: string) {
-  const payload = await getPayload({ config });
-  const res = await payload.find({
-    collection: "landing-pages",
-    where: { and: [{ slug: { equals: slug } }, { status: { equals: "published" } }] },
-    limit: 1,
-  });
-  return res.docs[0] ?? null;
+  return safeRead("landing-page", async () => {
+    const payload = await getPayload({ config });
+    const res = await payload.find({
+      collection: "landing-pages",
+      where: { and: [{ slug: { equals: slug } }, { status: { equals: "published" } }] },
+      limit: 1,
+    });
+    return res.docs[0] ?? null;
+  }, null);
 }
 
 export async function generateMetadata({ params }: Args): Promise<Metadata> {

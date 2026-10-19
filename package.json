@@ -19,6 +19,7 @@
     "seo:redirects": "node scripts/build-redirects.mjs",
     "seo:crawl": "node scripts/seo-crawl.mjs",
     "test:seo": "node --test scripts/tests/*.test.mjs",
+    "test:links": "node scripts/check-links.mjs",
     "web:dev": "pnpm --filter web dev",
     "web:build": "pnpm --filter web build",
     "web:lint": "pnpm --filter web lint",
