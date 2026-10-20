@@ -4,7 +4,6 @@ import { buildConfig } from "payload";
 import type { Access } from "payload";
 import { postgresAdapter } from "@payloadcms/db-postgres";
 import { lexicalEditor } from "@payloadcms/richtext-lexical";
-import { migrations } from "./migrations";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -38,9 +37,6 @@ export default buildConfig({
       connectionString:
         process.env.DATABASE_URI || "postgres://maximerit:maximerit_dev@localhost:5432/maximerit",
     },
-    // Production (Vercel…) : applique les migrations versionnées au démarrage → une base vierge est
-    // initialisée toute seule, sans étape manuelle `payload migrate`. Sans effet en développement.
-    prodMigrations: migrations,
   }),
   // i18n réel FR/EN (ADR-0002)
   localization: { locales: ["fr", "en"], defaultLocale: "fr" },
