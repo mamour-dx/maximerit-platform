@@ -17,10 +17,10 @@ Back-office plus simple et plus convivial : français, menu réduit, formulaires
 - `docs/BACKOFFICE.md`.
 
 ## Tests exécutés
-- `admin-simplify.int.test.ts` (12) : listes de choix = domaine, rubriques masquées par rôle, CV hors menu mais
+- `admin-simplify.int.test.ts` (15) : listes de choix = domaine, rubriques masquées par rôle, CV hors menu mais
   routables, slug généré / unique / conservé, dates auto, republication, date choisie respectée, pays invalide
   refusé, article, premier compte.
-- Unit 85/85 · Intégration 51/51 · `tsc` 0 · `eslint` 0 · `next build` OK · crawl de liens 174 URL → 174 × 200.
+- Unit 85/85 · Intégration 54/54 · `tsc` 0 · `eslint` 0 · `next build` OK · rejoué sur Node 20 (version du CI) avec base vierge · crawl de liens 174 URL → 174 × 200.
 - Migration testée sur base vierge + données volontairement sales (`sn`, `mines`, valeurs inconnues), puis
   `migrate:down` / `migrate` (réversibilité).
 - Recette navigateur (base jetable) : accueil, menu, liste et fiche d'offre, création d'offre publiée (slug +
@@ -31,7 +31,7 @@ Back-office plus simple et plus convivial : français, menu réduit, formulaires
 ## Statut du gate
 ```
 PHASE : 14 — Back-office simplifié
-Specification PASS · Implementation PASS · Unit PASS (85/85) · Integration PASS (51/51)
+Specification PASS · Implementation PASS · Unit PASS (85/85) · Integration PASS (54/54)
 Security PASS (GraphQL retiré, rubriques réservées, RBAC inchangé) · Build PASS · Lint PASS · Type-check PASS · Doc PASS
 DÉCISION : GO
 ```
@@ -39,6 +39,14 @@ DÉCISION : GO
 ## Déploiement
 1. **Appliquer d'abord la migration** sur la base de production (compatible avec l'ancien code) :
    `payload migrate`. 2. Puis déployer le code.
+
+## Correctif post-CI
+- CI en échec : `ERR_PNPM_OUTDATED_LOCKFILE` — la version de `@payloadcms/translations` avait été modifiée à la main
+  dans `package.json` (`^3.90.1`) sans régénérer `pnpm-lock.yaml`. Lockfile régénéré ; `pnpm install --frozen-lockfile` OK.
+- Rejeu local des étapes du CI sur **Node 20** + base **vierge** : un test (`jobs.int.test`, sitemap) échouait — la règle
+  « republier prolonge de 60 jours » écrasait une date de fin passée fournie *à la création*. Règle restreinte aux
+  republications d'une offre existante dont la date n'a pas été modifiée ; 3 tests ajoutés (formulaire, création avec date
+  passée, date saisie volontairement).
 
 ## Risques restants
 - La migration 14 est une 9ᵉ migration : toute base existante doit l'appliquer (`payload migrate`).

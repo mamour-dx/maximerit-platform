@@ -102,16 +102,27 @@ const autoSlug =
 
 const DAY_MS = 864e5;
 
-/** Offres : date de publication automatique ; fin de validité à +60 jours si absente ou dépassée à la (re)publication. */
-const jobDates: CollectionBeforeChangeHook = ({ data, originalDoc }) => {
+/**
+ * Offres : date de publication automatique ; fin de visibilité à +60 jours si elle est absente.
+ * Republication d'une offre existante dont la date de fin est dépassée (et que personne n'a modifiée) :
+ * prolongée de 60 jours. Une date saisie volontairement (ou fournie à la création) est toujours respectée.
+ */
+const jobDates: CollectionBeforeChangeHook = ({ data, originalDoc, operation }) => {
   const status = data.status ?? originalDoc?.status;
   if (status !== "publiee") return data;
   const now = new Date();
   const out: Record<string, unknown> = { ...data, publishedAt: data.publishedAt ?? originalDoc?.publishedAt ?? now.toISOString() };
-  const justPublished = originalDoc?.status !== "publiee";
-  const expiresAt = data.expiresAt ?? originalDoc?.expiresAt;
-  if (!expiresAt || (justPublished && new Date(expiresAt).getTime() < now.getTime())) {
-    out.expiresAt = new Date(now.getTime() + 60 * DAY_MS).toISOString();
+
+  const provided = data.expiresAt ?? null;
+  const existing = originalDoc?.expiresAt ?? null;
+  const expiresAt = provided ?? existing;
+  const extended = new Date(now.getTime() + 60 * DAY_MS).toISOString();
+
+  if (!expiresAt) {
+    out.expiresAt = extended;
+  } else if (operation === "update" && originalDoc?.status !== "publiee" && new Date(expiresAt).getTime() < now.getTime()) {
+    const untouched = !provided || (existing && new Date(provided).getTime() === new Date(existing).getTime());
+    if (untouched) out.expiresAt = extended;
   }
   return out;
 };

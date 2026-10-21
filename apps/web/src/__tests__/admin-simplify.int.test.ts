@@ -108,6 +108,30 @@ describe("offres : automatismes", () => {
     expect(new Date(again.expiresAt as string).getTime()).toBeGreaterThan(Date.now() + 59 * 864e5);
   });
 
+  it("republication depuis le formulaire (date de fin passée renvoyée telle quelle) : prolongée", async () => {
+    const past = new Date(Date.now() - 10 * 864e5).toISOString();
+    const j = await payload.create({ collection: "jobs", data: { title: `Formulaire ${stamp}`, status: "expiree", expiresAt: past }, overrideAccess: true });
+    created.push({ collection: "jobs", id: j.id });
+    const again = await payload.update({ collection: "jobs", id: j.id, data: { status: "publiee", expiresAt: j.expiresAt }, overrideAccess: true });
+    expect(new Date(again.expiresAt as string).getTime()).toBeGreaterThan(Date.now() + 59 * 864e5);
+  });
+
+  it("offre créée « Publiée » avec une date de fin passée : la date est respectée (offre expirée)", async () => {
+    const past = new Date(Date.now() - 3 * 864e5).toISOString();
+    const j = await payload.create({ collection: "jobs", data: { title: `Passée ${stamp}`, status: "publiee", expiresAt: past }, overrideAccess: true });
+    created.push({ collection: "jobs", id: j.id });
+    expect(new Date(j.expiresAt as string).toISOString()).toBe(past);
+  });
+
+  it("une nouvelle date de fin passée, saisie volontairement à la republication, est respectée", async () => {
+    const old = new Date(Date.now() - 20 * 864e5).toISOString();
+    const chosen = new Date(Date.now() - 2 * 864e5).toISOString();
+    const j = await payload.create({ collection: "jobs", data: { title: `Choix ${stamp}`, status: "expiree", expiresAt: old }, overrideAccess: true });
+    created.push({ collection: "jobs", id: j.id });
+    const again = await payload.update({ collection: "jobs", id: j.id, data: { status: "publiee", expiresAt: chosen }, overrideAccess: true });
+    expect(new Date(again.expiresAt as string).toISOString()).toBe(chosen);
+  });
+
   it("une date de fin choisie par l'équipe est respectée", async () => {
     const chosen = new Date(Date.now() + 15 * 864e5).toISOString();
     const j = await payload.create({ collection: "jobs", data: { title: `Date choisie ${stamp}`, status: "publiee", expiresAt: chosen }, overrideAccess: true });
