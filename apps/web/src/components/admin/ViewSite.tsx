@@ -10,6 +10,7 @@ export function ViewSite() {
         margin: "12px 0 0",
         padding: "8px 0",
         color: "var(--theme-text)",
+        fontSize: 16,
         fontWeight: 600,
         textDecoration: "none",
       }}

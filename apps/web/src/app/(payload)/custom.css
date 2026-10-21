@@ -1,0 +1,21 @@
+/* Retouches de l'interface d'administration Maximerit (chargé par app/(payload)/layout.tsx).
+   Hors des couches de Payload : ces règles l'emportent sans !important. */
+
+/* Menu latéral : texte plus grand et rubriques mieux contrastées */
+.nav__link {
+  font-size: 16px;
+  line-height: 28px;
+  padding-block: 3px;
+}
+.nav-group {
+  margin-bottom: 14px;
+}
+.nav-group__toggle {
+  margin-bottom: 6px;
+}
+.nav__label {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--theme-elevation-600);
+}

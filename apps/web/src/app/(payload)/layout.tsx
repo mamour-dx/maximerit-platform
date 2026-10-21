@@ -1,6 +1,7 @@
 import { getPayload, type ServerFunctionClient } from "payload";
 import config from "@payload-config";
 import "@payloadcms/next/css";
+import "./custom.css";
 import { handleServerFunctions, RootLayout } from "@payloadcms/next/layouts";
 import Link from "next/link";
 import React from "react";
