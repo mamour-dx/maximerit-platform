@@ -24,6 +24,7 @@ Le scaffolding applicatif est mis en place en **Phase 3** (après GATE 0/1/2).
 | `docs/SECURITY.md` | Sécurité & données candidats *(Phase 9)* |
 | `docs/DATA_MODEL.md` | Modèle de domaine *(Phase 1)* |
 | `docs/DEPLOYMENT.md` | Déploiement & mise en prod *(Phase 12)* |
+| `docs/BACKOFFICE.md` | Guide du back-office pour l'équipe *(Phase 14)* |
 | `specs/` | Spécifications par phase/feature |
 
 ## État

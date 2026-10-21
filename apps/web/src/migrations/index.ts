@@ -6,6 +6,7 @@ import * as migration_20260921_132909_parse_proposal from './20260921_132909_par
 import * as migration_20260921_135604_talent_pools from './20260921_135604_talent_pools';
 import * as migration_20260921_180118_jobs_applications from './20260921_180118_jobs_applications';
 import * as migration_20260921_182546_editorial from './20260921_182546_editorial';
+import * as migration_20261021_100054_simplify_admin from './20261021_100054_simplify_admin';
 
 export const migrations = [
   {
@@ -46,6 +47,11 @@ export const migrations = [
   {
     up: migration_20260921_182546_editorial.up,
     down: migration_20260921_182546_editorial.down,
-    name: '20260921_182546_editorial'
+    name: '20260921_182546_editorial',
+  },
+  {
+    up: migration_20261021_100054_simplify_admin.up,
+    down: migration_20261021_100054_simplify_admin.down,
+    name: '20261021_100054_simplify_admin'
   },
 ];

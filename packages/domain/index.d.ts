@@ -86,6 +86,8 @@ export const mining: MiningTaxonomy;
 export const ROLES: Set<Role>;
 export const SECTORS: Set<string>;
 export const COMMODITIES: Set<string>;
+export const COUNTRY_CODES: Set<string>;
+export const CONTRACT_TYPES: Set<string>;
 export const MINING_DISCIPLINES: Set<string>;
 export const MINING_SPECIALTIES: Set<string>;
 export const SPECIALTY_TO_DISCIPLINE: Map<string, string>;

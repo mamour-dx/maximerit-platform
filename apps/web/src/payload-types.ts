@@ -67,19 +67,19 @@ export interface Config {
   };
   blocks: {};
   collections: {
-    users: User;
-    pages: Page;
-    redirects: Redirect;
-    'landing-pages': LandingPage;
-    leads: Lead;
-    tags: Tag;
-    cvs: Cv;
-    candidates: Candidate;
-    'talent-pools': TalentPool;
     jobs: Job;
     applications: Application;
+    candidates: Candidate;
+    leads: Lead;
     articles: Article;
     resources: Resource;
+    pages: Page;
+    users: User;
+    'landing-pages': LandingPage;
+    redirects: Redirect;
+    tags: Tag;
+    'talent-pools': TalentPool;
+    cvs: Cv;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -87,19 +87,19 @@ export interface Config {
   };
   collectionsJoins: {};
   collectionsSelect: {
-    users: UsersSelect<false> | UsersSelect<true>;
-    pages: PagesSelect<false> | PagesSelect<true>;
-    redirects: RedirectsSelect<false> | RedirectsSelect<true>;
-    'landing-pages': LandingPagesSelect<false> | LandingPagesSelect<true>;
-    leads: LeadsSelect<false> | LeadsSelect<true>;
-    tags: TagsSelect<false> | TagsSelect<true>;
-    cvs: CvsSelect<false> | CvsSelect<true>;
-    candidates: CandidatesSelect<false> | CandidatesSelect<true>;
-    'talent-pools': TalentPoolsSelect<false> | TalentPoolsSelect<true>;
     jobs: JobsSelect<false> | JobsSelect<true>;
     applications: ApplicationsSelect<false> | ApplicationsSelect<true>;
+    candidates: CandidatesSelect<false> | CandidatesSelect<true>;
+    leads: LeadsSelect<false> | LeadsSelect<true>;
     articles: ArticlesSelect<false> | ArticlesSelect<true>;
     resources: ResourcesSelect<false> | ResourcesSelect<true>;
+    pages: PagesSelect<false> | PagesSelect<true>;
+    users: UsersSelect<false> | UsersSelect<true>;
+    'landing-pages': LandingPagesSelect<false> | LandingPagesSelect<true>;
+    redirects: RedirectsSelect<false> | RedirectsSelect<true>;
+    tags: TagsSelect<false> | TagsSelect<true>;
+    'talent-pools': TalentPoolsSelect<false> | TalentPoolsSelect<true>;
+    cvs: CvsSelect<false> | CvsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -140,151 +140,83 @@ export interface UserAuthOperations {
   };
 }
 /**
+ * Les offres publiées apparaissent sur la page « Offres d'emploi » du site.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "users".
+ * via the `definition` "jobs".
  */
-export interface User {
-  id: number;
-  firstName?: string | null;
-  lastName?: string | null;
-  role: 'SUPER_ADMIN' | 'ADMIN' | 'RECRUITER' | 'CONTENT_MANAGER' | 'MARKETING' | 'VIEWER';
-  updatedAt: string;
-  createdAt: string;
-  email: string;
-  resetPasswordToken?: string | null;
-  resetPasswordExpiration?: string | null;
-  salt?: string | null;
-  hash?: string | null;
-  resetPasswordRequestedAt?: string | null;
-  loginAttempts?: number | null;
-  lockUntil?: string | null;
-  sessions?:
-    | {
-        id: string;
-        createdAt?: string | null;
-        expiresAt: string;
-      }[]
-    | null;
-  password?: string | null;
-  collection: 'users';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "pages".
- */
-export interface Page {
+export interface Job {
   id: number;
   title: string;
-  slug: string;
-  content?: string | null;
-  seoTitle?: string | null;
-  seoDescription?: string | null;
-  status?: ('draft' | 'published') | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "redirects".
- */
-export interface Redirect {
-  id: number;
-  from: string;
-  to?: string | null;
-  type: '301' | '410' | 'noindex';
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "landing-pages".
- */
-export interface LandingPage {
-  id: number;
-  title: string;
-  slug: string;
-  promise?: string | null;
-  problem?: string | null;
-  profiles?:
-    | {
-        label?: string | null;
-        id?: string | null;
-      }[]
-    | null;
-  method?: string | null;
-  proof?: string | null;
-  ctaLabel?: string | null;
-  indexable?: boolean | null;
-  seoTitle?: string | null;
-  seoDescription?: string | null;
-  status?: ('draft' | 'published') | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "leads".
- */
-export interface Lead {
-  id: number;
-  company?: string | null;
-  contactName: string;
-  jobFunction?: string | null;
-  email: string;
-  phone?: string | null;
-  country?: string | null;
-  sector?: string | null;
-  profileSought?: string | null;
-  headcount?: number | null;
-  level?: string | null;
   location?: string | null;
-  desiredDate?: string | null;
-  comment?: string | null;
+  country?: ('SN' | 'GN' | 'CI' | 'ML' | 'MR' | 'BF' | 'GH') | null;
+  discipline?:
+    ('geologie-exploration' | 'exploitation-operations' | 'finance-miniere' | 'leadership-executive-search') | null;
+  contractType?: ('cdi' | 'cdd' | 'mission-interim' | 'consultant-freelance' | 'fifo-roster' | 'stage') | null;
+  experienceMin?: number | null;
+  /**
+   * 2 à 4 phrases : le contexte et l'objectif du poste.
+   */
+  mission?: string | null;
+  /**
+   * Une ligne par mission.
+   */
+  responsibilities?: string | null;
+  /**
+   * Diplômes, expérience, langues… Une ligne par critère.
+   */
+  requirements?: string | null;
+  /**
+   * Passez en « Publiée » pour mettre l'offre en ligne.
+   */
+  status?: ('brouillon' | 'publiee' | 'expiree' | 'pourvue' | 'archivee') | null;
+  /**
+   * Rempli automatiquement à la publication.
+   */
+  publishedAt?: string | null;
+  /**
+   * Après cette date l'offre disparaît du site. Par défaut : 60 jours après la publication.
+   */
+  expiresAt?: string | null;
+  /**
+   * Laissez vide : elle est créée automatiquement à partir du titre. Ne la changez que si nécessaire.
+   */
+  slug?: string | null;
+  sector?:
+    | ('mines-ressources-naturelles' | 'energie' | 'petrole-gaz' | 'btp-infrastructures' | 'industrie' | 'services')
+    | null;
+  /**
+   * Mot-clé supplémentaire utilisé par la recherche du site.
+   */
+  specialty?: string | null;
+  similarJobs?: (number | Job)[] | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Candidatures reçues depuis le site (formulaire « Postuler »).
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "applications".
+ */
+export interface Application {
+  id: number;
+  candidate: number | Candidate;
+  job?: (number | null) | Job;
+  cv?: (number | null) | Cv;
+  status?: ('recue' | 'en-revue' | 'retenue' | 'rejetee') | null;
   source?: string | null;
   utm?: {
     source?: string | null;
     medium?: string | null;
     campaign?: string | null;
-    term?: string | null;
-    content?: string | null;
   };
-  landingPage?: (number | null) | LandingPage;
-  status?: ('nouveau' | 'qualifie' | 'opportunite' | 'perdu') | null;
   updatedAt: string;
   createdAt: string;
 }
 /**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "tags".
- */
-export interface Tag {
-  id: number;
-  label: string;
-  slug: string;
-  category?: string | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "cvs".
- */
-export interface Cv {
-  id: number;
-  candidateName?: string | null;
-  updatedAt: string;
-  createdAt: string;
-  url?: string | null;
-  thumbnailURL?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
-  focalX?: number | null;
-  focalY?: number | null;
-}
-/**
+ * Tous les profils reçus (candidatures et dépôts de CV).
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "candidates".
  */
@@ -294,35 +226,12 @@ export interface Candidate {
   lastName: string;
   email: string;
   phone?: string | null;
-  whatsapp?: string | null;
-  countryOfResidence?: string | null;
-  nationality?: string | null;
-  internationalMobility?: boolean | null;
   currentPosition?: string | null;
-  targetSpecialty?: string | null;
-  targetDiscipline?: string | null;
-  sector?: string | null;
   yearsExperience?: number | null;
-  seniority?: string | null;
-  currentCompany?: string | null;
-  salaryExpectation?: number | null;
-  availabilityDays?: number | null;
-  languages?:
-    | {
-        code?: string | null;
-        proficiency?: string | null;
-        id?: string | null;
-      }[]
-    | null;
-  mining?: {
-    commodities?: string[] | null;
-    mineType?: string[] | null;
-    disciplines?: string[] | null;
-    countriesExperience?: string[] | null;
-    fifoRoster?: boolean | null;
-  };
   cv?: (number | null) | Cv;
-  tags?: (number | Tag)[] | null;
+  /**
+   * Vos commentaires sur ce candidat (visibles de toute l'équipe).
+   */
   notes?:
     | {
         body?: string | null;
@@ -348,6 +257,38 @@ export interface Candidate {
         | 'archive'
       )
     | null;
+  /**
+   * Le candidat accepte le traitement de ses données.
+   */
+  consent: boolean;
+  whatsapp?: string | null;
+  countryOfResidence?: string | null;
+  nationality?: string | null;
+  internationalMobility?: boolean | null;
+  targetDiscipline?: string | null;
+  targetSpecialty?: string | null;
+  sector?: string | null;
+  seniority?: string | null;
+  currentCompany?: string | null;
+  salaryExpectation?: number | null;
+  availabilityDays?: number | null;
+  languages?:
+    | {
+        code?: string | null;
+        proficiency?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  mining?: {
+    commodities?: string[] | null;
+    mineType?: string[] | null;
+    disciplines?: string[] | null;
+    countriesExperience?: string[] | null;
+    fifoRoster?: boolean | null;
+  };
+  tags?: (number | Tag)[] | null;
+  source?: string | null;
+  consentAt?: string | null;
   parseStatus?: ('pending' | 'parsed' | 'validated' | 'failed') | null;
   proposedProfile?:
     | {
@@ -358,13 +299,275 @@ export interface Candidate {
     | number
     | boolean
     | null;
-  source?: string | null;
-  consent: boolean;
-  consentAt?: string | null;
   updatedAt: string;
   createdAt: string;
 }
 /**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "cvs".
+ */
+export interface Cv {
+  id: number;
+  candidateName?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+}
+/**
+ * Les personnes qui ont accès à cet espace. Seuls les administrateurs peuvent ajouter des comptes.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "users".
+ */
+export interface User {
+  id: number;
+  firstName?: string | null;
+  lastName?: string | null;
+  /**
+   * Le tout premier compte est automatiquement Super administrateur. Administrateur : tout. Recruteur : offres, candidats, candidatures. Responsable contenu : articles et pages. Marketing : demandes d'entreprises et contenu. Lecture seule : consultation.
+   */
+  role: 'SUPER_ADMIN' | 'ADMIN' | 'RECRUITER' | 'CONTENT_MANAGER' | 'MARKETING' | 'VIEWER';
+  updatedAt: string;
+  createdAt: string;
+  email: string;
+  resetPasswordToken?: string | null;
+  resetPasswordExpiration?: string | null;
+  salt?: string | null;
+  hash?: string | null;
+  resetPasswordRequestedAt?: string | null;
+  loginAttempts?: number | null;
+  lockUntil?: string | null;
+  sessions?:
+    | {
+        id: string;
+        createdAt?: string | null;
+        expiresAt: string;
+      }[]
+    | null;
+  password?: string | null;
+  collection: 'users';
+}
+/**
+ * Réservé à l'équipe technique.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tags".
+ */
+export interface Tag {
+  id: number;
+  label: string;
+  slug: string;
+  category?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Demandes envoyées depuis le formulaire « Confier un recrutement » et les outils gratuits.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "leads".
+ */
+export interface Lead {
+  id: number;
+  contactName: string;
+  company?: string | null;
+  email: string;
+  phone?: string | null;
+  profileSought?: string | null;
+  comment?: string | null;
+  status?: ('nouveau' | 'qualifie' | 'opportunite' | 'perdu') | null;
+  jobFunction?: string | null;
+  country?: string | null;
+  sector?: string | null;
+  headcount?: number | null;
+  level?: string | null;
+  location?: string | null;
+  desiredDate?: string | null;
+  source?: string | null;
+  landingPage?: (number | null) | LandingPage;
+  utm?: {
+    source?: string | null;
+    medium?: string | null;
+    campaign?: string | null;
+    term?: string | null;
+    content?: string | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Pages d'atterrissage pour les campagnes (adresse /lp/…).
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "landing-pages".
+ */
+export interface LandingPage {
+  id: number;
+  title: string;
+  promise?: string | null;
+  problem?: string | null;
+  profiles?:
+    | {
+        label?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  method?: string | null;
+  proof?: string | null;
+  ctaLabel?: string | null;
+  status?: ('draft' | 'published') | null;
+  indexable?: boolean | null;
+  /**
+   * Laissez vide : elle est créée automatiquement à partir du titre. Ne la changez que si nécessaire.
+   */
+  slug?: string | null;
+  /**
+   * Si vide, le titre de la page est utilisé.
+   */
+  seoTitle?: string | null;
+  /**
+   * 1 à 2 phrases (environ 150 caractères).
+   */
+  seoDescription?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Articles du blog. Pour la version anglaise, changez de langue en haut de la fiche.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "articles".
+ */
+export interface Article {
+  id: number;
+  title: string;
+  /**
+   * 2 phrases affichées dans la liste des articles.
+   */
+  excerpt?: string | null;
+  /**
+   * Séparez les paragraphes par une ligne vide.
+   */
+  content?: string | null;
+  category?: ('mining' | 'recrutement' | 'rh' | 'finance' | 'qhse' | 'carriere' | 'salaires' | 'marche') | null;
+  status?: ('draft' | 'published') | null;
+  /**
+   * Rempli automatiquement à la publication.
+   */
+  publishedAt?: string | null;
+  /**
+   * Laissez vide : elle est créée automatiquement à partir du titre. Ne la changez que si nécessaire.
+   */
+  slug?: string | null;
+  author?: string | null;
+  /**
+   * Affichés en bas de l'article.
+   */
+  related?: (number | Article)[] | null;
+  /**
+   * Si vide, le titre de la page est utilisé.
+   */
+  seoTitle?: string | null;
+  /**
+   * 1 à 2 phrases (environ 150 caractères).
+   */
+  seoDescription?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Guides, études et baromètres téléchargeables.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "resources".
+ */
+export interface Resource {
+  id: number;
+  type: 'guides' | 'etudes' | 'barometres';
+  title: string;
+  description?: string | null;
+  /**
+   * Séparez les paragraphes par une ligne vide.
+   */
+  content?: string | null;
+  /**
+   * Coché : le visiteur doit remplir un formulaire pour le recevoir.
+   */
+  gated?: boolean | null;
+  status?: ('draft' | 'published') | null;
+  /**
+   * Rempli automatiquement à la publication.
+   */
+  publishedAt?: string | null;
+  /**
+   * Laissez vide : elle est créée automatiquement à partir du titre. Ne la changez que si nécessaire.
+   */
+  slug?: string | null;
+  /**
+   * Si vide, le titre de la page est utilisé.
+   */
+  seoTitle?: string | null;
+  /**
+   * 1 à 2 phrases (environ 150 caractères).
+   */
+  seoDescription?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Pages supplémentaires du site, accessibles à l'adresse /adresse-de-la-page/.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pages".
+ */
+export interface Page {
+  id: number;
+  title: string;
+  /**
+   * Séparez les paragraphes par une ligne vide.
+   */
+  content?: string | null;
+  status?: ('draft' | 'published') | null;
+  /**
+   * Laissez vide : elle est créée automatiquement à partir du titre. Ne la changez que si nécessaire.
+   */
+  slug?: string | null;
+  /**
+   * Si vide, le titre de la page est utilisé.
+   */
+  seoTitle?: string | null;
+  /**
+   * 1 à 2 phrases (environ 150 caractères).
+   */
+  seoDescription?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Réservé à l'équipe technique.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "redirects".
+ */
+export interface Redirect {
+  id: number;
+  from: string;
+  to?: string | null;
+  type: '301' | '410' | 'noindex';
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Réservé à l'équipe technique.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "talent-pools".
  */
@@ -384,89 +587,6 @@ export interface TalentPool {
     | null;
   members?: (number | Candidate)[] | null;
   isShortlist?: boolean | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "jobs".
- */
-export interface Job {
-  id: number;
-  title: string;
-  slug: string;
-  sector?: string | null;
-  discipline?: string | null;
-  specialty?: string | null;
-  country?: string | null;
-  location?: string | null;
-  mission?: string | null;
-  responsibilities?: string | null;
-  requirements?: string | null;
-  experienceMin?: number | null;
-  contractType?: ('cdi' | 'cdd' | 'mission-interim' | 'consultant-freelance' | 'fifo-roster' | 'stage') | null;
-  status?: ('brouillon' | 'publiee' | 'expiree' | 'pourvue' | 'archivee') | null;
-  publishedAt?: string | null;
-  expiresAt?: string | null;
-  similarJobs?: (number | Job)[] | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "applications".
- */
-export interface Application {
-  id: number;
-  job?: (number | null) | Job;
-  candidate: number | Candidate;
-  cv?: (number | null) | Cv;
-  status?: ('recue' | 'en-revue' | 'retenue' | 'rejetee') | null;
-  source?: string | null;
-  utm?: {
-    source?: string | null;
-    medium?: string | null;
-    campaign?: string | null;
-  };
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "articles".
- */
-export interface Article {
-  id: number;
-  title: string;
-  slug: string;
-  category?: ('mining' | 'recrutement' | 'rh' | 'finance' | 'qhse' | 'carriere' | 'salaires' | 'marche') | null;
-  author?: string | null;
-  excerpt?: string | null;
-  content?: string | null;
-  seoTitle?: string | null;
-  seoDescription?: string | null;
-  related?: (number | Article)[] | null;
-  status?: ('draft' | 'published') | null;
-  publishedAt?: string | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "resources".
- */
-export interface Resource {
-  id: number;
-  type: 'guides' | 'etudes' | 'barometres';
-  title: string;
-  slug: string;
-  description?: string | null;
-  content?: string | null;
-  gated?: boolean | null;
-  seoTitle?: string | null;
-  seoDescription?: string | null;
-  status?: ('draft' | 'published') | null;
-  publishedAt?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -495,42 +615,6 @@ export interface PayloadLockedDocument {
   id: number;
   document?:
     | ({
-        relationTo: 'users';
-        value: number | User;
-      } | null)
-    | ({
-        relationTo: 'pages';
-        value: number | Page;
-      } | null)
-    | ({
-        relationTo: 'redirects';
-        value: number | Redirect;
-      } | null)
-    | ({
-        relationTo: 'landing-pages';
-        value: number | LandingPage;
-      } | null)
-    | ({
-        relationTo: 'leads';
-        value: number | Lead;
-      } | null)
-    | ({
-        relationTo: 'tags';
-        value: number | Tag;
-      } | null)
-    | ({
-        relationTo: 'cvs';
-        value: number | Cv;
-      } | null)
-    | ({
-        relationTo: 'candidates';
-        value: number | Candidate;
-      } | null)
-    | ({
-        relationTo: 'talent-pools';
-        value: number | TalentPool;
-      } | null)
-    | ({
         relationTo: 'jobs';
         value: number | Job;
       } | null)
@@ -539,12 +623,48 @@ export interface PayloadLockedDocument {
         value: number | Application;
       } | null)
     | ({
+        relationTo: 'candidates';
+        value: number | Candidate;
+      } | null)
+    | ({
+        relationTo: 'leads';
+        value: number | Lead;
+      } | null)
+    | ({
         relationTo: 'articles';
         value: number | Article;
       } | null)
     | ({
         relationTo: 'resources';
         value: number | Resource;
+      } | null)
+    | ({
+        relationTo: 'pages';
+        value: number | Page;
+      } | null)
+    | ({
+        relationTo: 'users';
+        value: number | User;
+      } | null)
+    | ({
+        relationTo: 'landing-pages';
+        value: number | LandingPage;
+      } | null)
+    | ({
+        relationTo: 'redirects';
+        value: number | Redirect;
+      } | null)
+    | ({
+        relationTo: 'tags';
+        value: number | Tag;
+      } | null)
+    | ({
+        relationTo: 'talent-pools';
+        value: number | TalentPool;
+      } | null)
+    | ({
+        relationTo: 'cvs';
+        value: number | Cv;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -590,6 +710,190 @@ export interface PayloadMigration {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "jobs_select".
+ */
+export interface JobsSelect<T extends boolean = true> {
+  title?: T;
+  location?: T;
+  country?: T;
+  discipline?: T;
+  contractType?: T;
+  experienceMin?: T;
+  mission?: T;
+  responsibilities?: T;
+  requirements?: T;
+  status?: T;
+  publishedAt?: T;
+  expiresAt?: T;
+  slug?: T;
+  sector?: T;
+  specialty?: T;
+  similarJobs?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "applications_select".
+ */
+export interface ApplicationsSelect<T extends boolean = true> {
+  candidate?: T;
+  job?: T;
+  cv?: T;
+  status?: T;
+  source?: T;
+  utm?:
+    | T
+    | {
+        source?: T;
+        medium?: T;
+        campaign?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "candidates_select".
+ */
+export interface CandidatesSelect<T extends boolean = true> {
+  firstName?: T;
+  lastName?: T;
+  email?: T;
+  phone?: T;
+  currentPosition?: T;
+  yearsExperience?: T;
+  cv?: T;
+  notes?:
+    | T
+    | {
+        body?: T;
+        author?: T;
+        id?: T;
+      };
+  status?: T;
+  consent?: T;
+  whatsapp?: T;
+  countryOfResidence?: T;
+  nationality?: T;
+  internationalMobility?: T;
+  targetDiscipline?: T;
+  targetSpecialty?: T;
+  sector?: T;
+  seniority?: T;
+  currentCompany?: T;
+  salaryExpectation?: T;
+  availabilityDays?: T;
+  languages?:
+    | T
+    | {
+        code?: T;
+        proficiency?: T;
+        id?: T;
+      };
+  mining?:
+    | T
+    | {
+        commodities?: T;
+        mineType?: T;
+        disciplines?: T;
+        countriesExperience?: T;
+        fifoRoster?: T;
+      };
+  tags?: T;
+  source?: T;
+  consentAt?: T;
+  parseStatus?: T;
+  proposedProfile?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "leads_select".
+ */
+export interface LeadsSelect<T extends boolean = true> {
+  contactName?: T;
+  company?: T;
+  email?: T;
+  phone?: T;
+  profileSought?: T;
+  comment?: T;
+  status?: T;
+  jobFunction?: T;
+  country?: T;
+  sector?: T;
+  headcount?: T;
+  level?: T;
+  location?: T;
+  desiredDate?: T;
+  source?: T;
+  landingPage?: T;
+  utm?:
+    | T
+    | {
+        source?: T;
+        medium?: T;
+        campaign?: T;
+        term?: T;
+        content?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "articles_select".
+ */
+export interface ArticlesSelect<T extends boolean = true> {
+  title?: T;
+  excerpt?: T;
+  content?: T;
+  category?: T;
+  status?: T;
+  publishedAt?: T;
+  slug?: T;
+  author?: T;
+  related?: T;
+  seoTitle?: T;
+  seoDescription?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "resources_select".
+ */
+export interface ResourcesSelect<T extends boolean = true> {
+  type?: T;
+  title?: T;
+  description?: T;
+  content?: T;
+  gated?: T;
+  status?: T;
+  publishedAt?: T;
+  slug?: T;
+  seoTitle?: T;
+  seoDescription?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pages_select".
+ */
+export interface PagesSelect<T extends boolean = true> {
+  title?: T;
+  content?: T;
+  status?: T;
+  slug?: T;
+  seoTitle?: T;
+  seoDescription?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
@@ -616,15 +920,26 @@ export interface UsersSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "pages_select".
+ * via the `definition` "landing-pages_select".
  */
-export interface PagesSelect<T extends boolean = true> {
+export interface LandingPagesSelect<T extends boolean = true> {
   title?: T;
+  promise?: T;
+  problem?: T;
+  profiles?:
+    | T
+    | {
+        label?: T;
+        id?: T;
+      };
+  method?: T;
+  proof?: T;
+  ctaLabel?: T;
+  status?: T;
+  indexable?: T;
   slug?: T;
-  content?: T;
   seoTitle?: T;
   seoDescription?: T;
-  status?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -641,70 +956,26 @@ export interface RedirectsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "landing-pages_select".
- */
-export interface LandingPagesSelect<T extends boolean = true> {
-  title?: T;
-  slug?: T;
-  promise?: T;
-  problem?: T;
-  profiles?:
-    | T
-    | {
-        label?: T;
-        id?: T;
-      };
-  method?: T;
-  proof?: T;
-  ctaLabel?: T;
-  indexable?: T;
-  seoTitle?: T;
-  seoDescription?: T;
-  status?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "leads_select".
- */
-export interface LeadsSelect<T extends boolean = true> {
-  company?: T;
-  contactName?: T;
-  jobFunction?: T;
-  email?: T;
-  phone?: T;
-  country?: T;
-  sector?: T;
-  profileSought?: T;
-  headcount?: T;
-  level?: T;
-  location?: T;
-  desiredDate?: T;
-  comment?: T;
-  source?: T;
-  utm?:
-    | T
-    | {
-        source?: T;
-        medium?: T;
-        campaign?: T;
-        term?: T;
-        content?: T;
-      };
-  landingPage?: T;
-  status?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "tags_select".
  */
 export interface TagsSelect<T extends boolean = true> {
   label?: T;
   slug?: T;
   category?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "talent-pools_select".
+ */
+export interface TalentPoolsSelect<T extends boolean = true> {
+  name?: T;
+  owner?: T;
+  type?: T;
+  query?: T;
+  members?: T;
+  isShortlist?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -725,157 +996,6 @@ export interface CvsSelect<T extends boolean = true> {
   height?: T;
   focalX?: T;
   focalY?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "candidates_select".
- */
-export interface CandidatesSelect<T extends boolean = true> {
-  firstName?: T;
-  lastName?: T;
-  email?: T;
-  phone?: T;
-  whatsapp?: T;
-  countryOfResidence?: T;
-  nationality?: T;
-  internationalMobility?: T;
-  currentPosition?: T;
-  targetSpecialty?: T;
-  targetDiscipline?: T;
-  sector?: T;
-  yearsExperience?: T;
-  seniority?: T;
-  currentCompany?: T;
-  salaryExpectation?: T;
-  availabilityDays?: T;
-  languages?:
-    | T
-    | {
-        code?: T;
-        proficiency?: T;
-        id?: T;
-      };
-  mining?:
-    | T
-    | {
-        commodities?: T;
-        mineType?: T;
-        disciplines?: T;
-        countriesExperience?: T;
-        fifoRoster?: T;
-      };
-  cv?: T;
-  tags?: T;
-  notes?:
-    | T
-    | {
-        body?: T;
-        author?: T;
-        id?: T;
-      };
-  status?: T;
-  parseStatus?: T;
-  proposedProfile?: T;
-  source?: T;
-  consent?: T;
-  consentAt?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "talent-pools_select".
- */
-export interface TalentPoolsSelect<T extends boolean = true> {
-  name?: T;
-  owner?: T;
-  type?: T;
-  query?: T;
-  members?: T;
-  isShortlist?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "jobs_select".
- */
-export interface JobsSelect<T extends boolean = true> {
-  title?: T;
-  slug?: T;
-  sector?: T;
-  discipline?: T;
-  specialty?: T;
-  country?: T;
-  location?: T;
-  mission?: T;
-  responsibilities?: T;
-  requirements?: T;
-  experienceMin?: T;
-  contractType?: T;
-  status?: T;
-  publishedAt?: T;
-  expiresAt?: T;
-  similarJobs?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "applications_select".
- */
-export interface ApplicationsSelect<T extends boolean = true> {
-  job?: T;
-  candidate?: T;
-  cv?: T;
-  status?: T;
-  source?: T;
-  utm?:
-    | T
-    | {
-        source?: T;
-        medium?: T;
-        campaign?: T;
-      };
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "articles_select".
- */
-export interface ArticlesSelect<T extends boolean = true> {
-  title?: T;
-  slug?: T;
-  category?: T;
-  author?: T;
-  excerpt?: T;
-  content?: T;
-  seoTitle?: T;
-  seoDescription?: T;
-  related?: T;
-  status?: T;
-  publishedAt?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "resources_select".
- */
-export interface ResourcesSelect<T extends boolean = true> {
-  type?: T;
-  title?: T;
-  slug?: T;
-  description?: T;
-  content?: T;
-  gated?: T;
-  seoTitle?: T;
-  seoDescription?: T;
-  status?: T;
-  publishedAt?: T;
-  updatedAt?: T;
-  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

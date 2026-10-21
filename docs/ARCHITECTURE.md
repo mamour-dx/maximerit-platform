@@ -10,7 +10,7 @@
                          │  SEO · i18n · Conversion   │  pages, blog, métiers, pays,
                          │  Landing pages · Jobs      │  offres, outils, ressources
                          └─────────────┬─────────────┘
-                                       │  API (REST/GraphQL Payload) + Server Actions
+                                       │  API (REST Payload) + Server Actions
                                        ▼
                          ┌───────────────────────────┐
                          │        API / MÉTIER       │  Payload (auth, RBAC, validation

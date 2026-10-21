@@ -8,13 +8,17 @@ const DAY = 864e5;
 const ago = (d: number) => new Date(Date.now() - d * DAY).toISOString();
 const inDays = (d: number) => new Date(Date.now() + d * DAY).toISOString();
 
-type Contract = "cdi" | "cdd" | "mission-interim" | "consultant-freelance" | "fifo-roster" | "stage";
+import type { Job } from "../src/payload-types";
+
+type Contract = NonNullable<Job["contractType"]>;
+type Country = NonNullable<Job["country"]>;
+type Discipline = NonNullable<Job["discipline"]>;
 
 interface Demo {
   slug: string;
-  country: string;
+  country: Country;
   location: string;
-  discipline: string;
+  discipline: Discipline;
   specialty: string;
   contractType: Contract;
   experienceMin: number;
@@ -189,7 +193,7 @@ export async function script(config: SanitizedConfig) {
       slug: d.slug,
       country: d.country,
       location: d.location,
-      sector: "mines",
+      sector: "mines-ressources-naturelles" as const,
       discipline: d.discipline,
       specialty: d.specialty,
       contractType: d.contractType,

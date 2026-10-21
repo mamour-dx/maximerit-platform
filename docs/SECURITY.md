@@ -13,6 +13,13 @@
 - **Élévation verticale refusée** : VIEWER ne peut pas créer d'utilisateur ; RECRUITER lit mais ne
   supprime pas un candidat (delete réservé ADMIN) — testé.
 - Bootstrap du 1er admin autorisé une seule fois (aucun user), puis création réservée aux admins.
+  Le tout premier compte est **forcé en SUPER_ADMIN** (hook `users.beforeValidate`, testé) ; sinon il hériterait du rôle
+  par défaut VIEWER. **Créez ce compte immédiatement après le premier déploiement** : la création du premier compte
+  est ouverte tant qu'aucun utilisateur n'existe.
+- **Surface réduite (Phase 14)** : l'API **GraphQL** et son playground sont **désactivés** (inutilisés ; routes
+  supprimées → 404). Les rubriques techniques (redirections, étiquettes, viviers, pages marketing, comptes) sont
+  **masquées et non routables** pour les non-administrateurs (`admin.hidden`, testé) ; les fichiers CV sont hors
+  menu mais gardent leurs règles d'accès (lecture interne uniquement).
 
 ## Validation & entrées
 - Validation **serveur systématique** : profil candidat (`@maximerit/domain`), lead (`lib/lead`).

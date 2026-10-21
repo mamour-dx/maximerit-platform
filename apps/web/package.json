@@ -17,6 +17,7 @@
     "@payloadcms/db-postgres": "^3.90.1",
     "@payloadcms/next": "^3.90.1",
     "@payloadcms/richtext-lexical": "^3.90.1",
+    "@payloadcms/translations": "^3.90.1",
     "graphql": "^16.14.2",
     "mammoth": "^1.12.3",
     "meilisearch": "^0.62.0",
