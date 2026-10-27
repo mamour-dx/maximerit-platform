@@ -49,6 +49,11 @@
   mesure avant accord — Phase 8).
 - Conservation / suppression / export : opérables via l'admin (soft-delete à activer en Phase 12) ;
   politique de conservation à formaliser avec le client.
+- **Export CSV / Excel** (candidats, candidatures — `src/lib/export.ts`) : `POST /api/<collection>/export`, réservé à
+  RECRUITER / ADMIN / SUPER_ADMIN (403 sinon, 401 anonyme) ; accès Payload appliqué (`overrideAccess: false`), filtres
+  validés par Payload ; notes internes et données de parsing exclues ; injection de formules neutralisée (CSV) et
+  impossible (XLSX, cellules texte) ; chaque export est journalisé (`event: "data-export"` : utilisateur, rôle,
+  collection, format, nombre de lignes, filtres) ; plafond de 10 000 lignes.
 
 ## Audit des dépendances
 - `pnpm audit --prod` : **0 vulnérabilité connue** après `pnpm.overrides` (dompurify ≥ 3.4.13, esbuild ≥ 0.25.0

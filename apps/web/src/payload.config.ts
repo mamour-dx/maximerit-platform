@@ -1,7 +1,7 @@
 import path from "path";
 import { fileURLToPath } from "url";
 import { buildConfig } from "payload";
-import type { Access, CollectionBeforeChangeHook, CollectionBeforeValidateHook, Field } from "payload";
+import type { Access, CollectionBeforeChangeHook, CollectionBeforeValidateHook, Endpoint, Field } from "payload";
 import { postgresAdapter } from "@payloadcms/db-postgres";
 import { lexicalEditor } from "@payloadcms/richtext-lexical";
 import { fr } from "@payloadcms/translations/languages/fr";
@@ -133,6 +133,19 @@ const publishDate: CollectionBeforeChangeHook = ({ data, originalDoc }) => {
   if (status !== "published") return data;
   return { ...data, publishedAt: data.publishedAt ?? originalDoc?.publishedAt ?? new Date().toISOString() };
 };
+
+// ───────────────────────────── Export CSV / Excel (candidats, candidatures) ─────────────────────────────
+// Bouton au-dessus de la liste + endpoint `POST /api/<collection>/export`. Rôles autorisés, colonnes et
+// journalisation : src/lib/export.ts (import paresseux, comme la recherche : la CLI n'évalue pas ce module).
+const EXPORT_BAR = "/components/admin/ExportBar#ExportBar";
+const exportEndpoint = (collection: "candidates" | "applications"): Endpoint => ({
+  path: "/export",
+  method: "post",
+  handler: async (req) => {
+    const { handleExport } = await import("./lib/export");
+    return handleExport(req, collection);
+  },
+});
 
 // ───────────────────────────── Briques de formulaire ─────────────────────────────
 const half = { width: "50%" } as const;
@@ -301,11 +314,13 @@ export default buildConfig({
         useAsTitle: "id",
         group: "Recrutement",
         defaultColumns: ["candidate", "job", "status", "createdAt"],
-        description: "Candidatures reçues depuis le site (formulaire « Postuler »).",
+        description: "Candidatures reçues depuis le site (formulaire « Postuler »). Filtrez par offre puis exportez la liste.",
+        components: { beforeListTable: [EXPORT_BAR] },
       },
       defaultSort: "-createdAt",
       // Créées via /apply (overrideAccess) ; jamais lisibles publiquement (données candidats).
       access: { read: isAuthenticated, create: isAuthenticated, update: isAuthenticated, delete: isAdmin },
+      endpoints: [exportEndpoint("applications")],
       fields: [
         {
           type: "row",
@@ -352,10 +367,12 @@ export default buildConfig({
         defaultColumns: ["firstName", "lastName", "email", "currentPosition", "status", "createdAt"],
         listSearchableFields: ["firstName", "lastName", "email", "currentPosition"],
         description: "Tous les profils reçus (candidatures et dépôts de CV).",
+        components: { beforeListTable: [EXPORT_BAR] },
       },
       defaultSort: "-createdAt",
       // Données personnelles : jamais lisibles publiquement ; création via /apply (overrideAccess).
       access: { read: isAuthenticated, create: isAuthenticated, update: isAuthenticated, delete: isAdmin },
+      endpoints: [exportEndpoint("candidates")],
       hooks: {
         // Sync Meilisearch (import paresseux : n'alourdit pas l'éval du config ni la CLI ; fail-soft).
         afterChange: [async ({ doc }) => { const { indexCandidate } = await import("./lib/search"); await indexCandidate(doc as never); }],

@@ -39,6 +39,28 @@ Pour la remettre en ligne : repassez-la en **« Publiée »** (elle est prolong�
 
 Les dépôts de CV spontanés (sans offre) apparaissent dans **Candidats**.
 
+## Exporter des candidats (Excel / CSV)
+
+Au-dessus des listes **Candidats** et **Candidatures**, la barre **« Exporter »** télécharge un fichier :
+
+- **Rien de coché** : tous les résultats affichés, c'est-à-dire avec vos **filtres** et votre **recherche** en cours
+  (toutes les pages, pas seulement la page visible). Sans filtre : tous les candidats.
+- **Des lignes cochées** : uniquement ces lignes.
+- **Excel (.xlsx)** : à ouvrir dans Excel ou Google Sheets (en-tête figé et filtrable, liens cliquables vers le CV
+  et la fiche). **CSV** : pour importer dans un autre outil (séparateur « ; », accents conservés).
+
+Exemples : *Candidats* → filtre « Étape du recrutement = Dans le vivier » → **Excel**.
+*Candidatures* → filtre « Offre = Géologue senior » → **Excel** : la liste des personnes qui ont postulé à ce poste,
+avec leurs coordonnées.
+
+Le fichier contient le profil complet (coordonnées, expérience, étape, offres auxquelles la personne a postulé,
+lien vers le CV). Les **notes de l'équipe ne sont jamais exportées**. Les liens vers le CV et la fiche ne
+s'ouvrent que pour une personne connectée au back-office.
+
+> L'export est réservé aux **recruteurs** et **administrateurs** et chaque export est enregistré (qui, quand, combien).
+> 10 000 lignes maximum par fichier : au-delà, affinez les filtres. Un fichier exporté contient des données
+> personnelles : ne le partagez qu'avec les personnes qui en ont besoin.
+
 ## Répondre aux demandes d'entreprises
 
 **Demandes d'entreprises** liste les entreprises qui ont écrit via le site. Ouvrez une demande, contactez la
@@ -58,8 +80,8 @@ Le site existe en français et en anglais. Dans une offre, un article ou une pag
 
 | Rôle | Peut |
 |---|---|
-| Super administrateur / Administrateur | Tout, y compris gérer les comptes et supprimer |
-| Recruteur | Offres, candidats, candidatures, contenu du site |
+| Super administrateur / Administrateur | Tout, y compris gérer les comptes, supprimer et exporter |
+| Recruteur | Offres, candidats, candidatures (dont l'export Excel / CSV), contenu du site |
 | Responsable contenu | Articles, ressources, pages |
 | Marketing | Demandes d'entreprises, pages marketing, contenu |
 | Lecture seule | Consulter |
