@@ -3,6 +3,8 @@ import { fileURLToPath } from "url";
 import { buildConfig } from "payload";
 import type { Access, CollectionBeforeChangeHook, CollectionBeforeValidateHook, Endpoint, Field } from "payload";
 import { postgresAdapter } from "@payloadcms/db-postgres";
+import { cloudStoragePlugin } from "@payloadcms/plugin-cloud-storage";
+import type { Adapter } from "@payloadcms/plugin-cloud-storage/types";
 import { lexicalEditor } from "@payloadcms/richtext-lexical";
 import { fr } from "@payloadcms/translations/languages/fr";
 import { mining, SECTORS, COUNTRY_CODES, CONTRACT_TYPES } from "@maximerit/domain";
@@ -147,6 +149,28 @@ const exportEndpoint = (collection: "candidates" | "applications"): Endpoint => 
   },
 });
 
+// ───────────────────────────── Stockage privé des documents candidats ─────────────────────────────
+// Production (Vercel) : store Vercel Blob « Private » — le disque du serveur y est en lecture seule et
+// non persistant. Actif dès que BLOB_READ_WRITE_TOKEN est défini ; sinon disque local (dev, tests).
+// Lecture toujours servie par l'application après contrôle d'accès Payload (Art. VI). Implémentation :
+// src/lib/blob-storage.ts (import paresseux : la CLI n'évalue pas ce module).
+const BLOB_ENABLED = Boolean(process.env.BLOB_READ_WRITE_TOKEN);
+const privateBlobAdapter: Adapter = ({ collection }) => ({
+  name: "vercel-blob-private",
+  handleUpload: async ({ file, storageFilePath }) => {
+    const { putPrivate } = await import("./lib/blob-storage");
+    await putPrivate(storageFilePath, file.buffer, file.mimeType);
+  },
+  handleDelete: async ({ storageFilePath }) => {
+    const { delPrivate } = await import("./lib/blob-storage");
+    await delPrivate(storageFilePath);
+  },
+  staticHandler: async (req, { doc, params }) => {
+    const { serveStored } = await import("./lib/blob-storage");
+    return serveStored(req, { collection, doc, filename: params.filename });
+  },
+});
+
 // ───────────────────────────── Briques de formulaire ─────────────────────────────
 const half = { width: "50%" } as const;
 
@@ -241,6 +265,15 @@ export default buildConfig({
         process.env.DATABASE_URI || "postgres://maximerit:maximerit_dev@localhost:5432/maximerit",
     },
   }),
+  // Documents candidats sur stockage privé en production (voir « Stockage privé » plus haut). alwaysInsertFields :
+  // même schéma de base en local et en production (colonnes prefix / _objectKey), donc mêmes migrations.
+  plugins: [
+    cloudStoragePlugin({
+      enabled: BLOB_ENABLED,
+      alwaysInsertFields: true,
+      collections: { cvs: { adapter: privateBlobAdapter, prefix: "cvs" } },
+    }),
+  ],
   // i18n réel FR/EN du contenu du site (ADR-0002)
   localization: { locales: [{ label: "Français", code: "fr" }, { label: "English", code: "en" }], defaultLocale: "fr" },
   typescript: { outputFile: path.resolve(dirname, "payload-types.ts") },
@@ -331,6 +364,13 @@ export default buildConfig({
         },
         { name: "cv", type: "relationship", relationTo: "cvs", label: "CV" },
         {
+          type: "row",
+          fields: [
+            { name: "coverLetter", type: "relationship", relationTo: "cvs", label: "Lettre de motivation (fichier)", admin: half },
+            { name: "coverLetterText", type: "textarea", label: "Lettre de motivation (texte)", admin: { ...half, description: "Facultative : saisie par le candidat dans le formulaire." } },
+          ],
+        },
+        {
           name: "status",
           type: "select",
           label: "Suivi",
@@ -401,6 +441,8 @@ export default buildConfig({
           ],
         },
         { name: "cv", type: "relationship", relationTo: "cvs", label: "CV" },
+        { name: "coverLetter", type: "relationship", relationTo: "cvs", label: "Lettre de motivation (fichier)" },
+        { name: "coverLetterText", type: "textarea", label: "Lettre de motivation (texte)", admin: { description: "Facultative : saisie par le candidat dans le formulaire." } },
         {
           name: "notes",
           type: "array",
@@ -830,10 +872,10 @@ export default buildConfig({
       ],
     },
 
-    // ─────────────── Fichiers CV (hors menu : on y accède depuis la fiche du candidat) ───────────────
+    // ─────────────── Documents candidats : CV et lettres (hors menu : on y accède depuis la fiche du candidat) ───────────────
     {
       slug: "cvs",
-      labels: { singular: "CV", plural: "CV" },
+      labels: { singular: "Document candidat (CV, lettre)", plural: "Documents candidats (CV, lettres)" },
       admin: { useAsTitle: "filename", group: false },
       upload: {
         staticDir: path.resolve(dirname, "../cv-uploads"),

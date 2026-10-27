@@ -2,34 +2,32 @@ import { NextResponse } from "next/server";
 import { getPayload } from "payload";
 import config from "@payload-config";
 import { validateCandidateProfile, type CandidateProfile } from "@maximerit/domain";
-import { validateCvFile, sanitizeFilename } from "@/lib/upload";
-import type { Candidate } from "@/payload-types";
+import { ApplyError, submitApplication, type DocInput } from "@/lib/apply";
+import { captchaEnabled, clientIp, rateLimiter, verifyTicket } from "@/lib/captcha";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-const WINDOW_MS = 60_000;
-const MAX_PER_WINDOW = 5;
-const hits = new Map<string, number[]>();
-function rateLimited(ip: string): boolean {
-  const now = Date.now();
-  const arr = (hits.get(ip) ?? []).filter((t) => now - t < WINDOW_MS);
-  arr.push(now);
-  hits.set(ip, arr);
-  return arr.length > MAX_PER_WINDOW;
+const limited = rateLimiter(5);
+
+/** Document du formulaire : fichier joint (`<champ>`) ou référence d'envoi direct (`<champ>Ref` + `<champ>Name`). */
+function docFrom(form: FormData, field: string): DocInput {
+  const file = form.get(field);
+  if (file && typeof file !== "string" && file.size > 0) return { file };
+  const ref = form.get(`${field}Ref`);
+  if (typeof ref === "string" && ref) {
+    const name = form.get(`${field}Name`);
+    return { ref, name: typeof name === "string" ? name.slice(0, 200) : undefined };
+  }
+  return null;
 }
 
-// Champs du profil recopiés vers la fiche candidat (whitelist stricte).
-const PROFILE_KEYS: (keyof CandidateProfile)[] = [
-  "firstName", "lastName", "email", "phone", "whatsapp", "countryOfResidence", "nationality",
-  "internationalMobility", "currentPosition", "targetSpecialty", "targetDiscipline", "sector",
-  "yearsExperience", "seniority", "currentCompany", "salaryExpectation", "availabilityDays",
-  "languages", "mining",
-];
-
+/**
+ * Étape finale d'une candidature : profil + CV (requis) + lettre de motivation (facultative, fichier ou texte).
+ * Captcha : ticket exigé quand Turnstile est configuré (délivré par /apply/session après vérification).
+ */
 export async function POST(req: Request): Promise<Response> {
-  const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "local";
-  if (rateLimited(ip)) return NextResponse.json({ error: "rate_limited" }, { status: 429 });
+  if (limited(clientIp(req))) return NextResponse.json({ error: "rate_limited" }, { status: 429 });
 
   let form: FormData;
   try {
@@ -44,6 +42,10 @@ export async function POST(req: Request): Promise<Response> {
     return NextResponse.json({ ok: true }, { status: 202 });
   }
 
+  if (captchaEnabled() && !verifyTicket(form.get("ticket"))) {
+    return NextResponse.json({ error: "captcha", errors: ["captcha"] }, { status: 403 });
+  }
+
   // Profil (JSON) → validation métier (domaine, consentement obligatoire)
   let profile: CandidateProfile;
   try {
@@ -54,46 +56,23 @@ export async function POST(req: Request): Promise<Response> {
   const check = validateCandidateProfile(profile);
   if (!check.valid) return NextResponse.json({ errors: check.errors }, { status: 400 });
 
-  // CV (fichier) — requis, type/taille contrôlés
-  const file = form.get("cv");
-  if (!file || typeof file === "string") return NextResponse.json({ errors: ["CV requis"] }, { status: 400 });
-  const upload = validateCvFile({ mimetype: file.type, size: file.size, name: file.name });
-  if (!upload.valid) return NextResponse.json({ errors: [upload.error] }, { status: 400 });
+  const jobRaw = form.get("jobId");
+  const jobId = jobRaw != null && String(jobRaw).trim() !== "" ? Number(jobRaw) : undefined;
+  if (jobId !== undefined && !Number.isInteger(jobId)) return NextResponse.json({ errors: ["offre invalide"] }, { status: 400 });
 
   try {
     const payload = await getPayload({ config });
-    const buffer = Buffer.from(await file.arrayBuffer());
-    const cv = await payload.create({
-      collection: "cvs",
-      file: { data: buffer, mimetype: file.type, name: sanitizeFilename(file.name), size: file.size },
-      data: { candidateName: `${profile.firstName ?? ""} ${profile.lastName ?? ""}`.trim() },
+    const letterText = form.get("coverLetterText");
+    const result = await submitApplication(payload, {
+      profile,
+      jobId,
+      cv: docFrom(form, "cv"),
+      coverLetter: docFrom(form, "coverLetter"),
+      coverLetterText: typeof letterText === "string" ? letterText : undefined,
     });
-
-    const data: Record<string, unknown> = { cv: cv.id, source: "site", consent: true, consentAt: new Date().toISOString(), parseStatus: "pending", status: "nouveau" };
-    for (const k of PROFILE_KEYS) if (profile[k] != null) data[k] = profile[k];
-
-    // Données assemblées dynamiquement puis validées (validateCandidateProfile) : on informe TS
-    // via le type généré (les génériques Payload ne l'infèrent pas depuis un Record).
-    const candidate = await payload.create({
-      collection: "candidates",
-      overrideAccess: true,
-      data: data as unknown as Candidate,
-    });
-
-    // Candidature à une offre précise (Phase 6) : crée une Application reliée à l'ATS.
-    const jobId = form.get("jobId");
-    let applicationId: number | string | undefined;
-    if (jobId != null && String(jobId).trim() !== "") {
-      const application = await payload.create({
-        collection: "applications",
-        overrideAccess: true,
-        data: { job: Number(jobId), candidate: candidate.id, cv: cv.id, status: "recue", source: "site" },
-      });
-      applicationId = application.id;
-    }
-
-    return NextResponse.json({ ok: true, id: candidate.id, cvId: cv.id, applicationId }, { status: 201 });
+    return NextResponse.json({ ok: true, ...result }, { status: 201 });
   } catch (err) {
+    if (err instanceof ApplyError) return NextResponse.json({ error: err.code, errors: [err.code] }, { status: err.code === "cv_too_large" || err.code === "letter_too_large" ? 413 : 400 });
     console.error("[apply] échec création:", err instanceof Error ? err.message : err);
     return NextResponse.json({ error: "server_error" }, { status: 500 });
   }

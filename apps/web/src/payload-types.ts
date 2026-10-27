@@ -194,7 +194,7 @@ export interface Job {
   createdAt: string;
 }
 /**
- * Candidatures reçues depuis le site (formulaire « Postuler »).
+ * Candidatures reçues depuis le site (formulaire « Postuler »). Filtrez par offre puis exportez la liste.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "applications".
@@ -204,6 +204,11 @@ export interface Application {
   candidate: number | Candidate;
   job?: (number | null) | Job;
   cv?: (number | null) | Cv;
+  coverLetter?: (number | null) | Cv;
+  /**
+   * Facultative : saisie par le candidat dans le formulaire.
+   */
+  coverLetterText?: string | null;
   status?: ('recue' | 'en-revue' | 'retenue' | 'rejetee') | null;
   source?: string | null;
   utm?: {
@@ -229,6 +234,11 @@ export interface Candidate {
   currentPosition?: string | null;
   yearsExperience?: number | null;
   cv?: (number | null) | Cv;
+  coverLetter?: (number | null) | Cv;
+  /**
+   * Facultative : saisie par le candidat dans le formulaire.
+   */
+  coverLetterText?: string | null;
   /**
    * Vos commentaires sur ce candidat (visibles de toute l'équipe).
    */
@@ -309,6 +319,8 @@ export interface Candidate {
 export interface Cv {
   id: number;
   candidateName?: string | null;
+  prefix?: string | null;
+  _objectKey?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -740,6 +752,8 @@ export interface ApplicationsSelect<T extends boolean = true> {
   candidate?: T;
   job?: T;
   cv?: T;
+  coverLetter?: T;
+  coverLetterText?: T;
   status?: T;
   source?: T;
   utm?:
@@ -764,6 +778,8 @@ export interface CandidatesSelect<T extends boolean = true> {
   currentPosition?: T;
   yearsExperience?: T;
   cv?: T;
+  coverLetter?: T;
+  coverLetterText?: T;
   notes?:
     | T
     | {
@@ -985,6 +1001,8 @@ export interface TalentPoolsSelect<T extends boolean = true> {
  */
 export interface CvsSelect<T extends boolean = true> {
   candidateName?: T;
+  prefix?: T;
+  _objectKey?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;

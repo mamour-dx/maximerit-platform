@@ -59,7 +59,7 @@ const list = (v: unknown): string => (Array.isArray(v) ? v.filter(Boolean).join(
 const date = (v: unknown): Date | null => (typeof v === "string" && v ? new Date(v) : null);
 const cvLink = (cv: unknown, ctx: Ctx): Link | null => {
   const c = obj<Cv>(cv);
-  return c?.url ? { text: c.filename ?? "CV", url: ctx.abs(c.url) } : null;
+  return c?.url ? { text: c.filename ?? "Document", url: ctx.abs(c.url) } : null;
 };
 const ficheLink = (collection: ExportCollection, id: number, ctx: Ctx): Link => ({
   text: "Ouvrir la fiche",
@@ -107,6 +107,8 @@ const CANDIDATE_COLUMNS: Column<Candidate>[] = [
   { header: "Date du consentement", width: 17, value: (c) => date(c.consentAt) },
   { header: "Reçu le", width: 17, value: (c) => date(c.createdAt) },
   { header: "CV", width: 24, value: (c, x) => cvLink(c.cv, x) },
+  { header: "Lettre de motivation (fichier)", width: 24, value: (c, x) => cvLink(c.coverLetter, x) },
+  { header: "Lettre de motivation (texte)", width: 50, value: (c) => c.coverLetterText },
   { header: "Fiche back-office", width: 18, value: (c, x) => ficheLink("candidates", c.id, x) },
 ];
 
@@ -128,6 +130,8 @@ const APPLICATION_COLUMNS: Column<Application>[] = [
   { header: "Campagne — support", value: (a) => a.utm?.medium },
   { header: "Campagne — nom", value: (a) => a.utm?.campaign },
   { header: "CV", width: 24, value: (a, x) => cvLink(a.cv, x) ?? cvLink(obj<Candidate>(a.candidate)?.cv, x) },
+  { header: "Lettre de motivation (fichier)", width: 24, value: (a, x) => cvLink(a.coverLetter, x) },
+  { header: "Lettre de motivation (texte)", width: 50, value: (a) => a.coverLetterText },
   {
     header: "Fiche candidat",
     width: 18,

@@ -39,6 +39,10 @@ Pour la remettre en ligne : repassez-la en **« Publiée »** (elle est prolong�
 
 Les dépôts de CV spontanés (sans offre) apparaissent dans **Candidats**.
 
+**Lettre de motivation** (facultative) : le candidat peut joindre un fichier (PDF/DOCX) ou l'écrire dans le formulaire.
+Elle apparaît sur la fiche du candidat (et sur la candidature) dans **Lettre de motivation (fichier)** ou
+**Lettre de motivation (texte)**, et dans les exports Excel / CSV. Les CV et lettres acceptés vont jusqu'à **20 Mo**.
+
 ## Exporter des candidats (Excel / CSV)
 
 Au-dessus des listes **Candidats** et **Candidatures**, la barre **« Exporter »** télécharge un fichier :

@@ -1,10 +1,22 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
-import type { Payload } from "payload";
+import { createLocalReq, type Payload, type TypeWithID } from "payload";
 import { parseCvBuffer, type ParsedCvProposal } from "./cv-parse";
+import { blobEnabled, readPrivate, storagePathOf } from "./blob-storage";
+import { MAX_CV_BYTES } from "./upload";
 
-// Répertoire de stockage des CV (aligné payload.config.ts → cvs.upload.staticDir).
+// Répertoire de stockage local des CV (aligné payload.config.ts → cvs.upload.staticDir), hors production.
 const CV_DIR = path.join(process.cwd(), "cv-uploads");
+
+/** Contenu d'un document candidat, où qu'il soit stocké (stockage privé en production, disque en local). */
+async function readCvFile(payload: Payload, doc: TypeWithID & Record<string, unknown> & { filename: string }): Promise<Buffer> {
+  if (!blobEnabled()) return readFile(path.join(CV_DIR, path.basename(doc.filename)));
+  const req = await createLocalReq({}, payload);
+  const pathname = await storagePathOf(payload.collections.cvs.config, doc, doc.filename, req);
+  const stored = await readPrivate(pathname, MAX_CV_BYTES);
+  if (!stored) throw new Error("cv_missing");
+  return stored.buffer;
+}
 
 /**
  * Parse le CV d'un candidat et enregistre une PROPOSITION de fiche (proposedProfile),
@@ -25,7 +37,7 @@ export async function parseCandidateCv(
   }
 
   try {
-    const buffer = await readFile(path.join(CV_DIR, cvDoc.filename));
+    const buffer = await readCvFile(payload, cvDoc as unknown as TypeWithID & Record<string, unknown> & { filename: string });
     const proposal = await parseCvBuffer(buffer, cvDoc.mimeType);
     await payload.update({
       collection: "candidates",

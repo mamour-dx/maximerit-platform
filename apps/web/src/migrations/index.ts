@@ -7,6 +7,7 @@ import * as migration_20260921_135604_talent_pools from './20260921_135604_talen
 import * as migration_20260921_180118_jobs_applications from './20260921_180118_jobs_applications';
 import * as migration_20260921_182546_editorial from './20260921_182546_editorial';
 import * as migration_20261021_100054_simplify_admin from './20261021_100054_simplify_admin';
+import * as migration_20261027_154452_candidature_lettre_stockage from './20261027_154452_candidature_lettre_stockage';
 
 export const migrations = [
   {
@@ -52,6 +53,11 @@ export const migrations = [
   {
     up: migration_20261021_100054_simplify_admin.up,
     down: migration_20261021_100054_simplify_admin.down,
-    name: '20261021_100054_simplify_admin'
+    name: '20261021_100054_simplify_admin',
+  },
+  {
+    up: migration_20261027_154452_candidature_lettre_stockage.up,
+    down: migration_20261027_154452_candidature_lettre_stockage.down,
+    name: '20261027_154452_candidature_lettre_stockage'
   },
 ];

@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { getPayload } from "payload";
 import config from "@payload-config";
 import { validateLead, isSpam, sanitizeUtm, type LeadInput } from "@/lib/lead";
+import { verifyCaptcha } from "@/lib/captcha";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -32,6 +33,10 @@ export async function POST(req: Request): Promise<Response> {
 
   // Honeypot : on accepte silencieusement (202) sans rien stocker, pour ne pas signaler le piège.
   if (isSpam(body)) return NextResponse.json({ ok: true }, { status: 202 });
+
+  // Captcha Turnstile (ignoré tant que TURNSTILE_SECRET_KEY n'est pas configuré).
+  const captcha = await verifyCaptcha((body as { captchaToken?: unknown }).captchaToken, ip);
+  if (!captcha.ok) return NextResponse.json({ error: "captcha", reason: captcha.reason }, { status: 403 });
 
   const { valid, errors, data } = validateLead(body);
   if (!valid || !data) return NextResponse.json({ errors }, { status: 400 });
