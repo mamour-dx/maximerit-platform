@@ -1,8 +1,10 @@
 import path from "path";
 import { fileURLToPath } from "url";
 import { buildConfig } from "payload";
-import type { Access, CollectionBeforeChangeHook, CollectionBeforeValidateHook, Field } from "payload";
+import type { Access, CollectionBeforeChangeHook, CollectionBeforeValidateHook, Endpoint, Field } from "payload";
 import { postgresAdapter } from "@payloadcms/db-postgres";
+import { cloudStoragePlugin } from "@payloadcms/plugin-cloud-storage";
+import type { Adapter } from "@payloadcms/plugin-cloud-storage/types";
 import { lexicalEditor } from "@payloadcms/richtext-lexical";
 import { fr } from "@payloadcms/translations/languages/fr";
 import { mining, SECTORS, COUNTRY_CODES, CONTRACT_TYPES } from "@maximerit/domain";
@@ -134,6 +136,41 @@ const publishDate: CollectionBeforeChangeHook = ({ data, originalDoc }) => {
   return { ...data, publishedAt: data.publishedAt ?? originalDoc?.publishedAt ?? new Date().toISOString() };
 };
 
+// ───────────────────────────── Export CSV / Excel (candidats, candidatures) ─────────────────────────────
+// Bouton au-dessus de la liste + endpoint `POST /api/<collection>/export`. Rôles autorisés, colonnes et
+// journalisation : src/lib/export.ts (import paresseux, comme la recherche : la CLI n'évalue pas ce module).
+const EXPORT_BAR = "/components/admin/ExportBar#ExportBar";
+const exportEndpoint = (collection: "candidates" | "applications"): Endpoint => ({
+  path: "/export",
+  method: "post",
+  handler: async (req) => {
+    const { handleExport } = await import("./lib/export");
+    return handleExport(req, collection);
+  },
+});
+
+// ───────────────────────────── Stockage privé des documents candidats ─────────────────────────────
+// Production (Vercel) : store Vercel Blob « Private » — le disque du serveur y est en lecture seule et
+// non persistant. Actif dès que BLOB_READ_WRITE_TOKEN est défini ; sinon disque local (dev, tests).
+// Lecture toujours servie par l'application après contrôle d'accès Payload (Art. VI). Implémentation :
+// src/lib/blob-storage.ts (import paresseux : la CLI n'évalue pas ce module).
+const BLOB_ENABLED = Boolean(process.env.BLOB_READ_WRITE_TOKEN);
+const privateBlobAdapter: Adapter = ({ collection }) => ({
+  name: "vercel-blob-private",
+  handleUpload: async ({ file, storageFilePath }) => {
+    const { putPrivate } = await import("./lib/blob-storage");
+    await putPrivate(storageFilePath, file.buffer, file.mimeType);
+  },
+  handleDelete: async ({ storageFilePath }) => {
+    const { delPrivate } = await import("./lib/blob-storage");
+    await delPrivate(storageFilePath);
+  },
+  staticHandler: async (req, { doc, params }) => {
+    const { serveStored } = await import("./lib/blob-storage");
+    return serveStored(req, { collection, doc, filename: params.filename });
+  },
+});
+
 // ───────────────────────────── Briques de formulaire ─────────────────────────────
 const half = { width: "50%" } as const;
 
@@ -228,6 +265,15 @@ export default buildConfig({
         process.env.DATABASE_URI || "postgres://maximerit:maximerit_dev@localhost:5432/maximerit",
     },
   }),
+  // Documents candidats sur stockage privé en production (voir « Stockage privé » plus haut). alwaysInsertFields :
+  // même schéma de base en local et en production (colonnes prefix / _objectKey), donc mêmes migrations.
+  plugins: [
+    cloudStoragePlugin({
+      enabled: BLOB_ENABLED,
+      alwaysInsertFields: true,
+      collections: { cvs: { adapter: privateBlobAdapter, prefix: "cvs" } },
+    }),
+  ],
   // i18n réel FR/EN du contenu du site (ADR-0002)
   localization: { locales: [{ label: "Français", code: "fr" }, { label: "English", code: "en" }], defaultLocale: "fr" },
   typescript: { outputFile: path.resolve(dirname, "payload-types.ts") },
@@ -301,11 +347,13 @@ export default buildConfig({
         useAsTitle: "id",
         group: "Recrutement",
         defaultColumns: ["candidate", "job", "status", "createdAt"],
-        description: "Candidatures reçues depuis le site (formulaire « Postuler »).",
+        description: "Candidatures reçues depuis le site (formulaire « Postuler »). Filtrez par offre puis exportez la liste.",
+        components: { beforeListTable: [EXPORT_BAR] },
       },
       defaultSort: "-createdAt",
       // Créées via /apply (overrideAccess) ; jamais lisibles publiquement (données candidats).
       access: { read: isAuthenticated, create: isAuthenticated, update: isAuthenticated, delete: isAdmin },
+      endpoints: [exportEndpoint("applications")],
       fields: [
         {
           type: "row",
@@ -315,6 +363,13 @@ export default buildConfig({
           ],
         },
         { name: "cv", type: "relationship", relationTo: "cvs", label: "CV" },
+        {
+          type: "row",
+          fields: [
+            { name: "coverLetter", type: "relationship", relationTo: "cvs", label: "Lettre de motivation (fichier)", admin: half },
+            { name: "coverLetterText", type: "textarea", label: "Lettre de motivation (texte)", admin: { ...half, description: "Facultative : saisie par le candidat dans le formulaire." } },
+          ],
+        },
         {
           name: "status",
           type: "select",
@@ -352,10 +407,12 @@ export default buildConfig({
         defaultColumns: ["firstName", "lastName", "email", "currentPosition", "status", "createdAt"],
         listSearchableFields: ["firstName", "lastName", "email", "currentPosition"],
         description: "Tous les profils reçus (candidatures et dépôts de CV).",
+        components: { beforeListTable: [EXPORT_BAR] },
       },
       defaultSort: "-createdAt",
       // Données personnelles : jamais lisibles publiquement ; création via /apply (overrideAccess).
       access: { read: isAuthenticated, create: isAuthenticated, update: isAuthenticated, delete: isAdmin },
+      endpoints: [exportEndpoint("candidates")],
       hooks: {
         // Sync Meilisearch (import paresseux : n'alourdit pas l'éval du config ni la CLI ; fail-soft).
         afterChange: [async ({ doc }) => { const { indexCandidate } = await import("./lib/search"); await indexCandidate(doc as never); }],
@@ -384,6 +441,8 @@ export default buildConfig({
           ],
         },
         { name: "cv", type: "relationship", relationTo: "cvs", label: "CV" },
+        { name: "coverLetter", type: "relationship", relationTo: "cvs", label: "Lettre de motivation (fichier)" },
+        { name: "coverLetterText", type: "textarea", label: "Lettre de motivation (texte)", admin: { description: "Facultative : saisie par le candidat dans le formulaire." } },
         {
           name: "notes",
           type: "array",
@@ -813,10 +872,10 @@ export default buildConfig({
       ],
     },
 
-    // ─────────────── Fichiers CV (hors menu : on y accède depuis la fiche du candidat) ───────────────
+    // ─────────────── Documents candidats : CV et lettres (hors menu : on y accède depuis la fiche du candidat) ───────────────
     {
       slug: "cvs",
-      labels: { singular: "CV", plural: "CV" },
+      labels: { singular: "Document candidat (CV, lettre)", plural: "Documents candidats (CV, lettres)" },
       admin: { useAsTitle: "filename", group: false },
       upload: {
         staticDir: path.resolve(dirname, "../cv-uploads"),

@@ -9,7 +9,9 @@
     "onlyBuiltDependencies": ["esbuild", "unrs-resolver", "@tailwindcss/oxide", "sharp", "@swc/core"],
     "overrides": {
       "dompurify": ">=3.4.13",
-      "esbuild": ">=0.25.0"
+      "esbuild": ">=0.25.0",
+      "exceljs>uuid": "^11.1.1",
+      "@vercel/cli-config>zod": "^4.6.6"
     }
   },
   "scripts": {

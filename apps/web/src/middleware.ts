@@ -11,7 +11,8 @@ export function middleware(req: NextRequest) {
   return NextResponse.next();
 }
 
-// Exécuté sur toutes les routes sauf assets, admin Payload et API.
+// Exécuté sur toutes les routes sauf assets, admin Payload, API et envoi de candidature (/apply/ : fichiers jusqu'à
+// 20 Mo, que le proxy tamponnerait en mémoire et tronquerait au-delà de 10 Mo — aucune redirection SEO à y appliquer).
 export const config = {
-  matcher: ["/((?!_next/|admin|api|favicon.ico|.*\\.).*)"],
+  matcher: ["/((?!_next/|admin|api|apply/|favicon.ico|.*\\.).*)"],
 };

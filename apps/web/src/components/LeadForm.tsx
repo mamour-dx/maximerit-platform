@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/Button";
+import { Turnstile, captchaOnPage } from "@/components/Turnstile";
 import { pushEvent, trackOnce } from "@/lib/analytics";
 
 type Status = "idle" | "loading" | "success" | "error";
@@ -24,6 +25,8 @@ const LEAD_COPY = {
     contactName: "Nom *", email: "Email professionnel *", company: "Société", phone: "Téléphone",
     profileSought: "Profil recherché", comment: "Votre besoin",
     error: "Une erreur est survenue. Vérifiez vos informations et réessayez.",
+    captcha: "La vérification anti-robot n'a pas abouti. Réessayez.",
+    captchaPending: "Patientez quelques secondes : la vérification anti-robot est en cours.",
     sending: "Envoi…", cta: "Confier un recrutement",
   },
   en: {
@@ -32,6 +35,8 @@ const LEAD_COPY = {
     contactName: "Name *", email: "Work email *", company: "Company", phone: "Phone",
     profileSought: "Profile sought", comment: "Your need",
     error: "Something went wrong. Check your details and try again.",
+    captcha: "The anti-bot check did not complete. Please try again.",
+    captchaPending: "Please wait a few seconds: the anti-bot check is in progress.",
     sending: "Sending…", cta: "Send",
   },
 } as const;
@@ -50,10 +55,18 @@ export function LeadForm({
   const t = LEAD_COPY[lang];
   const cta = ctaLabel ?? t.cta;
   const [status, setStatus] = useState<Status>("idle");
+  const [message, setMessage] = useState<string>(t.error);
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  const [captchaKey, setCaptchaKey] = useState(0); // remonte le widget → nouveau jeton après chaque tentative
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const fd = new FormData(e.currentTarget);
+    if (captchaOnPage && !captchaToken) {
+      setMessage(t.captchaPending);
+      setStatus("error");
+      return;
+    }
     setStatus("loading");
     const body = {
       contactName: fd.get("contactName"),
@@ -63,6 +76,7 @@ export function LeadForm({
       profileSought: fd.get("profileSought"),
       comment: fd.get("comment"),
       company_url: fd.get("company_url"), // honeypot
+      captchaToken,
       ...(landingPageId != null ? { landingPage: landingPageId } : {}),
       source,
       utm: readUtm(),
@@ -77,10 +91,15 @@ export function LeadForm({
         pushEvent("submit_lead_form", { source });
         setStatus("success");
       } else {
+        setMessage(res.status === 403 ? t.captcha : t.error);
         setStatus("error");
       }
     } catch {
+      setMessage(t.error);
       setStatus("error");
+    } finally {
+      setCaptchaToken(null);
+      setCaptchaKey((k) => k + 1);
     }
   }
 
@@ -112,8 +131,9 @@ export function LeadForm({
         <input name="profileSought" placeholder={t.profileSought} className="field sm:col-span-2" />
       </div>
       <textarea name="comment" placeholder={t.comment} rows={3} className="field" />
+      <Turnstile key={captchaKey} lang={lang} action="lead" onToken={setCaptchaToken} />
       {status === "error" && (
-        <p role="alert" className="text-sm text-brand">{t.error}</p>
+        <p role="alert" className="text-sm text-brand">{message}</p>
       )}
       <Button type="submit" disabled={status === "loading"} className="mt-1 py-3">
         {status === "loading" ? t.sending : cta}

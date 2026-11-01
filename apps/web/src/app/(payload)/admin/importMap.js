@@ -1,3 +1,4 @@
+import { ExportBar as ExportBar_ded88410e483202f029964b7bda34fc2 } from '../../../components/admin/ExportBar'
 import { Icon as Icon_dfe4008080d895d460898c3a6155e9ba } from '../../../components/admin/Icon'
 import { Logo as Logo_91a09b539d3c86b0aebf520e7564ce08 } from '../../../components/admin/Logo'
 import { ViewSite as ViewSite_8fac4e0478deee7386e7954c3e3e90bf } from '../../../components/admin/ViewSite'
@@ -6,6 +7,7 @@ import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } f
 
 /** @type import('payload').ImportMap */
 export const importMap = {
+  "/components/admin/ExportBar#ExportBar": ExportBar_ded88410e483202f029964b7bda34fc2,
   "/components/admin/Icon#Icon": Icon_dfe4008080d895d460898c3a6155e9ba,
   "/components/admin/Logo#Logo": Logo_91a09b539d3c86b0aebf520e7564ce08,
   "/components/admin/ViewSite#ViewSite": ViewSite_8fac4e0478deee7386e7954c3e3e90bf,

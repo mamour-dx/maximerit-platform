@@ -85,10 +85,10 @@ describe("ATS — intake /apply", () => {
     expect(res.status).toBe(400);
   });
 
-  it("refuse un fichier trop volumineux (400)", async () => {
-    const big = new File([new Uint8Array(6 * 1024 * 1024)], "cv.pdf", { type: "application/pdf" });
+  it("refuse un fichier trop volumineux (413 au-delà de 20 Mo)", async () => {
+    const big = new File([new Uint8Array(20 * 1024 * 1024 + 1)], "cv.pdf", { type: "application/pdf" });
     const res = await apply(validProfile(), big);
-    expect(res.status).toBe(400);
+    expect(res.status).toBe(413);
   });
 
   it("exige un CV (400 si absent)", async () => {

@@ -49,6 +49,18 @@
   mesure avant accord — Phase 8).
 - Conservation / suppression / export : opérables via l'admin (soft-delete à activer en Phase 12) ;
   politique de conservation à formaliser avec le client.
+- **Documents candidats (CV, lettres)** : store Vercel Blob **privé** (aucune URL publique ; lecture uniquement via
+  `/api/cvs/file/…` après contrôle d'accès Payload, `Cache-Control: private, no-store`). Envoi direct navigateur → store
+  par jeton restreint (chemin `incoming/<uuid>.<pdf|docx>` imposé, PDF/DOCX, ≤ 20 Mo, sans écrasement, 10 min), puis
+  revérification serveur (taille, **type réel d'après les octets**) avant rangement ; dépôts abandonnés purgés après 1 h.
+- **Captcha** Cloudflare Turnstile sur candidature et demande d'entreprise (vérification serveur, échec fermé si
+  Cloudflare est injoignable). Candidature : captcha vérifié une fois puis ticket HMAC (`PAYLOAD_SECRET`) de 15 min pour
+  les envois de fichiers et la fiche. Limite connue : un ticket reste réutilisable pendant 15 min (limite de débit par IP).
+- **Export CSV / Excel** (candidats, candidatures — `src/lib/export.ts`) : `POST /api/<collection>/export`, réservé à
+  RECRUITER / ADMIN / SUPER_ADMIN (403 sinon, 401 anonyme) ; accès Payload appliqué (`overrideAccess: false`), filtres
+  validés par Payload ; notes internes et données de parsing exclues ; injection de formules neutralisée (CSV) et
+  impossible (XLSX, cellules texte) ; chaque export est journalisé (`event: "data-export"` : utilisateur, rôle,
+  collection, format, nombre de lignes, filtres) ; plafond de 10 000 lignes.
 
 ## Audit des dépendances
 - `pnpm audit --prod` : **0 vulnérabilité connue** après `pnpm.overrides` (dompurify ≥ 3.4.13, esbuild ≥ 0.25.0
