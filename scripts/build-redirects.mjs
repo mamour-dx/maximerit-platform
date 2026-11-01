@@ -42,5 +42,14 @@ for (const r of rows) {
   // KEEP / NOINDEX : pas d'entrée de redirection ici.
 }
 
+// Pages du NOUVEAU site retirées après mise en ligne (ex. métier supprimé de la taxonomie) : 301 vers la page
+// parente la plus proche, pour ne pas créer de 404 sur des URL déjà publiées ou indexées.
+const RETIRED = [
+  // Métier « Ingénieur Forage & Minage » retiré de la taxonomie (2026-11) → son pôle Exploitation & Opérations.
+  ["/mines/metiers/drill-and-blast/", "/mines/exploitation-miniere/"],
+  ["/en/mines/metiers/drill-and-blast/", "/en/mines/exploitation-miniere/"],
+];
+for (const [from, to] of RETIRED) { map[from] = { to, status: 301 }; n301++; }
+
 writeFileSync(OUT, JSON.stringify(map, null, 2) + "\n");
 console.log(`Redirections générées : ${Object.keys(map).length} (${n301}×301, ${n410}×410) → ${OUT.pathname}`);

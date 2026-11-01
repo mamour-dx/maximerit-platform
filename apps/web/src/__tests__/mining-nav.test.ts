@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { disciplineParams, findDiscipline, specialtyParams, findSpecialty, miningIndexablePaths } from "@/lib/mining-nav";
+import { disciplineParams, findDiscipline, specialtyParams, findSpecialty, miningIndexablePaths, disciplineRoles } from "@/lib/mining-nav";
 
 describe("mining-nav", () => {
   it("4 disciplines paramétrées", () => {
@@ -22,5 +22,14 @@ describe("mining-nav", () => {
     expect(paths).toContain("/mines/geologie-exploration/");
     expect(paths).toContain("/mines/metiers/exploration-geologist/");
     expect(paths.length).toBe(1 + 4 + 26);
+  });
+
+  it("métiers transverses (crossRefs) listés dans leur pôle de renvoi, sans dupliquer la fiche", () => {
+    const leadership = findDiscipline("executive-search-mining")!;
+    const slugs = disciplineRoles(leadership).map((s) => s.slug);
+    expect(slugs).toContain("cfo-mining"); // Directeur financier : fiche canonique en Finance
+    expect(new Set(slugs).size).toBe(slugs.length);
+    expect(findSpecialty("cfo-mining")?.discipline.slug).toBe("finance-miniere");
+    expect(specialtyParams().filter((p) => p.slug === "cfo-mining")).toHaveLength(1);
   });
 });

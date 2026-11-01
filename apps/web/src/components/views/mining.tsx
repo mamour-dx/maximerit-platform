@@ -18,6 +18,7 @@ import {
 } from "@/components/site/PageKit";
 import { localePath, type Locale } from "@/lib/i18n";
 import { MINING_COUNTRIES, type MiningCountry } from "@/lib/mining-countries";
+import { disciplineRoles } from "@/lib/mining-nav";
 
 // Silo Mining (FR/EN) : hub, pôles, pays, métiers, page commerciale « recrutement minier ».
 
@@ -50,6 +51,8 @@ const C = {
     statPillars: "pôles",
     statRoles: "métiers",
     statCountries: "pays",
+    pillarsAnchor: "poles",
+    countriesAnchor: "pays",
     pillarsTitle: "Quatre pôles métiers",
     pillarsIntro: "De l'exploration à la direction des opérations : chaque pôle regroupe les métiers que nous recrutons.",
     byCountry: "Par pays",
@@ -120,6 +123,8 @@ const C = {
     statPillars: "pillars",
     statRoles: "roles",
     statCountries: "countries",
+    pillarsAnchor: "pillars",
+    countriesAnchor: "countries",
     pillarsTitle: "Four pillars",
     pillarsIntro: "From exploration to operations leadership: each pillar groups the roles we recruit.",
     byCountry: "By country",
@@ -185,10 +190,10 @@ function DisciplineCards({ lang, preview = false }: { lang: Locale; preview?: bo
     <ul className={`grid gap-5 sm:grid-cols-2 ${preview ? "" : "lg:grid-cols-4"}`}>
       {mining.disciplines.map((d, i) => (
         <li key={d.slug}>
-          <LinkCard href={disciplineHref(d, lang)} icon={DISCIPLINE_ICONS[d.slug] ?? "pickaxe"} index={i + 1} title={label(d, lang)} meta={t.rolesCount(d.specialties.length)}>
+          <LinkCard href={disciplineHref(d, lang)} icon={DISCIPLINE_ICONS[d.slug] ?? "pickaxe"} index={i + 1} title={label(d, lang)} meta={t.rolesCount(disciplineRoles(d).length)}>
             {preview ? (
               <ul className="mt-4 flex flex-wrap gap-1.5">
-                {d.specialties.slice(0, 4).map((s) => (
+                {disciplineRoles(d).slice(0, 4).map((s) => (
                   <li key={s.slug} className="chip">{label(s, lang)}</li>
                 ))}
               </ul>
@@ -246,25 +251,28 @@ export function MiningHub({ lang }: { lang: Locale }) {
           </>
         }
         aside={
-          <dl className="card grid grid-cols-3 divide-x divide-border p-6 sm:p-8">
+          // Chiffres cliquables : pôles et pays → sections plus bas (ancres), métiers → page de tous les métiers.
+          <ul className="card grid grid-cols-3 divide-x divide-border p-6 sm:p-8">
             {[
-              [String(mining.disciplines.length), t.statPillars],
-              [`${mining.disciplines.reduce((n, d) => n + d.specialties.length, 0)}+`, t.statRoles],
-              [String(MINING_COUNTRIES.length), t.statCountries],
-            ].map(([v, l]) => (
-              <div key={l} className="flex flex-col items-center px-2 text-center">
-                <dt className="order-2 mt-1 text-xs text-muted sm:text-sm">{l}</dt>
-                <dd className="order-1 font-display text-4xl font-bold text-brand sm:text-5xl">{v}</dd>
-              </div>
+              [String(mining.disciplines.length), t.statPillars, `#${t.pillarsAnchor}`],
+              [`${mining.disciplines.reduce((n, d) => n + d.specialties.length, 0)}+`, t.statRoles, localePath(lang, "/mines/metiers/")],
+              [String(MINING_COUNTRIES.length), t.statCountries, `#${t.countriesAnchor}`],
+            ].map(([v, l, href]) => (
+              <li key={l} className="px-2">
+                <Link href={href} className="group flex flex-col items-center rounded-[var(--radius)] text-center focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand">
+                  <span className="font-display text-4xl font-bold text-brand sm:text-5xl">{v}</span>
+                  <span className="mt-1 text-xs text-muted transition-colors group-hover:text-brand group-hover:underline sm:text-sm">{l}</span>
+                </Link>
+              </li>
             ))}
-          </dl>
+          </ul>
         }
       />
-      <Section>
+      <Section id={t.pillarsAnchor}>
         <SectionHeading title={t.pillarsTitle} intro={t.pillarsIntro} action={<ArrowLink href={localePath(lang, "/mines/metiers/")}>{t.allRoles}</ArrowLink>} />
         <div className="mt-10"><DisciplineCards lang={lang} preview /></div>
       </Section>
-      <Section tone="surface">
+      <Section tone="surface" id={t.countriesAnchor}>
         <SectionHeading eyebrow={t.byCountry} title={t.byCountryTitle} intro={t.byCountryIntro} />
         <ul className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {MINING_COUNTRIES.map((c) => (
@@ -287,7 +295,7 @@ export function MiningDisciplinePage({ discipline: d, lang }: { discipline: Mini
       <PageHero
         lang={lang}
         crumbs={[{ label: t.mining, href: localePath(lang, "/mines/") }, { label: l }]}
-        eyebrow={t.rolesCount(d.specialties.length)}
+        eyebrow={t.rolesCount(disciplineRoles(d).length)}
         title={l}
         intro={t.disciplineIntro(l)}
         actions={
@@ -298,15 +306,15 @@ export function MiningDisciplinePage({ discipline: d, lang }: { discipline: Mini
         }
       />
       <Section>
-        <SectionHeading title={t.disciplineRolesTitle(d.specialties.length)} />
-        <div className="mt-8"><RoleGrid roles={d.specialties} lang={lang} /></div>
+        <SectionHeading title={t.disciplineRolesTitle(disciplineRoles(d).length)} />
+        <div className="mt-8"><RoleGrid roles={disciplineRoles(d)} lang={lang} /></div>
       </Section>
       <Section tone="surface">
         <SectionHeading title={t.otherPillars} />
         <ul className="mt-8 grid gap-4 sm:grid-cols-3">
           {mining.disciplines.filter((x) => x.slug !== d.slug).map((x) => (
             <li key={x.slug}>
-              <LinkCard href={disciplineHref(x, lang)} icon={DISCIPLINE_ICONS[x.slug] ?? "pickaxe"} title={label(x, lang)} meta={t.rolesCount(x.specialties.length)} />
+              <LinkCard href={disciplineHref(x, lang)} icon={DISCIPLINE_ICONS[x.slug] ?? "pickaxe"} title={label(x, lang)} meta={t.rolesCount(disciplineRoles(x).length)} />
             </li>
           ))}
         </ul>
@@ -379,11 +387,11 @@ export function MiningRolesPage({ lang }: { lang: Locale }) {
       {mining.disciplines.map((d, i) => (
         <Section key={d.slug} id={d.slug} tone={i % 2 ? "surface" : "default"}>
           <SectionHeading
-            eyebrow={t.rolesCount(d.specialties.length)}
+            eyebrow={t.rolesCount(disciplineRoles(d).length)}
             title={label(d, lang)}
             action={<ArrowLink href={disciplineHref(d, lang)}>{t.viewPillar}</ArrowLink>}
           />
-          <div className="mt-8"><RoleGrid roles={d.specialties} lang={lang} /></div>
+          <div className="mt-8"><RoleGrid roles={disciplineRoles(d)} lang={lang} /></div>
         </Section>
       ))}
       <CtaBand lang={lang} />

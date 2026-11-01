@@ -26,11 +26,10 @@
       "specialties": [
         { "slug": "mining-engineer", "label_fr": "Ingénieur minier", "label_en": "Mining Engineer" },
         { "slug": "mine-planning-engineer", "label_fr": "Ingénieur planification minière", "label_en": "Mine Planning Engineer" },
-        { "slug": "drill-and-blast", "label_fr": "Ingénieur Forage & Minage", "label_en": "Drill & Blast Engineer" },
         { "slug": "process-engineer", "label_fr": "Ingénieur procédés", "label_en": "Process Engineer" },
         { "slug": "metallurgist", "label_fr": "Métallurgiste", "label_en": "Metallurgist" },
         { "slug": "maintenance-manager", "label_fr": "Responsable maintenance", "label_en": "Maintenance Manager" },
-        { "slug": "hse-manager", "label_fr": "Responsable HSE", "label_en": "HSE Manager" },
+        { "slug": "hse-manager", "label_fr": "Responsable QHSE", "label_en": "QHSE Manager" },
         { "slug": "mine-manager", "label_fr": "Directeur de mine", "label_en": "Mine Manager" }
       ],
       "crossRefs": []
@@ -46,6 +45,7 @@
         { "slug": "financial-controller-mining", "label_fr": "Contrôleur financier", "label_en": "Financial Controller" },
         { "slug": "cost-controller-mining", "label_fr": "Cost Controller", "label_en": "Cost Controller" },
         { "slug": "chief-accountant-mining", "label_fr": "Chef comptable", "label_en": "Chief Accountant" },
+        { "slug": "accountant-mining", "label_fr": "Comptable", "label_en": "Accountant" },
         { "slug": "project-finance-mining", "label_fr": "Project Finance", "label_en": "Project Finance" }
       ],
       "crossRefs": []

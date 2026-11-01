@@ -6,6 +6,7 @@ import { TrustedBy } from "@/components/site/TrustedBy";
 import { LocationMap } from "@/components/site/LocationMap";
 import { SERVICES, SECTORS } from "@/lib/content";
 import { MINING_COUNTRIES } from "@/lib/mining-countries";
+import { disciplineRoles } from "@/lib/mining-nav";
 import { SERVICE_ICONS } from "@/components/views/company";
 import { Steps } from "@/components/site/PageKit";
 
@@ -333,7 +334,7 @@ export function HomePage({ lang }: { lang: Lang }) {
                     <span className="font-display text-4xl font-bold text-border transition group-hover:text-brand/25">0{i + 1}</span>
                   </div>
                   <span className="mt-5 text-lg font-semibold group-hover:text-brand">{en ? d.label_en : d.label_fr}</span>
-                  <span className="mt-1 text-sm text-muted">{t.roles(d.specialties.length)}</span>
+                  <span className="mt-1 text-sm text-muted">{t.roles(disciplineRoles(d).length)}</span>
                 </Link>
               </li>
             ))}

@@ -502,5 +502,13 @@
   "/conseils/": {
     "to": "/entreprises/",
     "status": 301
+  },
+  "/mines/metiers/drill-and-blast/": {
+    "to": "/mines/exploitation-miniere/",
+    "status": 301
+  },
+  "/en/mines/metiers/drill-and-blast/": {
+    "to": "/en/mines/exploitation-miniere/",
+    "status": 301
   }
 }

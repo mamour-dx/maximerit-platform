@@ -395,19 +395,6 @@
     "inNav": false,
     "parent": "/mines/exploitation-miniere/",
     "singleLocale": false,
-    "path": "/mines/metiers/ingenieur-forage-minage/",
-    "type": "metier",
-    "title": "Ingénieur Forage & Minage",
-    "hrefGroup": "mines-metier-drill-and-blast",
-    "seoLevel": 2,
-    "notes": "specialty=drill-and-blast"
-  },
-  {
-    "locale": "fr",
-    "indexable": true,
-    "inNav": false,
-    "parent": "/mines/exploitation-miniere/",
-    "singleLocale": false,
     "path": "/mines/metiers/ingenieur-procedes/",
     "type": "metier",
     "title": "Ingénieur procédés",
@@ -447,9 +434,9 @@
     "inNav": false,
     "parent": "/mines/exploitation-miniere/",
     "singleLocale": false,
-    "path": "/mines/metiers/responsable-hse/",
+    "path": "/mines/metiers/responsable-qhse/",
     "type": "metier",
-    "title": "Responsable HSE",
+    "title": "Responsable QHSE",
     "hrefGroup": "mines-metier-hse-manager",
     "seoLevel": 2,
     "notes": "specialty=hse-manager"
@@ -544,6 +531,19 @@
     "hrefGroup": "mines-metier-chief-accountant-mining",
     "seoLevel": 2,
     "notes": "specialty=chief-accountant-mining"
+  },
+  {
+    "locale": "fr",
+    "indexable": true,
+    "inNav": false,
+    "parent": "/mines/finance-miniere/",
+    "singleLocale": false,
+    "path": "/mines/metiers/comptable/",
+    "type": "metier",
+    "title": "Comptable",
+    "hrefGroup": "mines-metier-accountant-mining",
+    "seoLevel": 2,
+    "notes": "specialty=accountant-mining"
   },
   {
     "locale": "fr",
@@ -1470,19 +1470,6 @@
     "inNav": false,
     "parent": "/en/mines/exploitation-miniere/",
     "singleLocale": false,
-    "path": "/en/mines/metiers/ingenieur-forage-minage/",
-    "type": "metier",
-    "title": "Ingénieur Forage & Minage",
-    "hrefGroup": "mines-metier-drill-and-blast",
-    "seoLevel": 2,
-    "notes": "specialty=drill-and-blast"
-  },
-  {
-    "locale": "en",
-    "indexable": true,
-    "inNav": false,
-    "parent": "/en/mines/exploitation-miniere/",
-    "singleLocale": false,
     "path": "/en/mines/metiers/ingenieur-procedes/",
     "type": "metier",
     "title": "Ingénieur procédés",
@@ -1522,9 +1509,9 @@
     "inNav": false,
     "parent": "/en/mines/exploitation-miniere/",
     "singleLocale": false,
-    "path": "/en/mines/metiers/responsable-hse/",
+    "path": "/en/mines/metiers/responsable-qhse/",
     "type": "metier",
-    "title": "Responsable HSE",
+    "title": "Responsable QHSE",
     "hrefGroup": "mines-metier-hse-manager",
     "seoLevel": 2,
     "notes": "specialty=hse-manager"
@@ -1619,6 +1606,19 @@
     "hrefGroup": "mines-metier-chief-accountant-mining",
     "seoLevel": 2,
     "notes": "specialty=chief-accountant-mining"
+  },
+  {
+    "locale": "en",
+    "indexable": true,
+    "inNav": false,
+    "parent": "/en/mines/finance-miniere/",
+    "singleLocale": false,
+    "path": "/en/mines/metiers/comptable/",
+    "type": "metier",
+    "title": "Comptable",
+    "hrefGroup": "mines-metier-accountant-mining",
+    "seoLevel": 2,
+    "notes": "specialty=accountant-mining"
   },
   {
     "locale": "en",

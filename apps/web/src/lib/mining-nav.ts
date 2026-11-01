@@ -25,6 +25,18 @@ export function findSpecialty(slug: string): { specialty: MiningSpecialty; disci
   return null;
 }
 
+/**
+ * Métiers affichés pour un pôle : ses métiers propres + les métiers transverses rattachés par `crossRefs`
+ * (ex. Directeur financier, fiche canonique en Finance, également listé en Leadership). Pas de doublon de fiche :
+ * un renvoi pointe vers la fiche canonique ; les compteurs globaux restent sur `specialties` (métiers uniques).
+ */
+export function disciplineRoles(d: MiningDiscipline): MiningSpecialty[] {
+  const refs = (d.crossRefs ?? [])
+    .map((slug) => findSpecialty(slug)?.specialty)
+    .filter((s): s is MiningSpecialty => !!s && !d.specialties.some((own) => own.slug === s.slug));
+  return [...d.specialties, ...refs];
+}
+
 /** Tous les chemins indexables du silo Mining (disciplines + fiches métiers) — pour le sitemap. */
 export function miningIndexablePaths(): string[] {
   const paths = ["/mines/metiers/"];
