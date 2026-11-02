@@ -3,6 +3,7 @@ import { SERVICES, SECTORS } from "@/lib/content";
 import { miningIndexablePaths } from "@/lib/mining-nav";
 import { countryPaths } from "@/lib/mining-countries";
 import { TOOLS } from "@/lib/tools";
+import { OFFERS, offerPath } from "@/lib/offers";
 
 // Phase 11 — logique SEO (robots + sitemap), pure et testable.
 
@@ -15,6 +16,7 @@ export const STATIC_INDEXABLE = [
   "/contact/",
   "/entreprises/",
   ...SERVICES.map((s) => `/entreprises/${s.slug}/`),
+  ...OFFERS.map(offerPath),
   "/secteurs/",
   ...SECTORS.map((s) => `/secteurs/${s.slug}/`),
   "/mines/",
@@ -36,6 +38,7 @@ export const STATIC_INDEXABLE = [
   "/en/contact/",
   "/en/entreprises/",
   ...SERVICES.map((s) => `/en/entreprises/${s.slug}/`),
+  ...OFFERS.map((o) => `/en${offerPath(o)}`),
   "/en/secteurs/",
   ...SECTORS.map((s) => `/en/secteurs/${s.slug}/`),
   "/en/mines/",

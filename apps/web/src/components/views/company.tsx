@@ -13,10 +13,12 @@ import {
   Page,
   PageHero,
   Photo,
+  Prose,
   Section,
   SectionHeading,
 } from "@/components/site/PageKit";
-import { SECTORS, SERVICES, type SectorContent, type ServiceContent } from "@/lib/content";
+import { SECTORS, SERVICES, getService, type SectorContent, type ServiceContent } from "@/lib/content";
+import { SERVICE_DETAILS, offerPath, offersOf, type OfferContent } from "@/lib/offers";
 import { localePath, type Locale } from "@/lib/i18n";
 import { MINING_COUNTRIES } from "@/lib/mining-countries";
 
@@ -44,6 +46,12 @@ const svc = (s: ServiceContent, lang: Locale) => ({
   intro: lang === "en" ? s.introEn : s.intro,
   bullets: lang === "en" ? s.bulletsEn : s.bullets,
 });
+const off = (o: OfferContent, lang: Locale) => ({
+  title: lang === "en" ? o.titleEn : o.title,
+  intro: lang === "en" ? o.introEn : o.intro,
+  body: lang === "en" ? o.bodyEn : o.body,
+  bullets: lang === "en" ? o.bulletsEn : o.bullets,
+});
 const sec = (s: SectorContent, lang: Locale) => ({ title: lang === "en" ? s.titleEn : s.title, intro: lang === "en" ? s.introEn : s.intro });
 
 const C = {
@@ -57,6 +65,10 @@ const C = {
     contactUs: "Nous contacter",
     whatWeBring: "Ce que nous apportons",
     otherServices: "Autres expertises",
+    offersTitle: "Nos prestations",
+    offersIntro: "Des missions ciblées, menées par nos experts et adaptées à votre contexte.",
+    weHandle: "Ce que nous prenons en charge",
+    otherOffers: "Autres prestations",
     miningCalloutTitle: "Recrutement minier",
     miningCalloutBody: "Notre verticale prioritaire : géologie, exploitation, finance et leadership pour les opérations minières.",
     miningCalloutCta: "Découvrir la verticale Mining",
@@ -76,6 +88,14 @@ const C = {
     otherSectors: "Autres secteurs",
     aboutEyebrow: "À propos",
     aboutTitle: "Qui sommes-nous",
+    approachTitle: "Notre approche",
+    approachIntro:
+      "Consultance, externalisation de services, recrutement et intérim : nous accompagnons multinationales, entreprises locales et organismes internationaux en alliant performance et respect des critères environnementaux, sociaux et de bonne gouvernance. Notre démarche repose sur trois piliers.",
+    approach: [
+      ["Le savoir", "La connaissance des secteurs et des acteurs du développement, grâce à l'expérience de nos consultants dans des domaines variés."],
+      ["Le savoir-faire", "L'efficacité dans la recherche de solutions aux problèmes posés, et un souci constant d'amélioration continue."],
+      ["Le savoir-être", "Engagement, confidentialité, transparence et éthique, dans une démarche de proximité et de respect de toutes les parties."],
+    ],
     aboutPhotoAlt: "Deux consultants Maximerit en entretien avec une candidate dans un bureau lumineux à Dakar",
     aboutIntro:
       "Maximerit accompagne les entreprises d'Afrique de l'Ouest dans l'accès aux compétences dont elles ont besoin pour recruter, structurer et faire fonctionner leurs opérations — avec une spécialisation forte sur les Mines & Ressources naturelles.",
@@ -111,6 +131,10 @@ const C = {
     contactUs: "Contact us",
     whatWeBring: "What we bring",
     otherServices: "Other services",
+    offersTitle: "Our services",
+    offersIntro: "Targeted assignments, led by our experts and adapted to your context.",
+    weHandle: "What we take care of",
+    otherOffers: "Other services in this area",
     miningCalloutTitle: "Mining recruitment",
     miningCalloutBody: "Our priority vertical: geology, operations, finance and leadership for mining operations.",
     miningCalloutCta: "Explore the Mining vertical",
@@ -130,6 +154,14 @@ const C = {
     otherSectors: "Other sectors",
     aboutEyebrow: "About",
     aboutTitle: "About us",
+    approachTitle: "Our approach",
+    approachIntro:
+      "Consulting, outsourced services, recruitment and staffing: we work with multinationals, local companies and international organisations, combining performance with respect for environmental, social and governance criteria. Our approach rests on three pillars.",
+    approach: [
+      ["Knowledge", "Deep understanding of sectors and development players, drawn from our consultants' experience across many fields."],
+      ["Know-how", "Effective, efficient problem-solving and a constant drive for continuous improvement."],
+      ["Values", "Commitment, confidentiality, transparency and ethics, with a close, respectful relationship with every party involved."],
+    ],
     aboutPhotoAlt: "Two Maximerit consultants interviewing a candidate in a bright office in Dakar",
     aboutIntro:
       "Maximerit helps West African companies access the skills they need to hire, structure and run their operations — with a strong specialisation in Mining & Natural Resources.",
@@ -158,6 +190,7 @@ const C = {
 } as const;
 
 const PILLAR_ICONS: IconName[] = ["target", "mapPin", "users", "clock"];
+const APPROACH_ICONS: IconName[] = ["book", "compass", "shield"];
 
 function HireActions({ lang }: { lang: Locale }) {
   return (
@@ -220,7 +253,29 @@ export function ServicePage({ service, lang }: { service: ServiceContent; lang: 
           </div>
         </Section>
       ) : null}
-      <Section tone="surface">
+      {(SERVICE_DETAILS[service.slug]?.[lang] ?? []).map((d) => (
+        <Section key={d.title} narrow>
+          <h2 className="section-title">{d.title}</h2>
+          <Prose text={d.body} className="mt-6" />
+          {d.items ? <CheckList items={d.items} className="mt-6" /> : null}
+        </Section>
+      ))}
+      {offersOf(service.slug).length ? (
+        <Section tone="surface">
+          <SectionHeading title={t.offersTitle} intro={t.offersIntro} />
+          <ul className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {offersOf(service.slug).map((o) => {
+              const x = off(o, lang);
+              return (
+                <li key={o.slug}>
+                  <LinkCard href={localePath(lang, offerPath(o))} icon={SERVICE_ICONS[service.slug] ?? "briefcase"} title={x.title} body={x.intro} />
+                </li>
+              );
+            })}
+          </ul>
+        </Section>
+      ) : null}
+      <Section tone={offersOf(service.slug).length ? "default" : "surface"}>
         <SectionHeading title={t.otherServices} />
         <ul className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {SERVICES.filter((s) => s.slug !== service.slug).map((s) => {
@@ -233,6 +288,59 @@ export function ServicePage({ service, lang }: { service: ServiceContent; lang: 
           })}
         </ul>
       </Section>
+      <CtaBand lang={lang} />
+    </Page>
+  );
+}
+
+/** Prestation détaillée d'un pôle (/entreprises/<service>/<offre>/) — contenu repris de l'ancien site. */
+export function OfferPage({ offer, lang }: { offer: OfferContent; lang: Locale }) {
+  const t = C[lang];
+  const parent = getService(offer.service);
+  const p = parent ? svc(parent, lang) : null;
+  const x = off(offer, lang);
+  const siblings = offersOf(offer.service).filter((o) => o.slug !== offer.slug);
+  return (
+    <Page lang={lang}>
+      <PageHero
+        lang={lang}
+        crumbs={[
+          { label: t.employers, href: localePath(lang, "/entreprises/") },
+          ...(p ? [{ label: p.title, href: localePath(lang, `/entreprises/${offer.service}/`) }] : []),
+          { label: x.title },
+        ]}
+        title={x.title}
+        intro={x.intro}
+        actions={<Link href={localePath(lang, "/contact/")} className="btn btn-primary">{t.contactUs} <Icon name="arrowRight" size={18} /></Link>}
+        aside={
+          <div className="card p-6 sm:p-8">
+            <span className="icon-chip"><Icon name={SERVICE_ICONS[offer.service] ?? "briefcase"} /></span>
+            <h2 className="mt-4 text-xs font-semibold uppercase tracking-wider text-muted">{t.weHandle}</h2>
+            <CheckList items={x.bullets} className="mt-4" />
+          </div>
+        }
+      />
+      <Section narrow>
+        <Prose text={x.body} />
+      </Section>
+      {siblings.length ? (
+        <Section tone="surface">
+          <SectionHeading
+            title={t.otherOffers}
+            action={p ? <ArrowLink href={localePath(lang, `/entreprises/${offer.service}/`)}>{p.title}</ArrowLink> : undefined}
+          />
+          <ul className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {siblings.map((o) => {
+              const y = off(o, lang);
+              return (
+                <li key={o.slug}>
+                  <LinkCard href={localePath(lang, offerPath(o))} icon={SERVICE_ICONS[o.service] ?? "briefcase"} title={y.title} body={y.intro} />
+                </li>
+              );
+            })}
+          </ul>
+        </Section>
+      ) : null}
       <CtaBand lang={lang} />
     </Page>
   );
@@ -331,6 +439,14 @@ export function AboutPage({ lang }: { lang: Locale }) {
         </ul>
       </Section>
       <Section tone="surface">
+        <SectionHeading title={t.approachTitle} intro={t.approachIntro} />
+        <ul className="mt-10 grid gap-5 md:grid-cols-3">
+          {t.approach.map(([title, body], i) => (
+            <li key={title}><InfoCard icon={APPROACH_ICONS[i]} title={title} body={body} /></li>
+          ))}
+        </ul>
+      </Section>
+      <Section>
         <SectionHeading title={t.presenceTitle} intro={t.presenceIntro} action={<ArrowLink href={localePath(lang, "/mines/")}>{t.miningCalloutCta}</ArrowLink>} />
         <div className="mt-8">
           <ChipList icon="mapPin" items={MINING_COUNTRIES.map((c) => ({ label: lang === "en" ? c.labelEn : c.label, href: localePath(lang, `/mines/${c.slug}/`) }))} />

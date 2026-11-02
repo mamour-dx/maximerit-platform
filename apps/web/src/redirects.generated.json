@@ -12,7 +12,7 @@
     "status": 301
   },
   "/esg/": {
-    "to": "/entreprises/qhse-esg/",
+    "to": "/entreprises/qhse-esg/strategie-esg/",
     "status": 301
   },
   "/language/en/our-strengths/": {
@@ -28,7 +28,7 @@
     "status": 301
   },
   "/accueil-et-integration/": {
-    "to": "/entreprises/externalisation-rh-paie/",
+    "to": "/entreprises/externalisation-rh-paie/accueil-integration/",
     "status": 301
   },
   "/developpement-durable/": {
@@ -44,7 +44,7 @@
     "status": 301
   },
   "/etude-dimpact-environnemental-et-social/": {
-    "to": "/entreprises/qhse-esg/",
+    "to": "/entreprises/qhse-esg/etude-impact-environnemental-social/",
     "status": 301
   },
   "/language/en/environmental-social-and-governance/": {
@@ -204,11 +204,11 @@
     "status": 301
   },
   "/conseil-en-qhse/": {
-    "to": "/entreprises/qhse-esg/",
+    "to": "/entreprises/qhse-esg/conseil-audit-qhse/",
     "status": 301
   },
   "/conseils/conseils-en-rh/": {
-    "to": "/entreprises/",
+    "to": "/entreprises/externalisation-rh-paie/conseil-rh/",
     "status": 301
   },
   "/conseil-en-finance/": {
@@ -224,15 +224,15 @@
     "status": 301
   },
   "/audit-qhse/": {
-    "to": "/entreprises/qhse-esg/",
+    "to": "/entreprises/qhse-esg/conseil-audit-qhse/",
     "status": 301
   },
   "/mise-a-disposition-equipe-qhse/": {
-    "to": "/entreprises/qhse-esg/",
+    "to": "/entreprises/qhse-esg/equipe-qhse/",
     "status": 301
   },
   "/mise-en-place-dune-politique-qhse/": {
-    "to": "/entreprises/qhse-esg/",
+    "to": "/entreprises/qhse-esg/politique-qhse/",
     "status": 301
   },
   "/redaction-de-code-de-conduite/": {
@@ -252,7 +252,7 @@
     "status": 301
   },
   "/suivi-rh/": {
-    "to": "/entreprises/externalisation-rh-paie/",
+    "to": "/entreprises/externalisation-rh-paie/suivi-rh/",
     "status": 301
   },
   "/interim/": {
@@ -264,7 +264,7 @@
     "status": 301
   },
   "/gestion-paie-et-des-declarations/": {
-    "to": "/entreprises/externalisation-rh-paie/",
+    "to": "/entreprises/externalisation-rh-paie/gestion-paie-declarations/",
     "status": 301
   },
   "/mise-en-place-doutils-delaboration-et-de-suivi-de-budget/": {

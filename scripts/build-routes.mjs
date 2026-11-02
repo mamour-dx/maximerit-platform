@@ -41,6 +41,21 @@ const ENTREPRISES = [
 for (const [slug, title] of ENTREPRISES)
   add({ path: `/entreprises/${slug}/`, type: 'service', title, hrefGroup: `entreprises-${slug}`, inNav: true, navGroup: 'entreprises', parent: '/entreprises/', seoLevel: 1 });
 
+// Prestations détaillées (reprise de l'ancien site — miroir de apps/web/src/lib/offers.ts)
+const OFFRES = [
+  ['externalisation-rh-paie', 'gestion-paie-declarations', 'Gestion de la paie et des déclarations'],
+  ['externalisation-rh-paie', 'suivi-rh', 'Suivi RH et développement des compétences'],
+  ['externalisation-rh-paie', 'conseil-rh', 'Conseil en ressources humaines'],
+  ['externalisation-rh-paie', 'accueil-integration', 'Accueil, intégration et relocation'],
+  ['qhse-esg', 'conseil-audit-qhse', 'Conseil, audit et certification QHSE'],
+  ['qhse-esg', 'politique-qhse', "Mise en place d'une politique QHSE"],
+  ['qhse-esg', 'equipe-qhse', "Mise à disposition d'une équipe QHSE"],
+  ['qhse-esg', 'etude-impact-environnemental-social', "Étude d'impact environnemental et social"],
+  ['qhse-esg', 'strategie-esg', 'Stratégie et reporting ESG'],
+];
+for (const [service, slug, title] of OFFRES)
+  add({ path: `/entreprises/${service}/${slug}/`, type: 'service-offer', title, hrefGroup: `entreprises-${service}-${slug}`, parent: `/entreprises/${service}/`, seoLevel: 2 });
+
 // Secteurs (hub + 5 non-mining ; Mining pointe vers le hub /mines/)
 add({ path: '/secteurs/', type: 'section', title: 'Secteurs', hrefGroup: 'secteurs', inNav: true, navGroup: 'secteurs', parent: '/', seoLevel: 1 });
 for (const s of enums.sectors) {
