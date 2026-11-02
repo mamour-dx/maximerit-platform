@@ -8,7 +8,7 @@ import { SERVICES, SECTORS } from "@/lib/content";
 import { MINING_COUNTRIES } from "@/lib/mining-countries";
 import { disciplineRoles } from "@/lib/mining-nav";
 import { SERVICE_ICONS } from "@/components/views/company";
-import { Steps } from "@/components/site/PageKit";
+import { Photo, Steps } from "@/components/site/PageKit";
 
 // Accueil partagé FR/EN : mêmes sections, textes par langue, liens préfixés /en en anglais.
 
@@ -40,6 +40,8 @@ const COPY = {
       body: "Opérations minières, fonctions critiques, direction : nous identifions, évaluons et présentons les bons candidats, rapidement.",
       points: ["Une première short-list qualifiée, rapidement", "Approche directe et confidentielle", "Couverture de 7 pays d'Afrique de l'Ouest"],
       cta: "Confier un recrutement",
+      photo: "/images/consultants-dakar.webp",
+      photoAlt: "Consultants Maximerit en entretien avec une candidate à Dakar",
     },
     candidate: {
       tag: "Candidats",
@@ -48,6 +50,8 @@ const COPY = {
       points: ["Offres en Afrique de l'Ouest, en FR et EN", "Profil visible de nos consultants à chaque mission", "Accompagnement jusqu'à la prise de poste"],
       cta: "Voir les offres",
       ctaAlt: "Déposer mon CV",
+      photo: "/images/talent-dakar.webp",
+      photoAlt: "Jeune professionnelle souriante dans un bureau à Dakar",
     },
     expertisesEyebrow: "Expertises",
     expertisesTitle: "Nos expertises entreprises",
@@ -105,6 +109,8 @@ const COPY = {
       body: "Mining operations, critical functions, leadership: we identify, assess and present the right candidates — fast.",
       points: ["A first qualified short-list, fast", "Direct, confidential approach", "Coverage across 7 West African countries"],
       cta: "Hire with us",
+      photo: "/images/consultants-dakar.webp",
+      photoAlt: "Maximerit consultants interviewing a candidate in Dakar",
     },
     candidate: {
       tag: "Candidates",
@@ -113,6 +119,8 @@ const COPY = {
       points: ["Openings across West Africa, in FR and EN", "Your profile seen by our consultants on every brief", "Support through to your start date"],
       cta: "View openings",
       ctaAlt: "Submit my CV",
+      photo: "/images/talent-dakar.webp",
+      photoAlt: "Smiling young professional in an office in Dakar",
     },
     expertisesEyebrow: "Expertise",
     expertisesTitle: "Services for employers",
@@ -242,6 +250,7 @@ export function HomePage({ lang }: { lang: Lang }) {
             { ...t.candidate, icon: "users" as const, href: jobsPath, alt: { label: t.candidate.ctaAlt, href: p("/candidats/deposer-mon-cv/") }, dark: false },
           ].map((a) => (
             <article key={a.tag} className={`card relative overflow-hidden p-8 sm:p-10 ${a.dark ? "bg-surface" : ""}`}>
+              <Photo src={a.photo} alt={a.photoAlt} sizes="(min-width: 1024px) 600px, 100vw" rounded={false} className="-mx-8 -mt-8 mb-8 aspect-[16/9] sm:-mx-10 sm:-mt-10" />
               <span className="icon-chip"><Icon name={a.icon} /></span>
               <p className="mt-6 text-xs font-semibold uppercase tracking-[0.18em] text-brand">{a.tag}</p>
               <h3 className="mt-2 font-display text-2xl font-bold sm:text-3xl">{a.title}</h3>

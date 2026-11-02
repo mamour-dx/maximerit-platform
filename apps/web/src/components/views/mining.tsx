@@ -11,6 +11,7 @@ import {
   LinkCard,
   Page,
   PageHero,
+  Photo,
   Section,
   SectionHeading,
   Steps,
@@ -52,6 +53,7 @@ const C = {
     statRoles: "métiers",
     statCountries: "pays",
     pillarsAnchor: "poles",
+    hubPhotoAlt: "Ingénieure et superviseur en EPI consultant une tablette au bord d'une mine d'or à ciel ouvert en Afrique de l'Ouest",
     countriesAnchor: "pays",
     pillarsTitle: "Quatre pôles métiers",
     pillarsIntro: "De l'exploration à la direction des opérations : chaque pôle regroupe les métiers que nous recrutons.",
@@ -124,6 +126,7 @@ const C = {
     statRoles: "roles",
     statCountries: "countries",
     pillarsAnchor: "pillars",
+    hubPhotoAlt: "Engineer and supervisor in PPE reviewing a tablet at the edge of an open-pit gold mine in West Africa",
     countriesAnchor: "countries",
     pillarsTitle: "Four pillars",
     pillarsIntro: "From exploration to operations leadership: each pillar groups the roles we recruit.",
@@ -268,6 +271,9 @@ export function MiningHub({ lang }: { lang: Locale }) {
           </ul>
         }
       />
+      <div className="container-page pt-12 sm:pt-16">
+        <Photo src="/images/mines-site-ouest-africain.webp" alt={t.hubPhotoAlt} sizes="(min-width: 1280px) 1200px, 100vw" className="aspect-[4/3] sm:aspect-[21/9]" />
+      </div>
       <Section id={t.pillarsAnchor}>
         <SectionHeading title={t.pillarsTitle} intro={t.pillarsIntro} action={<ArrowLink href={localePath(lang, "/mines/metiers/")}>{t.allRoles}</ArrowLink>} />
         <div className="mt-10"><DisciplineCards lang={lang} preview /></div>

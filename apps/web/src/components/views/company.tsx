@@ -12,6 +12,7 @@ import {
   LinkCard,
   Page,
   PageHero,
+  Photo,
   Section,
   SectionHeading,
 } from "@/components/site/PageKit";
@@ -75,6 +76,7 @@ const C = {
     otherSectors: "Autres secteurs",
     aboutEyebrow: "À propos",
     aboutTitle: "Qui sommes-nous",
+    aboutPhotoAlt: "Deux consultants Maximerit en entretien avec une candidate dans un bureau lumineux à Dakar",
     aboutIntro:
       "Maximerit accompagne les entreprises d'Afrique de l'Ouest dans l'accès aux compétences dont elles ont besoin pour recruter, structurer et faire fonctionner leurs opérations — avec une spécialisation forte sur les Mines & Ressources naturelles.",
     pillarsTitle: "Ce qui nous distingue",
@@ -128,6 +130,7 @@ const C = {
     otherSectors: "Other sectors",
     aboutEyebrow: "About",
     aboutTitle: "About us",
+    aboutPhotoAlt: "Two Maximerit consultants interviewing a candidate in a bright office in Dakar",
     aboutIntro:
       "Maximerit helps West African companies access the skills they need to hire, structure and run their operations — with a strong specialisation in Mining & Natural Resources.",
     pillarsTitle: "What sets us apart",
@@ -311,6 +314,7 @@ export function AboutPage({ lang }: { lang: Locale }) {
         eyebrow={t.aboutEyebrow}
         title={t.aboutTitle}
         intro={t.aboutIntro}
+        aside={<Photo src="/images/consultants-dakar.webp" alt={t.aboutPhotoAlt} priority className="aspect-[4/3]" />}
         actions={
           <>
             <Link href={localePath(lang, "/contact/")} className="btn btn-primary">{t.contactUs} <Icon name="arrowRight" size={18} /></Link>

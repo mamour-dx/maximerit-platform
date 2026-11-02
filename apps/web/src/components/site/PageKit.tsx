@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { Icon, type IconName } from "@/components/ui/Icon";
@@ -90,6 +91,22 @@ export function PageHero({
         {aside ? <div className="rise-in rise-in-delay">{aside}</div> : null}
       </div>
     </section>
+  );
+}
+
+/** Photo du site (public/images), cadrée par son conteneur : arrondie, recadrée en `object-cover`. */
+export function Photo({ src, alt, className = "", sizes = "(min-width: 1024px) 50vw, 100vw", priority = false, rounded = true }: {
+  rounded?: boolean;
+  src: string;
+  alt: string;
+  className?: string;
+  sizes?: string;
+  priority?: boolean;
+}) {
+  return (
+    <div className={`relative overflow-hidden bg-surface ${rounded ? "rounded-[var(--radius-lg)]" : ""} ${className}`}>
+      <Image src={src} alt={alt} fill sizes={sizes} priority={priority} className="object-cover" />
+    </div>
   );
 }
 
