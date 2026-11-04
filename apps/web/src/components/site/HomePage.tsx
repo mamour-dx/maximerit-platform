@@ -283,7 +283,7 @@ export function HomePage({ lang }: { lang: Lang }) {
             </div>
           </div>
           <ul className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {SERVICES.map((s) => (
+            {SERVICES.filter((s) => !s.secondary).map((s) => (
               <li key={s.slug} className="grid">
                 <Link href={p(`/entreprises/${s.slug}/`)} className="card card-hover group flex flex-col p-6">
                   <span className="icon-chip"><Icon name={SERVICE_ICONS[s.slug] ?? "briefcase"} /></span>

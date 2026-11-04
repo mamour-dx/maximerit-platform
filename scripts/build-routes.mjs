@@ -27,7 +27,7 @@ const add = (r) => { routes.push({ locale: 'fr', indexable: true, inNav: false, 
 // ---------- Coeur éditorial (FR) — sera mirroré en EN ----------
 add({ path: '/', type: 'home', title: 'Accueil', hrefGroup: 'home', inNav: true, navGroup: 'root', seoLevel: 1 });
 
-// Entreprises (hub + 7 services) — piliers corporate
+// Entreprises (hub + 7 services + 1 pôle annexe) — piliers corporate
 add({ path: '/entreprises/', type: 'section', title: 'Entreprises', hrefGroup: 'entreprises', inNav: true, navGroup: 'entreprises', parent: '/', seoLevel: 1 });
 const ENTREPRISES = [
   ['recrutement', 'Recrutement'],
@@ -37,6 +37,7 @@ const ENTREPRISES = [
   ['finance-performance', 'Finance & Performance'],
   ['qhse-esg', 'QHSE & ESG'],
   ['formation', 'Formation'],
+  ['informatique-securite', 'Informatique & sécurité des sites'],
 ];
 for (const [slug, title] of ENTREPRISES)
   add({ path: `/entreprises/${slug}/`, type: 'service', title, hrefGroup: `entreprises-${slug}`, inNav: true, navGroup: 'entreprises', parent: '/entreprises/', seoLevel: 1 });
@@ -52,6 +53,8 @@ const OFFRES = [
   ['qhse-esg', 'equipe-qhse', "Mise à disposition d'une équipe QHSE"],
   ['qhse-esg', 'etude-impact-environnemental-social', "Étude d'impact environnemental et social"],
   ['qhse-esg', 'strategie-esg', 'Stratégie et reporting ESG'],
+  ['informatique-securite', 'maintenance-informatique-reseaux', 'Maintenance des systèmes informatiques et réseaux'],
+  ['informatique-securite', 'installation-videosurveillance', 'Installation de vidéosurveillance'],
 ];
 for (const [service, slug, title] of OFFRES)
   add({ path: `/entreprises/${service}/${slug}/`, type: 'service-offer', title, hrefGroup: `entreprises-${service}-${slug}`, parent: `/entreprises/${service}/`, seoLevel: 2 });

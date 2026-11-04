@@ -128,7 +128,7 @@
     "status": 301
   },
   "/language/en/maintenance-of-computer-systems-and-networks/": {
-    "to": "/en/entreprises/",
+    "to": "/en/entreprises/informatique-securite/maintenance-informatique-reseaux/",
     "status": 301
   },
   "/language/en/community-liaison-officer/": {
@@ -200,7 +200,7 @@
     "status": 301
   },
   "/maintenance-des-systemes-informatiques-et-reseaux/": {
-    "to": "/entreprises/",
+    "to": "/entreprises/informatique-securite/maintenance-informatique-reseaux/",
     "status": 301
   },
   "/conseil-en-qhse/": {
@@ -216,7 +216,7 @@
     "status": 301
   },
   "/installation-video-surveillance/": {
-    "to": "/entreprises/",
+    "to": "/entreprises/informatique-securite/installation-videosurveillance/",
     "status": 301
   },
   "/facilities-management/": {
@@ -352,7 +352,7 @@
     "status": 301
   },
   "/language/en/video-surveillance-installation/": {
-    "to": "/en/entreprises/",
+    "to": "/en/entreprises/informatique-securite/installation-videosurveillance/",
     "status": 301
   },
   "/support-it/": {
@@ -408,7 +408,7 @@
     "status": 301
   },
   "/language/en/it-support/": {
-    "to": "/en/entreprises/",
+    "to": "/en/entreprises/informatique-securite/maintenance-informatique-reseaux/",
     "status": 301
   },
   "/language/en/implementation-of-budget-preparation-and-monitoring-tools/": {
