@@ -32,6 +32,7 @@ export const SERVICE_ICONS: Record<string, IconName> = {
   "finance-performance": "chart",
   "qhse-esg": "shield",
   formation: "book",
+  "informatique-securite": "monitor",
 };
 export const SECTOR_ICONS: Record<string, IconName> = {
   energie: "sparkle",

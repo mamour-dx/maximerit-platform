@@ -6,6 +6,7 @@ export interface OfferContent {
   service: string; // slug du pôle parent (SERVICES)
   slug: string;
   legacy: string[]; // anciennes URL couvertes
+  legacyEn?: string[]; // anciennes URL EN (/language/en/…) → miroir /en de la prestation
   title: string;
   intro: string;
   body: string; // paragraphes séparés par une ligne vide
@@ -245,6 +246,55 @@ export const OFFERS: OfferContent[] = [
       "Producing ESG reports",
       "Data analysis and target tracking",
       "Communication and community support",
+    ],
+  },
+  // ───────────── Informatique & sécurité des sites (pôle annexe) ─────────────
+  {
+    service: "informatique-securite",
+    slug: "maintenance-informatique-reseaux",
+    legacy: ["/maintenance-des-systemes-informatiques-et-reseaux/"],
+    legacyEn: ["/language/en/maintenance-of-computer-systems-and-networks/", "/language/en/it-support/"],
+    title: "Maintenance des systèmes informatiques et réseaux",
+    intro: "Serveurs, postes de travail, réseau : nous maintenons votre parc informatique pour anticiper les risques et garantir la disponibilité de vos équipes.",
+    body: "Nous accompagnons les entreprises dans la maintenance et la gestion de leur parc informatique. Notre implication et notre expertise nous donnent une compréhension fine des enjeux métiers de nos clients : une panne de serveur ou de réseau, c'est une activité à l'arrêt.\n\nPour vous garantir une qualité de service et une disponibilité optimales, notre offre de maintenance vous décharge entièrement des contraintes liées à la gestion de votre parc. Vous vous concentrez sur votre activité, en toute sérénité.",
+    bullets: [
+      "Maintenance des serveurs informatiques",
+      "Maintenance des postes de travail",
+      "Gestion du parc informatique",
+      "Maintenance des réseaux",
+    ],
+    titleEn: "IT systems and network maintenance",
+    introEn: "Servers, workstations, network: we maintain your IT equipment to anticipate risks and keep your teams up and running.",
+    bodyEn: "We support companies in maintaining and managing their IT equipment. Our commitment and expertise give us a clear understanding of our clients' business stakes: a server or network outage means operations grind to a halt.\n\nTo guarantee optimal service quality and availability, our maintenance offer takes the burden of managing your IT estate entirely off your hands. You focus on your business, with peace of mind.",
+    bulletsEn: [
+      "Server maintenance",
+      "Workstation maintenance",
+      "IT asset management",
+      "Network maintenance",
+    ],
+  },
+  {
+    service: "informatique-securite",
+    slug: "installation-videosurveillance",
+    legacy: ["/installation-video-surveillance/"],
+    legacyEn: ["/language/en/video-surveillance-installation/"],
+    title: "Installation de vidéosurveillance",
+    intro: "Sécurisez vos biens et vos équipes, dissuadez les intrusions et gardez un œil sur vos locaux, points de vente et entrepôts.",
+    body: "La vidéosurveillance est un outil particulièrement efficace pour protéger les biens et les personnes. Qu'il s'agisse de dissuader, de sécuriser un site ou simplement de visualiser vos locaux à distance, nous concevons et installons le dispositif adapté.\n\nCaméras intérieures ou extérieures, dôme, IP ou sans fil : chaque point de votre site est étudié pour une protection optimale, avec des équipements de dernière génération.",
+    bullets: [
+      "Caméras intérieures et extérieures",
+      "Caméras dôme, IP et sans fil",
+      "Visualisation de vos sites, y compris à distance",
+      "Bureaux, points de vente, entrepôts et domiciles",
+    ],
+    titleEn: "Video surveillance installation",
+    introEn: "Protect your assets and your people, deter intrusions and keep an eye on your offices, retail outlets and warehouses.",
+    bodyEn: "Video surveillance is a highly effective way to protect property and people. Whether the goal is deterrence, securing a site or simply viewing your premises remotely, we design and install the right setup.\n\nIndoor or outdoor, dome, IP or wireless cameras: every point of your site is assessed for optimal protection, using latest-generation equipment.",
+    bulletsEn: [
+      "Indoor and outdoor cameras",
+      "Dome, IP and wireless cameras",
+      "Viewing of your sites, including remotely",
+      "Offices, retail outlets, warehouses and homes",
     ],
   },
 ];

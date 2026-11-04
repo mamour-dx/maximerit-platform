@@ -15,6 +15,7 @@ describe("prestations (reprise de l'ancien site)", () => {
     expect(getOffer("qhse-esg", "inexistant")).toBeNull();
     expect(offersOf("qhse-esg").length).toBe(5);
     expect(offersOf("externalisation-rh-paie").length).toBe(4);
+    expect(offersOf("informatique-securite").length).toBe(2);
   });
 
   it("contenu FR et EN renseigné", () => {
@@ -27,6 +28,11 @@ describe("prestations (reprise de l'ancien site)", () => {
   it("chaque ancienne URL redirige (301) vers sa prestation", () => {
     for (const o of OFFERS)
       for (const legacy of o.legacy) expect(table[legacy], legacy).toEqual({ to: offerPath(o), status: 301 });
+  });
+
+  it("chaque ancienne URL EN redirige (301) vers le miroir /en de sa prestation", () => {
+    for (const o of OFFERS)
+      for (const legacy of o.legacyEn ?? []) expect(table[legacy], legacy).toEqual({ to: `/en${offerPath(o)}`, status: 301 });
   });
 
   it("prestations FR et EN dans le sitemap", () => {

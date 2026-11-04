@@ -9,6 +9,8 @@ export interface ServiceContent {
   titleEn: string;
   introEn: string;
   bulletsEn: string[];
+  /** Pôle annexe : listé sur /entreprises/ et dans le sitemap, mais pas dans la grille d'expertises de l'accueil. */
+  secondary?: boolean;
 }
 
 export const SERVICES: ServiceContent[] = [
@@ -74,6 +76,16 @@ export const SERVICES: ServiceContent[] = [
     titleEn: "Training",
     introEn: "Grow your teams' skills with training tailored to your operations.",
     bulletsEn: ["Trade and support-function training", "QHSE, finance, HR, management", "Bespoke programmes", "Grounded in West Africa field reality"],
+  },
+  {
+    slug: "informatique-securite",
+    title: "Informatique & sécurité des sites",
+    intro: "Maintenance de votre parc informatique et réseau, sécurisation de vos locaux par vidéosurveillance.",
+    bullets: ["Maintenance des serveurs et postes de travail", "Gestion du parc informatique et du réseau", "Installation de vidéosurveillance", "Bureaux, points de vente, entrepôts et sites"],
+    titleEn: "IT & site security",
+    introEn: "Maintenance of your IT equipment and network, and video surveillance to secure your premises.",
+    bulletsEn: ["Server and workstation maintenance", "IT equipment and network management", "Video surveillance installation", "Offices, retail outlets, warehouses and sites"],
+    secondary: true,
   },
 ];
 

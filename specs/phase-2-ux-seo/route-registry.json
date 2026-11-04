@@ -119,6 +119,19 @@
   {
     "locale": "fr",
     "indexable": true,
+    "inNav": true,
+    "parent": "/entreprises/",
+    "singleLocale": false,
+    "path": "/entreprises/informatique-securite/",
+    "type": "service",
+    "title": "Informatique & sécurité des sites",
+    "hrefGroup": "entreprises-informatique-securite",
+    "navGroup": "entreprises",
+    "seoLevel": 1
+  },
+  {
+    "locale": "fr",
+    "indexable": true,
     "inNav": false,
     "parent": "/entreprises/externalisation-rh-paie/",
     "singleLocale": false,
@@ -222,6 +235,30 @@
     "type": "service-offer",
     "title": "Stratégie et reporting ESG",
     "hrefGroup": "entreprises-qhse-esg-strategie-esg",
+    "seoLevel": 2
+  },
+  {
+    "locale": "fr",
+    "indexable": true,
+    "inNav": false,
+    "parent": "/entreprises/informatique-securite/",
+    "singleLocale": false,
+    "path": "/entreprises/informatique-securite/maintenance-informatique-reseaux/",
+    "type": "service-offer",
+    "title": "Maintenance des systèmes informatiques et réseaux",
+    "hrefGroup": "entreprises-informatique-securite-maintenance-informatique-reseaux",
+    "seoLevel": 2
+  },
+  {
+    "locale": "fr",
+    "indexable": true,
+    "inNav": false,
+    "parent": "/entreprises/informatique-securite/",
+    "singleLocale": false,
+    "path": "/entreprises/informatique-securite/installation-videosurveillance/",
+    "type": "service-offer",
+    "title": "Installation de vidéosurveillance",
+    "hrefGroup": "entreprises-informatique-securite-installation-videosurveillance",
     "seoLevel": 2
   },
   {
@@ -1302,6 +1339,19 @@
   {
     "locale": "en",
     "indexable": true,
+    "inNav": true,
+    "parent": "/en/entreprises/",
+    "singleLocale": false,
+    "path": "/en/entreprises/informatique-securite/",
+    "type": "service",
+    "title": "Informatique & sécurité des sites",
+    "hrefGroup": "entreprises-informatique-securite",
+    "navGroup": "entreprises",
+    "seoLevel": 1
+  },
+  {
+    "locale": "en",
+    "indexable": true,
     "inNav": false,
     "parent": "/en/entreprises/externalisation-rh-paie/",
     "singleLocale": false,
@@ -1405,6 +1455,30 @@
     "type": "service-offer",
     "title": "Stratégie et reporting ESG",
     "hrefGroup": "entreprises-qhse-esg-strategie-esg",
+    "seoLevel": 2
+  },
+  {
+    "locale": "en",
+    "indexable": true,
+    "inNav": false,
+    "parent": "/en/entreprises/informatique-securite/",
+    "singleLocale": false,
+    "path": "/en/entreprises/informatique-securite/maintenance-informatique-reseaux/",
+    "type": "service-offer",
+    "title": "Maintenance des systèmes informatiques et réseaux",
+    "hrefGroup": "entreprises-informatique-securite-maintenance-informatique-reseaux",
+    "seoLevel": 2
+  },
+  {
+    "locale": "en",
+    "indexable": true,
+    "inNav": false,
+    "parent": "/en/entreprises/informatique-securite/",
+    "singleLocale": false,
+    "path": "/en/entreprises/informatique-securite/installation-videosurveillance/",
+    "type": "service-offer",
+    "title": "Installation de vidéosurveillance",
+    "hrefGroup": "entreprises-informatique-securite-installation-videosurveillance",
     "seoLevel": 2
   },
   {
